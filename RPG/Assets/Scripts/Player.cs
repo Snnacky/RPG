@@ -17,13 +17,21 @@ public class Player : MonoBehaviour
     public Player_FallState fallState { get; private set; }
     public Player_WallSlideState wallSlideState { get; private set; }
     public Player_WallJumpState wallJumpState { get; private set; }
+    public Player_DashState dashState { get; private set; }
+    public Player_BasicAttackState basicAttackState { get; private set; }
     private const string IDLE_ANIM_BOOL_NAME = "idle";
     private const string MOVE_ANIM_BOOL_NAME = "move";
     private const string JUMP_ANIM_BOOL_NAME = "jumpFall";
     private const string FALL_ANIM_BOOL_NAME = "jumpFall";
     private const string WALL_SLIDE_ANIM_BOOL_NAME = "wallSlide";
     private const string WALL_JUMP_ANIM_BOOL_NAME = "jumpFall";
+    private const string DASH_ANIM_BOOL_NAME = "dash";
+    private const string BASIC_ATTACK_ANIM_BOOL_NAME = "basicAttack";
     public bool jumpPressed;
+
+    [Header("Attack Detail")]
+    public Vector2 attackVelocity;
+    public float attackVelocityDuriation = 0.1f;
 
     [Header("Movement Detail")]
     public float moveSpeed;//移动速度
@@ -33,6 +41,11 @@ public class Player : MonoBehaviour
     public float inAirMoveMultiplier;//空气乘数
     [Range(0, 1)]
     public float wallSlideMultiplier;//墙体下滑乘数
+    [Space]
+    public float dashDuration = 0.2f;
+    public float dashSpeed = 20;
+    public float dashCoolDown;
+    [HideInInspector]public float dashCoolDownTimer;
 
     [Header("Colliction Detection")]
     [SerializeField] private float groundCheckDistance;
@@ -56,6 +69,8 @@ public class Player : MonoBehaviour
         fallState = new Player_FallState(this, stateMachine, FALL_ANIM_BOOL_NAME);
         wallSlideState = new Player_WallSlideState(this, stateMachine, WALL_SLIDE_ANIM_BOOL_NAME);
         wallJumpState = new Player_WallJumpState(this, stateMachine, WALL_JUMP_ANIM_BOOL_NAME);
+        dashState = new Player_DashState(this, stateMachine, DASH_ANIM_BOOL_NAME);
+        basicAttackState = new Player_BasicAttackState(this, stateMachine, BASIC_ATTACK_ANIM_BOOL_NAME);
     }
 
     private void OnEnable()
@@ -83,7 +98,12 @@ public class Player : MonoBehaviour
     {
         HandleCollisionDetection();
         stateMachine.UpdateActiveState();
-        
+        DashCoolDown();
+    }
+
+    public void CallAnimationTrigger()
+    {
+        stateMachine.currentState.CallAnimationTrigger();
     }
 
     //设置速度
@@ -118,5 +138,10 @@ public class Player : MonoBehaviour
     {
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance, 0));
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(wallChckDistance * facingDir, 0, 0));
+    }
+
+    private void DashCoolDown()
+    {
+        dashCoolDownTimer-= Time.deltaTime;
     }
 }
