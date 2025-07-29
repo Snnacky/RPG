@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     public Player_WallJumpState wallJumpState { get; private set; }
     public Player_DashState dashState { get; private set; }
     public Player_BasicAttackState basicAttackState { get; private set; }
+    public Player_FallAttackState fallAttackState { get; private set; }
+    public Player_JumpAttackState jumpAttackState { get; private set; }
     private const string IDLE_ANIM_BOOL_NAME = "idle";
     private const string MOVE_ANIM_BOOL_NAME = "move";
     private const string JUMP_ANIM_BOOL_NAME = "jumpFall";
@@ -27,11 +29,17 @@ public class Player : MonoBehaviour
     private const string WALL_JUMP_ANIM_BOOL_NAME = "jumpFall";
     private const string DASH_ANIM_BOOL_NAME = "dash";
     private const string BASIC_ATTACK_ANIM_BOOL_NAME = "basicAttack";
+    private const string FALL_ATTACK_ANIM_BOOL_NAME = "fallAttack";
+    private const string JUMP_ATTACK_ANIM_BOOL_NAME = "jumpAttack";
     public bool jumpPressed;
 
     [Header("Attack Detail")]
-    public Vector2 attackVelocity;
+    public Vector2[] attackVelocity;
+    public Vector2 fallAttackVelocity;
     public float attackVelocityDuriation = 0.1f;
+    public float comboResetTime = 1;
+    private Coroutine queuedAttackCo;
+    public bool jumpAttacked = false;
 
     [Header("Movement Detail")]
     public float moveSpeed;//移动速度
@@ -71,6 +79,8 @@ public class Player : MonoBehaviour
         wallJumpState = new Player_WallJumpState(this, stateMachine, WALL_JUMP_ANIM_BOOL_NAME);
         dashState = new Player_DashState(this, stateMachine, DASH_ANIM_BOOL_NAME);
         basicAttackState = new Player_BasicAttackState(this, stateMachine, BASIC_ATTACK_ANIM_BOOL_NAME);
+        fallAttackState = new Player_FallAttackState(this, stateMachine, FALL_ATTACK_ANIM_BOOL_NAME);
+        jumpAttackState = new Player_JumpAttackState(this, stateMachine, JUMP_ATTACK_ANIM_BOOL_NAME);
     }
 
     private void OnEnable()
@@ -100,7 +110,19 @@ public class Player : MonoBehaviour
         stateMachine.UpdateActiveState();
         DashCoolDown();
     }
+    public void EnterAttackStateWithDelay()
+    {
+        //如果前面执行了协程还没结束,则结束,再执行下一个协程
+        if(queuedAttackCo!=null)
+            StopCoroutine(queuedAttackCo);
+        queuedAttackCo = StartCoroutine(EnterAttackStateWithDelayCo());
+    }
 
+    private IEnumerator EnterAttackStateWithDelayCo()
+    {
+        yield return new WaitForEndOfFrame();
+        stateMachine.ChangeState(basicAttackState);
+    }
     public void CallAnimationTrigger()
     {
         stateMachine.currentState.CallAnimationTrigger();
