@@ -27,5 +27,6 @@ public class Player_WallJumpState : Player_AirState
         {
             stateMachine.ChangeState(player.wallSlideState);
         }
+        
     }
 }

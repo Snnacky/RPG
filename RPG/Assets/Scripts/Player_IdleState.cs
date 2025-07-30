@@ -17,10 +17,8 @@ public class Player_IdleState : Player_GroundedState
     public override void Update()
     {
         base.Update();
-        if (rb.velocity.y<0)
-        {
-            stateMachine.ChangeState(player.fallState);
-        }
+        if (player.moveInput.x == player.facingDir && player.wallDetected)
+            return;
         if (player.moveInput.x!=0)
         {
             stateMachine.ChangeState(player.moveState);
