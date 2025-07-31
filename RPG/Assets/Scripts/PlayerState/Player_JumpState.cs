@@ -10,7 +10,7 @@ public class Player_JumpState : Player_AirState
     public override void Enter()
     {
         base.Enter();
-        player.SetVelocity(rb.velocity.x, player.jumpForce);
+        player.SetVelocity(0, player.jumpForce);
     }
     public override void Update()
     {
