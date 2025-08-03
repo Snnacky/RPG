@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_FallAttackState : EntityState
+public class Player_FallAttackState : PlayerState
 {
     private bool touchedGround;
     private int attackDir;

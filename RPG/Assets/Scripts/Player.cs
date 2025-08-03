@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
+    public PlayerInputSet input { get; private set; }//输入
+    public Vector2 moveInput { get; private set; }
 
-    public PlayerInputSet input {  get; private set; }//输入
-    private StateMachine stateMachine;
 
-    public Animator anim {  get; private set; }//动画
-    public Rigidbody2D rb { get; private set; }
-    public Vector2 moveInput {  get; private set; }
-    public Player_IdleState idleState {  get; private set; }
-    public Player_MoveState moveState {  get; private set; }
+    public Player_IdleState idleState { get; private set; }
+    public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
     public Player_FallState fallState { get; private set; }
     public Player_WallSlideState wallSlideState { get; private set; }
@@ -53,25 +50,14 @@ public class Player : MonoBehaviour
     public float dashDuration = 0.2f;
     public float dashSpeed = 20;
     public float dashCoolDown;
-    [HideInInspector]public float dashCoolDownTimer;
+    [HideInInspector] public float dashCoolDownTimer;
 
-    [Header("Colliction Detection")]
-    [SerializeField] private float groundCheckDistance;
-    [SerializeField] private float wallChckDistance;
-    [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private Transform primaryWallCheck;
-    [SerializeField] private Transform secondarWallCheck;
-    public bool groundDetected{  get; private set; }
-    public bool wallDetected{  get; private set; }
+    
 
-    private bool facingRight = true;
-    public int facingDir { get; private set; } = 1;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         input = new PlayerInputSet();
-        anim = GetComponentInChildren<Animator>();
-        rb= GetComponent<Rigidbody2D>();
-        stateMachine = new StateMachine();//定义化状态机
 
         idleState = new Player_IdleState(this, stateMachine, IDLE_ANIM_BOOL_NAME);//定义状态
         moveState = new Player_MoveState(this, stateMachine, MOVE_ANIM_BOOL_NAME);
@@ -85,6 +71,19 @@ public class Player : MonoBehaviour
         jumpAttackState = new Player_JumpAttackState(this, stateMachine, JUMP_ATTACK_ANIM_BOOL_NAME);
     }
 
+    public void EnterAttackStateWithDelay()
+    {
+        //如果前面执行了协程还没结束,则结束,再执行下一个协程
+        if (queuedAttackCo != null)
+            StopCoroutine(queuedAttackCo);
+        queuedAttackCo = StartCoroutine(EnterAttackStateWithDelayCo());
+    }
+
+    private IEnumerator EnterAttackStateWithDelayCo()
+    {
+        yield return new WaitForEndOfFrame();
+        stateMachine.ChangeState(basicAttackState);
+    }
     private void OnEnable()
     {
         input.Enable();
@@ -100,74 +99,21 @@ public class Player : MonoBehaviour
     {
         input.Disable();
     }
-    private void Start()
+
+    protected override void Start()
     {
+        base.Start();
         //初始化状态机的状态
         stateMachine.Initialize(idleState);
     }
 
-    private void Update()
+    protected override void Update()
     {
-        HandleCollisionDetection();
-        stateMachine.UpdateActiveState();
+        base.Update();
         DashCoolDown();
     }
-    public void EnterAttackStateWithDelay()
-    {
-        //如果前面执行了协程还没结束,则结束,再执行下一个协程
-        if(queuedAttackCo!=null)
-            StopCoroutine(queuedAttackCo);
-        queuedAttackCo = StartCoroutine(EnterAttackStateWithDelayCo());
-    }
-
-    private IEnumerator EnterAttackStateWithDelayCo()
-    {
-        yield return new WaitForEndOfFrame();
-        stateMachine.ChangeState(basicAttackState);
-    }
-    public void CallAnimationTrigger()
-    {
-        stateMachine.currentState.CallAnimationTrigger();
-    }
-
-    //设置速度
-    public void SetVelocity(float xVelocty,float yVelocty)
-    {
-        rb.velocity = new Vector2(xVelocty, yVelocty);
-        HandleFlip(xVelocty);
-    }
-    //翻转角色
-    private void HandleFlip(float xVelocity)
-    {
-        if (xVelocity < 0 & facingRight == true)
-            Flip();
-        else if(xVelocity>0&facingRight == false)
-            Flip();
-    }
-
-    public void Flip()
-    {
-        transform.Rotate(0, 180, 0);
-        facingRight = !facingRight;
-        facingDir *= -1;
-    }
-    //地面检测
-    private void HandleCollisionDetection()
-    {
-        groundDetected = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
-        wallDetected = Physics2D.Raycast(primaryWallCheck.position, Vector2.right * facingDir, wallChckDistance, whatIsGround)
-            && Physics2D.Raycast(secondarWallCheck.position, Vector2.right * facingDir, wallChckDistance, whatIsGround);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance, 0));
-        Gizmos.DrawLine(primaryWallCheck.position, primaryWallCheck.position + new Vector3(wallChckDistance * facingDir, 0, 0));
-        Gizmos.DrawLine(secondarWallCheck.position, secondarWallCheck.position + new Vector3(wallChckDistance * facingDir, 0, 0));
-    }
-
     private void DashCoolDown()
     {
-        dashCoolDownTimer-= Time.deltaTime;
+        dashCoolDownTimer -= Time.deltaTime;
     }
 }
