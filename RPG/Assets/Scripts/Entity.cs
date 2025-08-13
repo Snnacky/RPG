@@ -15,10 +15,14 @@ public class Entity : MonoBehaviour
     private bool facingRight = true;
     public int facingDir { get; private set; } = 1;
 
+    //击退
+    private Coroutine knockbackCo;
+    private bool isKnocked;
+
     [Header("Colliction Detection")]
+    [SerializeField] protected LayerMask whatIsGround;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float wallChckDistance;
-    [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform primaryWallCheck;
     [SerializeField] private Transform secondarWallCheck;
@@ -30,31 +34,54 @@ public class Entity : MonoBehaviour
         
     }
   
-    protected virtual void Start()
-    {
-        
-    }
-
     protected virtual void Update()
     {
         HandleCollisionDetection();
         stateMachine.UpdateActiveState();
         
     }
-    
-    public void CallAnimationTrigger()
+
+    protected virtual void Start()
     {
-        stateMachine.currentState.CallAnimationTrigger();
+
+    }
+    public void ReciveKnockback(Vector2 knockback,float duration)
+    {
+        if(knockbackCo!=null)
+            StopCoroutine(knockbackCo);
+        knockbackCo = StartCoroutine(KnockbackCo(knockback,duration));
+    }
+    //协程:击退效果
+    private IEnumerator KnockbackCo(Vector2 knockback,float duration)
+    {
+        isKnocked = true;
+        rb.velocity = knockback;
+        yield return new WaitForSeconds(duration);
+        rb.velocity = Vector2.zero;
+        isKnocked = false;
+    }
+
+    public void CurrentStateAnimationTrigger()
+    {
+        stateMachine.currentState.AnimationTrigger();
+    }
+
+    //死亡
+    public virtual void EntityDeath()
+    {
+
     }
 
     //设置速度
     public void SetVelocity(float xVelocty, float yVelocty)
     {
+        if (isKnocked)
+            return;
         rb.velocity = new Vector2(xVelocty, yVelocty);
         HandleFlip(xVelocty);
     }
     //翻转角色
-    private void HandleFlip(float xVelocity)
+    public void HandleFlip(float xVelocity)
     {
         if (xVelocity < 0 & facingRight == true)
             Flip();
@@ -79,7 +106,7 @@ public class Entity : MonoBehaviour
             wallDetected = Physics2D.Raycast(primaryWallCheck.position, Vector2.right * facingDir, wallChckDistance, whatIsGround);
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + new Vector3(0, -groundCheckDistance, 0));
         Gizmos.DrawLine(primaryWallCheck.position, primaryWallCheck.position + new Vector3(wallChckDistance * facingDir, 0, 0));

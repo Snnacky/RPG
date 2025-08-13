@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Entity
 {
+    public static event Action OnPlayerDeathh;
     public PlayerInputSet input { get; private set; }// ‰»Î
     public Vector2 moveInput { get; private set; }
 
@@ -18,6 +20,7 @@ public class Player : Entity
     public Player_BasicAttackState basicAttackState { get; private set; }
     public Player_FallAttackState fallAttackState { get; private set; }
     public Player_JumpAttackState jumpAttackState { get; private set; }
+    public Player_DeadState deadState { get; private set; }
     private const string IDLE_ANIM_BOOL_NAME = "idle";
     private const string MOVE_ANIM_BOOL_NAME = "move";
     private const string JUMP_ANIM_BOOL_NAME = "jumpFall";
@@ -28,6 +31,7 @@ public class Player : Entity
     private const string BASIC_ATTACK_ANIM_BOOL_NAME = "basicAttack";
     private const string FALL_ATTACK_ANIM_BOOL_NAME = "fallAttack";
     private const string JUMP_ATTACK_ANIM_BOOL_NAME = "jumpAttack";
+    private const string DEAD_ATTACK_ANIM_BOOL_NAME = "dead";
     public bool jumpPressed;
 
     [Header("Attack Detail")]
@@ -69,6 +73,7 @@ public class Player : Entity
         basicAttackState = new Player_BasicAttackState(this, stateMachine, BASIC_ATTACK_ANIM_BOOL_NAME);
         fallAttackState = new Player_FallAttackState(this, stateMachine, FALL_ATTACK_ANIM_BOOL_NAME);
         jumpAttackState = new Player_JumpAttackState(this, stateMachine, JUMP_ATTACK_ANIM_BOOL_NAME);
+        deadState = new Player_DeadState(this, stateMachine, DEAD_ATTACK_ANIM_BOOL_NAME);
     }
 
     public void EnterAttackStateWithDelay()
@@ -83,6 +88,12 @@ public class Player : Entity
     {
         yield return new WaitForEndOfFrame();
         stateMachine.ChangeState(basicAttackState);
+    }
+    public override void EntityDeath()
+    {
+        base.EntityDeath();
+        OnPlayerDeathh?.Invoke();
+        stateMachine.ChangeState(deadState);
     }
     private void OnEnable()
     {

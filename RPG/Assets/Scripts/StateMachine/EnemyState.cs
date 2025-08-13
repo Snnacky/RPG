@@ -12,9 +12,14 @@ public abstract class EnemyState : EntityState
         anim=enemy.anim;
     }
 
-    public override void Update()
+
+    public override void UpdateAnimationParameters()
     {
-        base.Update();
+        base.UpdateAnimationParameters();
+        float battleAnimSpeedMultiplier = enemy.battleMoveSpeed / enemy.moveSpeed;
+
+        anim.SetFloat("battleSpeedMultiplier", battleAnimSpeedMultiplier);//可以更改move动画速度
         anim.SetFloat("moveAnimSpeedMultiplier", enemy.moveAnimSpeedMultiplier);//可以更改move动画速度
+        anim.SetFloat("xVelocity", rb.velocity.x);
     }
 }

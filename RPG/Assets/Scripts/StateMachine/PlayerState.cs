@@ -19,7 +19,7 @@ public abstract class PlayerState:EntityState//定义为抽象类,确保无法直接使用
     public override void Update()
     {
         base.Update();
-        anim.SetFloat("yVelocity", rb.velocity.y);
+       
         if (input.Player.Dash.WasPressedThisFrame() && CanDash())
         {
             player.dashCoolDownTimer = player.dashCoolDown;
@@ -27,6 +27,11 @@ public abstract class PlayerState:EntityState//定义为抽象类,确保无法直接使用
         }
     }
 
+    public override void UpdateAnimationParameters()
+    {
+        base.UpdateAnimationParameters();
+        anim.SetFloat("yVelocity", rb.velocity.y);
+    }
     private bool CanDash()
     {
         if(player.wallDetected)

@@ -42,7 +42,7 @@ public class Player_BasicAttackState : PlayerState
         //在当前攻击结束前再次攻击
         if(input.Player.Attack.WasPressedThisFrame())
             QueueNextAttack();
-        if(triggerCalled)//动画事件
+        if(triggerCalled)//动画事件,表示攻击结束
         {
            HandleStateExit();
         }    
