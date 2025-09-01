@@ -10,6 +10,9 @@ public class Entity_VFX : MonoBehaviour
     [SerializeField] private float onDamageVfxDuration = .2f;//视觉持续时间
     private Material originalMaterial;
     private Coroutine onDamageVfxCoroutine;
+    [Header("攻击效果")]
+    [SerializeField] private Color hitvfxColor = Color.red;
+    [SerializeField] private GameObject hitvfx;
 
     private void Awake()
     {
@@ -17,6 +20,13 @@ public class Entity_VFX : MonoBehaviour
         originalMaterial=sr.material;
     }
 
+    public void CreatOnHitVfx(Transform target)
+    {
+        GameObject vfx = Instantiate(hitvfx, target.position, Quaternion.identity);
+        vfx.GetComponentInChildren<SpriteRenderer>().color = hitvfxColor;
+    }
+
+    //更换被攻击后的视觉效果
     public void PlayOnDamageVfx()
     {
         if (onDamageVfxCoroutine != null)
@@ -25,6 +35,7 @@ public class Entity_VFX : MonoBehaviour
 
     }
 
+    
     private IEnumerator OnDamageVfxCo()
     {
         sr.material = onDamageMaterial;

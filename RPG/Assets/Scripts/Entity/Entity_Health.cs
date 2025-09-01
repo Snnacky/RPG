@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity_Health : MonoBehaviour
+public class Entity_Health : MonoBehaviour , IDamgable
 {
     [SerializeField] protected float currentHp = 100;
     [SerializeField] protected float maxhp = 100;

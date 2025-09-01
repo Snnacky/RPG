@@ -9,6 +9,7 @@ public class Enemy : Entity
     public Enemy_AttackState attackState;
     public Enemy_BattleState battleState;
     public Enemy_DeadState deadState;
+    public Enemy_StunnedState stunnedState;
     [Header("Movement Detail")]
     public float idleTime = 2;
     public float moveSpeed = 1.4f;//移动速度
@@ -28,6 +29,13 @@ public class Enemy : Entity
     public float minRetreatDistance = 1;
     public Vector2 retreatVelovity;
 
+    [Header("Stunned Detail")]
+    public float stunnedDuration = 1;
+    public Vector2 stunnedVelocity=new Vector2(7,7);
+    [SerializeField]protected bool canBeStunned = false;
+
+    //可以被反击
+    public void EnableCounterWindow(bool enable) => canBeStunned = enable;
     public override void EntityDeath()
     {
         base.EntityDeath();

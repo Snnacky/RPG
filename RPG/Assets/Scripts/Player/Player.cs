@@ -21,6 +21,8 @@ public class Player : Entity
     public Player_FallAttackState fallAttackState { get; private set; }
     public Player_JumpAttackState jumpAttackState { get; private set; }
     public Player_DeadState deadState { get; private set; }
+    public Player_CounterAttackState counterAttackState { get; private set; }
+
     private const string IDLE_ANIM_BOOL_NAME = "idle";
     private const string MOVE_ANIM_BOOL_NAME = "move";
     private const string JUMP_ANIM_BOOL_NAME = "jumpFall";
@@ -32,6 +34,7 @@ public class Player : Entity
     private const string FALL_ATTACK_ANIM_BOOL_NAME = "fallAttack";
     private const string JUMP_ATTACK_ANIM_BOOL_NAME = "jumpAttack";
     private const string DEAD_ATTACK_ANIM_BOOL_NAME = "dead";
+    private const string COUNTER_ATTACK_ANIM_BOOL_NAME = "counterAttack";
     public bool jumpPressed;
 
     [Header("Attack Detail")]
@@ -74,6 +77,7 @@ public class Player : Entity
         fallAttackState = new Player_FallAttackState(this, stateMachine, FALL_ATTACK_ANIM_BOOL_NAME);
         jumpAttackState = new Player_JumpAttackState(this, stateMachine, JUMP_ATTACK_ANIM_BOOL_NAME);
         deadState = new Player_DeadState(this, stateMachine, DEAD_ATTACK_ANIM_BOOL_NAME);
+        counterAttackState = new Player_CounterAttackState(this, stateMachine, COUNTER_ATTACK_ANIM_BOOL_NAME);
     }
 
     public void EnterAttackStateWithDelay()
