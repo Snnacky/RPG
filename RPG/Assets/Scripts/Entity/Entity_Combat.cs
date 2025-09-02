@@ -26,7 +26,7 @@ public class Entity_Combat : MonoBehaviour
             if (damgable == null)
                 continue;
             damgable.TakeDamage(damage, transform);
-            vfx.CreatOnHitVfx(target.transform);
+            vfx.CreatOnHitVfx(target.transform);//打在敌人身上的效果
         }
     }
 

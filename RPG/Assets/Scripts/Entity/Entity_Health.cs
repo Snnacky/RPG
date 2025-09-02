@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Entity_Health : MonoBehaviour , IDamgable
 {
-    [SerializeField] protected float currentHp = 100;
-    [SerializeField] protected float maxhp = 100;
+    [SerializeField] protected float currentHp;
     [SerializeField] protected bool isDead;
     private Entity_VFX entity_VFX;
     private Entity entity;
+    private Slider healthBar;
+    private Entity_Stats stats;
+
     [Header("攻击击退效果")]
     [SerializeField] private float knockbackDuration = .2f;
     [SerializeField] private Vector2 onDamageKnockback = new Vector2(1.5f, 2.5f);
@@ -21,6 +24,10 @@ public class Entity_Health : MonoBehaviour , IDamgable
     {
         entity = GetComponent<Entity>();//Entity的子类也属于Entity
         entity_VFX = GetComponent<Entity_VFX>();
+        healthBar = GetComponentInChildren<Slider>();
+        stats = GetComponent<Entity_Stats>();
+        currentHp = stats.GetMaxHealth();
+        updateHealthBar();
     }
     public virtual void TakeDamage(float damage , Transform damageDealer)
     {
@@ -35,6 +42,7 @@ public class Entity_Health : MonoBehaviour , IDamgable
     protected void ReduceHp(float damage)
     {
         currentHp-=damage;
+        updateHealthBar();
         if (currentHp <= 0)
             Die();
     }
@@ -60,5 +68,13 @@ public class Entity_Health : MonoBehaviour , IDamgable
         return IsHeavyDamage(damge) ? heavyKnockbackDuration : knockbackDuration;
     }
     //判断是否是重损害
-    private bool IsHeavyDamage(float damge) => damge / maxhp > heavyDamageThreshold;
+    private bool IsHeavyDamage(float damge) => damge / stats.GetMaxHealth() > heavyDamageThreshold;
+
+
+
+    private void updateHealthBar()
+    {
+        if (healthBar == null) return;
+        healthBar.value = currentHp / stats.GetMaxHealth();
+    }
 }
