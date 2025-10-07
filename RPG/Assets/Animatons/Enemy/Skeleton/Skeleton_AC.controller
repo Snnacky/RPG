@@ -45,10 +45,10 @@ AnimatorStateMachine:
     m_Position: {x: 340, y: 210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6245567125099683960}
-    m_Position: {x: 350, y: 260, z: 0}
+    m_Position: {x: 340, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8837611897504579018}
-    m_Position: {x: 350, y: 320, z: 0}
+    m_Position: {x: 340, y: 320, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions:
@@ -176,13 +176,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 799f5dfe04c148e418c024e4d38af71f, type: 2}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: attackSpeedMultiplier
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -244,6 +244,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: battleSpeedMultiplier
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: attackSpeedMultiplier
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0

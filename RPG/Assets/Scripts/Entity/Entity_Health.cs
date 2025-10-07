@@ -10,7 +10,10 @@ public class Entity_Health : MonoBehaviour , IDamgable
     private Entity_VFX entity_VFX;
     private Entity entity;
     private Slider healthBar;
-    private Entity_Stats stats;
+    private Entity_Stats entityStats;
+    [Header("血量再生")]
+    [SerializeField] private float regenInterval = 1;
+    [SerializeField] private bool canRegenerateHealth = true;
 
     [Header("攻击击退效果")]
     [SerializeField] private float knockbackDuration = .2f;
@@ -25,22 +28,59 @@ public class Entity_Health : MonoBehaviour , IDamgable
         entity = GetComponent<Entity>();//Entity的子类也属于Entity
         entity_VFX = GetComponent<Entity_VFX>();
         healthBar = GetComponentInChildren<Slider>();
-        stats = GetComponent<Entity_Stats>();
-        currentHp = stats.GetMaxHealth();
+        entityStats = GetComponent<Entity_Stats>();
+        currentHp = entityStats.GetMaxHealth();
         updateHealthBar();
+        InvokeRepeating(nameof(RegenerateHealth), 0, regenInterval);
     }
-    public virtual void TakeDamage(float damage , Transform damageDealer)
+    public virtual bool TakeDamage(float damage , float elementalDamage,ElementType elementType, Transform damageDealer)//攻击他的人
     {
-        if(isDead) return;
-        Vector2 knockback = CalucateKnockback(damage,damageDealer);
-        ReduceHp(damage);
-        entity_VFX?.PlayOnDamageVfx();
-        entity?.ReciveKnockback(knockback, CalucateDuration(damage));
-            
+        if (isDead) return false;
+        if (AttackEvaded())
+        {
+            return false;
+        }
+
+        Entity_Stats attackerStats = damageDealer.GetComponent<Entity_Stats>();
+        float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;//护甲减免
+
+        float mitigation = entityStats.GetArmorMitigation(armorReduction);//计算护甲减免转换成伤害减免(百分比)
+        float physicalDamageTaken = damage * (1 - mitigation);//伤害减免后的最终物理伤害
+
+        float resistance = entityStats.GetElementalResistance(elementType);//元素抗性
+        float elementalDamageTaken = elementalDamage * (1 - resistance);//伤害减免后的最终元素伤害
+
+        ReduceHp(physicalDamageTaken + elementalDamageTaken);//扣血
+        TakeKnockback(damageDealer, physicalDamageTaken);//击退效果
+        return true;
+    }
+    
+    private void RegenerateHealth()
+    {
+        if (canRegenerateHealth == false)
+            return;
+        float regenAmount = entityStats.resources.healthRegen.GetValue();
+        IncreaseHealth(regenAmount);
     }
 
-    protected void ReduceHp(float damage)
+    public void IncreaseHealth(float healthAmount)
     {
+        if(isDead) return;
+
+        float newHp = currentHp + healthAmount;
+        float maxHp=entityStats.GetMaxHealth();
+
+        currentHp=Mathf.Min(newHp, maxHp);
+        updateHealthBar();
+    }
+
+    //是否闪避掉
+    private bool AttackEvaded()=> Random.Range(0, 100) < entityStats.GetEvasion();
+    
+
+    public void ReduceHp(float damage)
+    {
+        entity_VFX?.PlayOnDamageVfx();//更换角色颜色
         currentHp-=damage;
         updateHealthBar();
         if (currentHp <= 0)
@@ -62,19 +102,24 @@ public class Entity_Health : MonoBehaviour , IDamgable
         return knockback;
     }
 
+    //受攻击击退
+    private void TakeKnockback(Transform damageDealer, float finalDamage)
+    {
+        Vector2 knockback = CalucateKnockback(finalDamage, damageDealer);
+        entity?.ReciveKnockback(knockback, CalucateDuration(finalDamage));//击退效果
+    }
+
     //计算持续时间
     private float CalucateDuration(float damge)
     {
         return IsHeavyDamage(damge) ? heavyKnockbackDuration : knockbackDuration;
     }
     //判断是否是重损害
-    private bool IsHeavyDamage(float damge) => damge / stats.GetMaxHealth() > heavyDamageThreshold;
-
-
+    private bool IsHeavyDamage(float damge) => damge / entityStats.GetMaxHealth() > heavyDamageThreshold;
 
     private void updateHealthBar()
     {
         if (healthBar == null) return;
-        healthBar.value = currentHp / stats.GetMaxHealth();
+        healthBar.value = currentHp / entityStats.GetMaxHealth();
     }
 }

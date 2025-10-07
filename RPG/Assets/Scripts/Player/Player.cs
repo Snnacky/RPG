@@ -80,6 +80,42 @@ public class Player : Entity
         counterAttackState = new Player_CounterAttackState(this, stateMachine, COUNTER_ATTACK_ANIM_BOOL_NAME);
     }
 
+    public override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
+    {
+        float originalMoveSpeed = moveSpeed;
+        float originalJumpForce = jumpForce;
+        float originalAnimSpeed = anim.speed;
+        Vector2 originalWallJump = wallJumpForce;
+        Vector2 originalJumpAttack = fallAttackVelocity;
+        Vector2[] originalAttackVelocity= attackVelocity;
+
+        float speedMultiplier = 1 - slowMultiplier;
+
+        moveSpeed = moveSpeed * speedMultiplier;
+        jumpForce = jumpForce * speedMultiplier;
+        anim.speed = anim.speed * speedMultiplier;
+        wallJumpForce = wallJumpForce * speedMultiplier;
+        fallAttackVelocity = fallAttackVelocity * speedMultiplier;
+
+        for(int i=0; i<attackVelocity.Length; i++)
+        {
+            attackVelocity[i]=attackVelocity[i] * speedMultiplier;
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed = originalMoveSpeed;
+        jumpForce = originalJumpForce;
+        anim.speed = originalAnimSpeed;
+        wallJumpForce = originalWallJump;
+        fallAttackVelocity = originalJumpAttack;
+
+        for(int i=0;i<attackVelocity.Length; i++)
+        {
+            attackVelocity[i] = originalAttackVelocity[i];
+        }
+    }
+
     public void EnterAttackStateWithDelay()
     {
         //如果前面执行了协程还没结束,则结束,再执行下一个协程

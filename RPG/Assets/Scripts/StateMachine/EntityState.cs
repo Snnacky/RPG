@@ -7,8 +7,11 @@ public abstract class EntityState
 {
     protected StateMachine stateMachine;
     protected string animBoolName;//定义peotected保证可以在子类使用
+
     protected Animator anim;
     protected Rigidbody2D rb;
+    protected Entity_Stats stats;
+
     protected float stateTimer; //计数器
     protected bool triggerCalled;//anim事件触发器
 
@@ -40,5 +43,11 @@ public abstract class EntityState
     public virtual void UpdateAnimationParameters()
     {
 
+    }
+
+    public void SyncAttackSpeed()
+    {
+        float attackSpeed=stats.offense.attackSpeed.GetValue();
+        anim.SetFloat("attackSpeedMultiplier",attackSpeed);
     }
 }

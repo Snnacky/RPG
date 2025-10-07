@@ -10,6 +10,7 @@ public abstract class EnemyState : EntityState
         this.enemy = enemy;
         rb = enemy.rb;
         anim=enemy.anim;
+        stats = enemy.stats;
     }
 
 

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDamgable //½Ó¿Ú
 {
-    public void TakeDamage(float damage, Transform damageDealer);
+    public bool TakeDamage(float damage, float elementalDamage,ElementType elementType, Transform damageDealer);
 }

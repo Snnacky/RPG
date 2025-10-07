@@ -26,6 +26,7 @@ public class Player_BasicAttackState : PlayerState
         base.Enter();
         comboAttackQueued = false;
         ResetComboIndexIfNeeded();
+        SyncAttackSpeed();
         anim.SetInteger("basicAttackIndex", comboIndex);
 
         //确定攻击方向

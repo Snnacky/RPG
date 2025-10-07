@@ -14,6 +14,7 @@ public abstract class PlayerState:EntityState//定义为抽象类,确保无法直接使用
         anim = player.anim;
         rb = player.rb;
         input = player.input;
+        stats = player.stats;
     }
 
     public override void Update()

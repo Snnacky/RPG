@@ -34,6 +34,32 @@ public class Enemy : Entity
     public Vector2 stunnedVelocity=new Vector2(7,7);
     [SerializeField]protected bool canBeStunned = false;
 
+
+    float originalMoveSpeed;
+    float originalBattleSpeed;
+    float originalAnimSpeed;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        originalMoveSpeed = moveSpeed;
+        originalBattleSpeed = battleMoveSpeed;
+        originalAnimSpeed = anim.speed;
+    }
+    public override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
+    {
+        float speedMultiplier = 1 - slowMultiplier;
+        moveSpeed=moveSpeed*speedMultiplier;
+        battleMoveSpeed=battleMoveSpeed*speedMultiplier;
+        anim.speed=anim.speed*speedMultiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed = originalMoveSpeed;
+        battleMoveSpeed=originalBattleSpeed;
+        anim.speed = originalAnimSpeed;
+    }
+
     //可以被反击
     public void EnableCounterWindow(bool enable) => canBeStunned = enable;
     public override void EntityDeath()

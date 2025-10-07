@@ -6,13 +6,11 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     public event Action OnFlipped;
-
-
-
     protected StateMachine stateMachine;
     public Animator anim { get; private set; }//动画
     public Rigidbody2D rb { get; private set; }
 
+    public Entity_Stats stats { get; private set; }
     public bool groundDetected { get; private set; }
     public bool wallDetected { get; private set; }
 
@@ -22,6 +20,7 @@ public class Entity : MonoBehaviour
     //击退
     private Coroutine knockbackCo;
     private bool isKnocked;
+    private Coroutine slowDownCo;
 
     [Header("Colliction Detection")]
     [SerializeField] protected LayerMask whatIsGround;
@@ -35,7 +34,7 @@ public class Entity : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         stateMachine = new StateMachine();//定义化状态机
-        
+        stats = GetComponent<Entity_Stats>();
     }
   
     protected virtual void Update()
@@ -74,6 +73,21 @@ public class Entity : MonoBehaviour
     public virtual void EntityDeath()
     {
 
+    }
+    //冰冻效果减速
+    public virtual void SlowDownEntity(float duration,float slowMultiplier)
+    {
+        if (slowDownCo != null)
+        {
+            StopCoroutine(slowDownCo);
+        }
+        slowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier));
+    }
+    
+
+    public virtual IEnumerator SlowDownEntityCo(float duration,float slowMultiplier)
+    {
+        yield return null;
     }
 
     //设置速度
