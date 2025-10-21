@@ -6,6 +6,8 @@ using UnityEngine;
 public class Player : Entity
 {
     public static event Action OnPlayerDeathh;
+
+    private UI ui;
     public PlayerInputSet input { get; private set; }// ‰»Î
     public Vector2 moveInput { get; private set; }
 
@@ -64,6 +66,7 @@ public class Player : Entity
     protected override void Awake()
     {
         base.Awake();
+        ui=FindAnyObjectByType<UI>();
         input = new PlayerInputSet();
 
         idleState = new Player_IdleState(this, stateMachine, IDLE_ANIM_BOOL_NAME);//∂®“Â◊¥Ã¨
@@ -144,6 +147,8 @@ public class Player : Entity
 
         input.Player.Jump.started += ctx => jumpPressed = true;
         input.Player.Jump.canceled += ctx => jumpPressed = false;
+
+        input.Player.ToggleSkillTreeUI.performed += ctx => ui.ToggleSkillTreeUI();
     }
 
     private void OnDisable()
