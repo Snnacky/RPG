@@ -6,18 +6,14 @@ public class Entity_Combat : MonoBehaviour
 {
     private Entity_VFX vfx;//视觉效果
     private Entity_Stats stats;
+
+    public DamageScaleData basicAttackScale;
+
     [Header("Target detection")]
     [SerializeField] private Transform targetCheck;
     [SerializeField] private float targetCheckRadius = 1;
     [SerializeField] private LayerMask whatIsTarget;
 
-    [Header("状态效果")]
-    [SerializeField] private float defaultDuration = 3;//冰冻持续效果
-    [SerializeField] private float chillSlowMultiplier = .2f;//冰冻减速
-    [SerializeField] private float electrifyChargeBuildUp = .4f;
-    [Space]
-    [SerializeField] private float fireScale = .8f;
-    [SerializeField] private float lightningScale = 2.5f;
 
     private void Awake()
     {
@@ -32,41 +28,25 @@ public class Entity_Combat : MonoBehaviour
             IDamgable damegable = target.GetComponent<IDamgable>();//entity_health
             if (damegable == null)
                 continue;
-            float elementalDamage = stats.GetElementalDamage(out ElementType elementType,.6f);//获取元素伤害
-            float damage = stats.GetPhysicalDamage(out bool isCrit);//物理伤害
+
+            AttackData attackData = stats.GetAttackData(basicAttackScale);
+            Entity_StatusHandler statusHandler=target.GetComponent<Entity_StatusHandler>();
+
+            float physicalDamage = attackData.physicalDamage;//获取物理伤害
+            
+            float elementalDamage = attackData.elementalDamage;//获取元素伤害
+
+            ElementType elementType = attackData.element;
            
-            bool targetGetHit = damegable.TakeDamage(damage, elementalDamage, elementType, transform);
+            bool targetGetHit = damegable.TakeDamage(physicalDamage, elementalDamage, elementType, transform);
             //如果元素不是空,附加元素效果
-            if (elementType != ElementType.None)
-                ApplyStatusEffect(target.transform, elementType);
-
+            if(elementType!=ElementType.None)
+                statusHandler?.ApplyStatusEffect(elementType, attackData.effectData);
+            Debug.Log(elementType);
             if (targetGetHit)//敌方受到攻击
-            {
-                vfx.UpdateOnHitColor(elementType);
-                vfx.CreatOnHitVfx(target.transform,isCrit);//打在敌人身上的效果
-            }
+                vfx.CreatOnHitVfx(target.transform,attackData.isCrit,elementType);//打在敌人身上的效果
 
-        }
-    }
 
-    public void ApplyStatusEffect(Transform target,ElementType elementType,float scaleFactor=1)
-    {
-        Entity_StatusHandler statusHandler = target.GetComponent<Entity_StatusHandler>();
-        if (statusHandler == null)
-            return;
-        if (elementType == ElementType.Ice && statusHandler.CanBeApplied(ElementType.Ice))
-            statusHandler.ApplyChilledEffect(defaultDuration, chillSlowMultiplier*scaleFactor);
-        if(elementType==ElementType.Fire && statusHandler.CanBeApplied(ElementType.Fire))
-        {
-            scaleFactor = fireScale;
-            float fireDamage = stats.offense.fireDamage.GetValue()*scaleFactor;
-            statusHandler.ApplyBurnEffect(defaultDuration, fireDamage);
-        }
-        if(elementType==ElementType.Lightning&& statusHandler.CanBeApplied(ElementType.Lightning))
-        {
-            scaleFactor = lightningScale;
-            float lightningDamage=stats.offense.lightningDamage.GetValue()*scaleFactor;
-            statusHandler.ApplyElectrifyEffect(defaultDuration, lightningDamage, electrifyChargeBuildUp);
         }
     }
 

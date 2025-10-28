@@ -11,14 +11,19 @@ public class Entity_Stats : MonoBehaviour//统计数据
     public Stat_OffenseGroup offense;
     [Header("防御")]
     public Stat_DefenseGroup defense;
-    //元素攻击
+
+    public AttackData GetAttackData(DamageScaleData scaleData)
+    {
+        return new AttackData(this, scaleData);
+    }
+
+    //元素攻击,找出元素伤害里面最高的一类
     public float GetElementalDamage(out ElementType elementType, float scaleFactor = 1)
     {
         float fireDamage = offense.fireDamage.GetValue();
         float iceDamage = offense.iceDamage.GetValue();
-        float lightningDamage = offense.lightningDamage.GetValue();
+        float shockDamage = offense.lightningDamage.GetValue();
         float bonusElementalDamage = major.intelligence.GetValue();//智力加成
-
         float highestDamage = fireDamage;
         elementType = ElementType.Fire;
         if (highestDamage < iceDamage)
@@ -26,10 +31,10 @@ public class Entity_Stats : MonoBehaviour//统计数据
             elementType = ElementType.Ice;
             highestDamage = iceDamage;
         }
-        if (highestDamage < lightningDamage)
+        if (highestDamage < shockDamage)
         {
             elementType = ElementType.Lightning;
-            highestDamage = lightningDamage;
+            highestDamage = shockDamage;
         }
 
         if (highestDamage <= 0)
@@ -40,7 +45,7 @@ public class Entity_Stats : MonoBehaviour//统计数据
 
         float bonusFire = (fireDamage == highestDamage) ? 0 : fireDamage * 0.5f;
         float bonusIce = (iceDamage == highestDamage) ? 0 : iceDamage * 0.5f;
-        float bonusLightning = (lightningDamage == highestDamage) ? 0 : lightningDamage * 0.5f;
+        float bonusLightning = (shockDamage == highestDamage) ? 0 : shockDamage * 0.5f;
         float weakerElementsDamage = bonusFire + bonusIce + bonusLightning;//其他元素加成
 
         float finalDamage = highestDamage + bonusElementalDamage + weakerElementsDamage;

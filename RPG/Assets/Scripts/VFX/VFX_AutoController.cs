@@ -1,13 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class VFX_AutoController : MonoBehaviour
 {
+    private SpriteRenderer sr;
+
     [SerializeField] private bool autoDestroy = true;
     [SerializeField] private float destroyDelay = 1;
     [SerializeField] private bool randomOffest = true;
     [SerializeField] private bool randomRotation = true;
+
+    [Header("Fade Effect")]
+    [SerializeField] private bool canFade;
+    [SerializeField] private float fadeSpeed = 1;
 
     [Header("Random rotation")]
     [SerializeField] private float minRotation = 0;
@@ -20,27 +25,48 @@ public class VFX_AutoController : MonoBehaviour
     [SerializeField] private float yMinOffest = -.3f;
     [SerializeField] private float yMaxOffest = -.3f;
 
+   
+    private void Awake()
+    {
+        sr = GetComponentInChildren<SpriteRenderer>();
+    }
+
     private void Start()
     {
+        if (canFade)
+            StartCoroutine(FadeCo());
         ApplyRandomOffest();
         ApplyRandomRotation();
         if (autoDestroy)
-            Destroy(gameObject,destroyDelay);//ÑÓ³Ù´Ý»Ù
+            Destroy(gameObject, destroyDelay);//ÑÓ³Ù´Ý»Ù
     }
-
+    //Öð½¥ÏûÊ§Ð§¹û
+    private IEnumerator FadeCo()
+    {
+        Color targetColor = Color.white;
+        while (targetColor.a > 0)
+        {
+            targetColor.a -= fadeSpeed * Time.deltaTime;
+            sr.color = targetColor;
+            yield return null;
+        }
+        sr.color = targetColor;
+    }
+    //Ëæ»úÎ»ÖÃ
     private void ApplyRandomOffest()
     {
-        if (randomOffest)
+        if (randomOffest == false)
             return;
-        float xOffest=Random.Range(xMinOffest, xMaxOffest);
-        float yOffest=Random.Range(yMinOffest, yMaxOffest);
-        transform.position=transform.position+ new Vector3(xOffest,yOffest);
+        float xOffest = Random.Range(xMinOffest, xMaxOffest);
+        float yOffest = Random.Range(yMinOffest, yMaxOffest);
+        transform.position = transform.position + new Vector3(xOffest, yOffest);
     }
+    //Ëæ»ú·½Ïò
     private void ApplyRandomRotation()
     {
-        if (randomRotation) return;
+        if (randomRotation == false) return;
 
-        float zRotation = Random.Range(minRotation,maxRotation);
-        transform.Rotate(0,0,zRotation);
+        float zRotation = Random.Range(minRotation, maxRotation);
+        transform.Rotate(0, 0, zRotation);
     }
 }

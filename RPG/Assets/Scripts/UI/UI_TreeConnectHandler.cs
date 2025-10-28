@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,12 +28,24 @@ public class UI_TreeConnectHandler : MonoBehaviour
 
     private void OnValidate()
     {
-        if(connectionDetails.Length!=connections.Length)
+        if (connectionDetails.Length != connections.Length)
         {
             Debug.Log("Amount of details should be same as amount of connections." + gameObject.name);
             return;
         }
         UpdateConnection();
+    }
+
+    //获取子技能的UI_TreeNode组件
+    public UI_TreeNode[] GetChildNodes()
+    {
+        List<UI_TreeNode> childrenToReturn = new List<UI_TreeNode>();
+        foreach (var node in connectionDetails)
+        {
+            if (node.childNode != null)
+                childrenToReturn.Add(node.childNode.GetComponent<UI_TreeNode>());
+        }
+        return childrenToReturn.ToArray();
     }
 
     private void UpdateConnection()
@@ -63,7 +74,7 @@ public class UI_TreeConnectHandler : MonoBehaviour
 
         foreach (var node in connectionDetails)
         {
-            if(node.childNode==null) continue;
+            if (node.childNode == null) continue;
             node.childNode.UpdateConnection();
         }
     }
@@ -75,6 +86,6 @@ public class UI_TreeConnectHandler : MonoBehaviour
             return;
         connectionImage.color = unlocked ? Color.white : originalColor;
     }
-    public void SetConnectionImage(Image image) =>connectionImage = image;
-    public void SetPosition(Vector2 position)=>rect.anchoredPosition = position;
+    public void SetConnectionImage(Image image) => connectionImage = image;
+    public void SetPosition(Vector2 position) => rect.anchoredPosition = position;
 }

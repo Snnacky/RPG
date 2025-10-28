@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e3df5f07b0dda4f976d73852b41b7c, type: 3}
+  m_Name: Skill data - Vital Anchor
+  m_EditorClassIdentifier: 
+  cost: 3
+  unlockedByDefualt: 0
+  skillType: 2
+  upgradeData:
+    upgradeType: 10
+    cooldown: 4
+  displayName: Vital Anchor
+  description: When you swap payerces with the Time Shard,your health reverts to
+    the amount you had when the Time Shrd was created.
+  icon: {fileID: -541909463, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}

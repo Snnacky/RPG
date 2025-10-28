@@ -6,7 +6,7 @@ public abstract class PlayerState:EntityState//定义为抽象类,确保无法直接使用
 {
     protected Player player;
     protected PlayerInputSet input;
-    
+    protected Player_SkillManager skillManager;
 
     public PlayerState(Player player, StateMachine stateMachine, string animBoolName) : base(stateMachine, animBoolName)
     {
@@ -15,6 +15,7 @@ public abstract class PlayerState:EntityState//定义为抽象类,确保无法直接使用
         rb = player.rb;
         input = player.input;
         stats = player.stats;
+        skillManager = player.skillManager;
     }
 
     public override void Update()
@@ -23,6 +24,7 @@ public abstract class PlayerState:EntityState//定义为抽象类,确保无法直接使用
        
         if (input.Player.Dash.WasPressedThisFrame() && CanDash())
         {
+            skillManager.dash.SetSkillOnCoolDown();
             player.dashCoolDownTimer = player.dashCoolDown;
             stateMachine.ChangeState(player.dashState);
         }
@@ -35,6 +37,9 @@ public abstract class PlayerState:EntityState//定义为抽象类,确保无法直接使用
     }
     private bool CanDash()
     {
+        if(skillManager.dash.CanUseSkill()==false)
+            return false;
+
         if(player.wallDetected)
         {
             return false;
@@ -44,8 +49,8 @@ public abstract class PlayerState:EntityState//定义为抽象类,确保无法直接使用
         {
             return false;
         }
-        if(player.dashCoolDownTimer>0)
-            return false;
+        //if(player.dashCoolDownTimer>0)
+         //   return false;
         return true;
     }
 

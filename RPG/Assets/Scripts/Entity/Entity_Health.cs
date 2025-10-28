@@ -93,6 +93,15 @@ public class Entity_Health : MonoBehaviour , IDamgable
         entity.EntityDeath();
     }
 
+    //获取当前生命的百分比
+    public float GetHealthPercent() => currentHp / entityStats.GetMaxHealth();
+    //更新当前血量根据百分比
+    public void SetHealthToPercent(float percent)
+    {
+        currentHp = entityStats.GetMaxHealth() * Mathf.Clamp01(percent);
+        updateHealthBar();
+    }
+
     //计算击退的效果大小
     private Vector2 CalucateKnockback(float damage, Transform damageDealer)
     {

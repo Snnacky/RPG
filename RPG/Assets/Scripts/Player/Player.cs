@@ -10,8 +10,9 @@ public class Player : Entity
     private UI ui;
     public PlayerInputSet input { get; private set; }//输入
     public Vector2 moveInput { get; private set; }
-
-
+    public Player_SkillManager skillManager { get; private set; }
+    public Player_VFX vfx { get; private set; }
+    #region Stat Variables
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
@@ -37,6 +38,7 @@ public class Player : Entity
     private const string JUMP_ATTACK_ANIM_BOOL_NAME = "jumpAttack";
     private const string DEAD_ATTACK_ANIM_BOOL_NAME = "dead";
     private const string COUNTER_ATTACK_ANIM_BOOL_NAME = "counterAttack";
+    #endregion
     public bool jumpPressed;
 
     [Header("Attack Detail")]
@@ -68,6 +70,8 @@ public class Player : Entity
         base.Awake();
         ui=FindAnyObjectByType<UI>();
         input = new PlayerInputSet();
+        skillManager = GetComponent<Player_SkillManager>();
+        vfx = GetComponent<Player_VFX>();
 
         idleState = new Player_IdleState(this, stateMachine, IDLE_ANIM_BOOL_NAME);//定义状态
         moveState = new Player_MoveState(this, stateMachine, MOVE_ANIM_BOOL_NAME);
@@ -148,7 +152,8 @@ public class Player : Entity
         input.Player.Jump.started += ctx => jumpPressed = true;
         input.Player.Jump.canceled += ctx => jumpPressed = false;
 
-        input.Player.ToggleSkillTreeUI.performed += ctx => ui.ToggleSkillTreeUI();
+        input.Player.ToggleSkillTreeUI.performed += ctx => ui.ToggleSkillTreeUI();//开关技能ui
+        input.Player.Spell.performed += ctx => skillManager.shard.TryUseSkill();//爆炸碎片攻击
     }
 
     private void OnDisable()
@@ -172,4 +177,6 @@ public class Player : Entity
     {
         dashCoolDownTimer -= Time.deltaTime;
     }
+
+    public void TeleportPlayer(Vector3 position)=>transform.position = position;//变换位置
 }

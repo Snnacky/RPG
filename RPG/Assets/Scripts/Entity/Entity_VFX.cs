@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Entity_VFX : MonoBehaviour
 {
-    private SpriteRenderer sr;
+    protected SpriteRenderer sr;
     private Entity entity;
     [Header("视觉效果")]
     [SerializeField] private Material onDamageMaterial;
@@ -13,22 +13,20 @@ public class Entity_VFX : MonoBehaviour
     private Coroutine onDamageVfxCoroutine;
     private Color originalSrColor;
     [Header("攻击效果")]
-    [SerializeField] private Color hitvfxColor = Color.red;
+    [SerializeField] private Color hitvfxColor = Color.red;//物理攻击颜色
     [SerializeField] private GameObject hitvfx;
     [SerializeField] private GameObject critHitvfx;
 
     [Header("元素效果")]
     [SerializeField] private Color chillvfx = Color.cyan;//冰冻颜色青色
     [SerializeField] private Color burnvfx = Color.red;//灼烧颜色
-    [SerializeField] private Color electrifyvfx = Color.yellow;//电击颜色
-    private Color originalHitVfxColor;//初始攻击颜色
+    [SerializeField] private Color shockvfx = Color.yellow;//电击颜色
 
     private void Awake()
     {
         entity = GetComponent<Entity>();
         sr=GetComponentInChildren<SpriteRenderer>();
         originalMaterial=sr.material;
-        originalHitVfxColor=hitvfxColor;
         originalSrColor = sr.color;
     }
 
@@ -39,7 +37,7 @@ public class Entity_VFX : MonoBehaviour
         if(elementType==ElementType.Fire)
            StartCoroutine(PlayStatusVfxCo(duration, burnvfx));
         if (elementType == ElementType.Lightning)
-           StartCoroutine(PlayStatusVfxCo(duration, electrifyvfx));
+           StartCoroutine(PlayStatusVfxCo(duration, shockvfx));
 
     }
 
@@ -50,6 +48,7 @@ public class Entity_VFX : MonoBehaviour
         sr.material = originalMaterial;
     }
 
+    //更改角色被攻击后的身体颜色
     private IEnumerator PlayStatusVfxCo(float duration,Color effectColor)
     {
         float tickInterval = .25f;//间隔
@@ -67,22 +66,31 @@ public class Entity_VFX : MonoBehaviour
         sr.color = originalSrColor;
     }
 
-    public void CreatOnHitVfx(Transform target,bool isCrit)
+    //攻击预制体的颜色
+    public void CreatOnHitVfx(Transform target,bool isCrit,ElementType element)
     {
         GameObject prefab = isCrit ? critHitvfx : hitvfx;
         GameObject vfx = Instantiate(prefab, target.position, Quaternion.identity);//生成预制体
+        //vfx.GetComponentInChildren<SpriteRenderer>().color = GetElementColor(element);
         
-        vfx.GetComponentInChildren<SpriteRenderer>().color = hitvfxColor;
         if (entity.facingDir == -1 && isCrit)
             vfx.transform.Rotate(0, 180, 0);
     }
 
-    public void UpdateOnHitColor(ElementType elementType)
+    public Color GetElementColor(ElementType elementType)
     {
-        if (elementType == ElementType.Ice)
-            hitvfxColor = chillvfx;
-        if (elementType == ElementType.None)
-            hitvfxColor = originalHitVfxColor;
+        switch (elementType)
+        {
+            case ElementType.Ice:
+                return chillvfx;
+            case ElementType.Fire:
+                return burnvfx;
+            case ElementType.Lightning:
+                return shockvfx;
+            default:
+                return hitvfxColor;
+        }
+
     }
 
     //更换被攻击后的视觉效果
