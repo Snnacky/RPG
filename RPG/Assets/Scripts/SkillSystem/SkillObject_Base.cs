@@ -4,18 +4,31 @@ using UnityEngine;
 
 public class SkillObject_Base : MonoBehaviour
 {
+    public Transform originalPlayer;//释放该技能的玩家
+    [SerializeField] private GameObject onHitVfx;
+    [Space]
     [SerializeField] protected LayerMask whatIsEnemy;
     [SerializeField] protected Transform targetCheck;
-    [SerializeField] protected float checkRadius = 1;
+    [SerializeField] protected float attackCheckRadius = 1;
+    [SerializeField] protected float enemyCheckRadius = 10;
 
-    protected Entity_Stats playerStats;
+    protected Rigidbody2D rb;
+    protected Animator anim;
+    protected Entity_Stats playerStats;//player身上的
     protected DamageScaleData damageScaleData;
     protected ElementType usedElement;//应用在SkillObject_Shard的explode
+    protected bool targetGotHit;
+    protected Transform lastTarget;
+    protected virtual void Awake()
+    {
+        anim=GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     //伤害判定
-    protected void DamageEnemiesIndius(Transform t,float radius)
+    protected void DamageEnemiesIndius(Transform t,float enemyCheckRadius)
     {
-        foreach (var target in EnemiersAround(t,radius))
+        foreach (var target in GetEnemiersAround(t,enemyCheckRadius))
         {
             IDamgable damgable = target.GetComponent<IDamgable>();
             if (damgable == null) continue;
@@ -31,7 +44,13 @@ public class SkillObject_Base : MonoBehaviour
 
             usedElement = element;
        
-            damgable.TakeDamage(physicalDamage, elemDamage, element, transform);
+            targetGotHit = damgable.TakeDamage(physicalDamage, elemDamage, element, originalPlayer.transform);
+            //造成伤害
+            if (targetGotHit)
+            {
+                lastTarget = target.transform;
+                Instantiate(onHitVfx, target.transform.position, Quaternion.identity);
+            }
 
             if(element!=ElementType.None)//应用元素效果
                 target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(element, attackData.effectData);
@@ -43,7 +62,7 @@ public class SkillObject_Base : MonoBehaviour
     {
         Transform target = null;
         float closestDistance=Mathf.Infinity;
-        foreach (var enemy in EnemiersAround(transform,10))
+        foreach (var enemy in GetEnemiersAround(transform,enemyCheckRadius))//检测范围内的所有敌人
         {
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
             if (distance<closestDistance)
@@ -56,7 +75,7 @@ public class SkillObject_Base : MonoBehaviour
     }
 
     //范围检测
-    protected Collider2D[] EnemiersAround(Transform t,float radius)
+    protected Collider2D[] GetEnemiersAround(Transform t,float radius)
     {
         return Physics2D.OverlapCircleAll(t.position, radius, whatIsEnemy);
     }
@@ -65,6 +84,8 @@ public class SkillObject_Base : MonoBehaviour
     {
         if(targetCheck==null)
             targetCheck = transform;
-        Gizmos.DrawWireSphere(targetCheck.position, checkRadius);
+        Gizmos.DrawWireSphere(targetCheck.position, attackCheckRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(targetCheck.position, enemyCheckRadius);
     }
 }

@@ -12,9 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e3df5f07b0dda4f976d73852b41b7c, type: 3}
   m_Name: Skill data - Timeless Arrack
   m_EditorClassIdentifier: 
-  cost: 2
   displayName: Timeless Attack
   description: 'The Time echoo can perform 1 attack.
 
 '
   icon: {fileID: 124101098, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  cost: 2
+  unlockedByDefualt: 0
+  skillType: 1
+  upgradeData:
+    upgradeType: 16
+    cooldown: 0
+    damageScale:
+      physical: 1
+      elemental: 1
+      chillDuration: 3
+      chillSlowMultiplier: 0.2
+      burnDuration: 3
+      burnDamageScale: 1
+      shockDuration: 3
+      shockDamageScale: 1
+      shockCharge: 0.4

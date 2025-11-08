@@ -10,6 +10,7 @@ public class Enemy_DeadState : EnemyState
         col=enemy.GetComponent<Collider2D>();
     }
 
+    //死亡的视觉效果
     public override void Enter()
     {
         base.Enter();

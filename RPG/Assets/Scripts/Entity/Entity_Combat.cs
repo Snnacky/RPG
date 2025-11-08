@@ -42,7 +42,6 @@ public class Entity_Combat : MonoBehaviour
             //如果元素不是空,附加元素效果
             if(elementType!=ElementType.None)
                 statusHandler?.ApplyStatusEffect(elementType, attackData.effectData);
-            Debug.Log(elementType);
             if (targetGetHit)//敌方受到攻击
                 vfx.CreatOnHitVfx(target.transform,attackData.isCrit,elementType);//打在敌人身上的效果
 

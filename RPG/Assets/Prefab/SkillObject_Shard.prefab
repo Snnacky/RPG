@@ -46,11 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95debc19a623a5449a669e37774d6937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalPlayer: {fileID: 0}
+  onHitVfx: {fileID: 5989842939695768604, guid: 15c2ccabbd0d8d744b1634578af8d2b5, type: 3}
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
   targetCheck: {fileID: 9135242240117557747}
-  checkRadius: 1.67
+  attackCheckRadius: 1.6
+  enemyCheckRadius: 10
   vfxPrefab: {fileID: 6410177571796571512, guid: ab0e85c66c8055c449bec6e1afe078d4, type: 3}
 --- !u!58 &5984703858409069350
 CircleCollider2D:

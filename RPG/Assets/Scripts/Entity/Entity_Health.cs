@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Entity_Health : MonoBehaviour , IDamgable
+public class Entity_Health : MonoBehaviour, IDamgable
 {
-    [SerializeField] protected float currentHp;
-    [SerializeField] protected bool isDead;
+    public float currentHp;
+    public bool isDead;
     private Entity_VFX entity_VFX;
     private Entity entity;
     private Slider healthBar;
     private Entity_Stats entityStats;
+
+    public float lastDamageTaken { get; private set; }
+
     [Header("血量再生")]
     [SerializeField] private float regenInterval = 1;
     [SerializeField] private bool canRegenerateHealth = true;
@@ -29,11 +30,19 @@ public class Entity_Health : MonoBehaviour , IDamgable
         entity_VFX = GetComponent<Entity_VFX>();
         healthBar = GetComponentInChildren<Slider>();
         entityStats = GetComponent<Entity_Stats>();
+        SetupHealth();
+
+    }
+
+    private void SetupHealth()
+    {
+        if (entityStats == null) return;
         currentHp = entityStats.GetMaxHealth();
         updateHealthBar();
         InvokeRepeating(nameof(RegenerateHealth), 0, regenInterval);
     }
-    public virtual bool TakeDamage(float damage , float elementalDamage,ElementType elementType, Transform damageDealer)//攻击他的人
+
+    public virtual bool TakeDamage(float damage, float elementalDamage, ElementType elementType, Transform damageDealer)//攻击他的人
     {
         if (isDead) return false;
         if (AttackEvaded())
@@ -44,17 +53,18 @@ public class Entity_Health : MonoBehaviour , IDamgable
         Entity_Stats attackerStats = damageDealer.GetComponent<Entity_Stats>();
         float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;//护甲减免
 
-        float mitigation = entityStats.GetArmorMitigation(armorReduction);//计算护甲减免转换成伤害减免(百分比)
+        float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0;//计算护甲减免转换成伤害减免(百分比)
         float physicalDamageTaken = damage * (1 - mitigation);//伤害减免后的最终物理伤害
 
-        float resistance = entityStats.GetElementalResistance(elementType);//元素抗性
+        float resistance = entityStats != null ? entityStats.GetElementalResistance(elementType) : 0;//元素抗性
         float elementalDamageTaken = elementalDamage * (1 - resistance);//伤害减免后的最终元素伤害
 
         ReduceHp(physicalDamageTaken + elementalDamageTaken);//扣血
         TakeKnockback(damageDealer, physicalDamageTaken);//击退效果
+        lastDamageTaken = physicalDamageTaken + elementalDamageTaken;
         return true;
     }
-    
+
     private void RegenerateHealth()
     {
         if (canRegenerateHealth == false)
@@ -65,32 +75,38 @@ public class Entity_Health : MonoBehaviour , IDamgable
 
     public void IncreaseHealth(float healthAmount)
     {
-        if(isDead) return;
+        if (isDead) return;
 
         float newHp = currentHp + healthAmount;
-        float maxHp=entityStats.GetMaxHealth();
+        float maxHp = entityStats.GetMaxHealth();
 
-        currentHp=Mathf.Min(newHp, maxHp);
+        currentHp = Mathf.Min(newHp, maxHp);
         updateHealthBar();
     }
 
     //是否闪避掉
-    private bool AttackEvaded()=> Random.Range(0, 100) < entityStats.GetEvasion();
-    
+    private bool AttackEvaded()
+    {
+        if(entityStats==null) return false;
+        else return Random.Range(0, 100) < entityStats.GetEvasion();
+    }
+  
+
 
     public void ReduceHp(float damage)
     {
         entity_VFX?.PlayOnDamageVfx();//更换角色颜色
-        currentHp-=damage;
+        currentHp -= damage;
         updateHealthBar();
         if (currentHp <= 0)
             Die();
     }
 
-    private void Die()
+    public virtual void Die()
     {
         isDead = true;
         entity.EntityDeath();
+        Invoke(nameof(DestroyGameObject), 2f);
     }
 
     //获取当前生命的百分比
@@ -124,11 +140,20 @@ public class Entity_Health : MonoBehaviour , IDamgable
         return IsHeavyDamage(damge) ? heavyKnockbackDuration : knockbackDuration;
     }
     //判断是否是重损害
-    private bool IsHeavyDamage(float damge) => damge / entityStats.GetMaxHealth() > heavyDamageThreshold;
+    private bool IsHeavyDamage(float damge)
+    {
+        if(entityStats==null)  return false;
+        else return damge / entityStats.GetMaxHealth() > heavyDamageThreshold;
+    }
 
     private void updateHealthBar()
     {
         if (healthBar == null) return;
         healthBar.value = currentHp / entityStats.GetMaxHealth();
+    }
+
+    public void DestroyGameObject()
+    {
+        Destroy(gameObject);
     }
 }

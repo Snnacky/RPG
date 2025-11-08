@@ -48,13 +48,14 @@ public class Skill_Shard : Skill_Base
         if(Unlocked(SkillUpgradeType.Shard_TeleportHpRewind))
             HandleShardHealthRewind();
     }
-
+    //晶体移动
     private void HandleShardMoving()
     {
         HandleShardRegular();
         currentShard.MoveTowardsClosestTarget(shardSpeed);
     }
 
+    //多个晶体
     private void HandleShardMulticast()
     {
         if (currentCharges <= 0) return;
@@ -128,7 +129,7 @@ public class Skill_Shard : Skill_Base
         if (Unlocked(SkillUpgradeType.Shard_Teleport) || Unlocked(SkillUpgradeType.Shard_TeleportHpRewind))
             currentShard.OnExplode += ForceCooldown;
     }
-
+    //创建冲刺碎片
     public void CreateRawShard()
     {
         GameObject shard= Instantiate(shardPerfab,transform.position,Quaternion.identity);

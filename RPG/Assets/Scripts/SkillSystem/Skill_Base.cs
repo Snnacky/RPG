@@ -19,6 +19,7 @@ public class Skill_Base : MonoBehaviour
         player=GetComponentInParent<Player>();
         skillManager = GetComponentInParent<Player_SkillManager>();
         lastTimeUsed -= cooldown;//确保在出生的时候就可以使用技能
+        damageScaleData = new DamageScaleData();
     }
 
     public virtual void  TryUseSkill()
@@ -34,7 +35,7 @@ public class Skill_Base : MonoBehaviour
         damageScaleData = upgrade.damageScale;
     }
 
-    public bool CanUseSkill()
+    public virtual bool CanUseSkill()
     {
         if(upgradeType==SkillUpgradeType.None)
             return false;
@@ -49,7 +50,7 @@ public class Skill_Base : MonoBehaviour
     protected bool Unlocked(SkillUpgradeType upgraderToCheck) => upgradeType == upgraderToCheck;
     public bool OnCoolDown() => Time.time < lastTimeUsed + cooldown;//冷却
     public void SetSkillOnCoolDown() => lastTimeUsed = Time.time;//强制进入冷却
-    public void ResetCooldownBy(float cooldownReduction) => lastTimeUsed += cooldownReduction;
+    public void ReduceCooldownBy(float cooldownReduction) => lastTimeUsed += cooldownReduction;
     public void ResetCoolDown()=>lastTimeUsed=Time.time;
 
 }

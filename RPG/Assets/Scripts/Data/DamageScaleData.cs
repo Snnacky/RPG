@@ -7,8 +7,8 @@ using UnityEngine;
 public class DamageScaleData 
 {
     [Header("Damage Scale Factor")]
-    public float physical = 1;
-    public float elemental = 1;
+    public float physicalScale = 1;
+    public float elementalScale = 1;
 
     [Header("Chill")]
     public float chillDuration = 3;

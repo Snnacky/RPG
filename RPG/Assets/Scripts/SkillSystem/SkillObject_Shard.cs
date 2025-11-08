@@ -26,15 +26,16 @@ public class SkillObject_Shard :SkillObject_Base
     }
 
 
-    //设置定时爆炸
+    //初始化
     public void  SetupShard(Skill_Shard shard)
     {
         this.shard = shard;
         playerStats = shard.player.stats;
         damageScaleData = shard.damageScaleData;
+        originalPlayer = shard.player.transform;
         float detonationTime=shard.GetDetonationTime();
 
-        Invoke(nameof(Explode),detonationTime);
+        Invoke(nameof(Explode),detonationTime); //设置定时爆炸
     }
 
     public void SetupShard(Skill_Shard shard,float detonationTime,bool canMove,float shardSpeed)
@@ -42,7 +43,7 @@ public class SkillObject_Shard :SkillObject_Base
         this.shard = shard;
         playerStats = shard.player.stats;
         damageScaleData = shard.damageScaleData;
-
+        originalPlayer = shard.player.transform;
         Invoke(nameof(Explode), detonationTime);
 
         if (canMove)
@@ -52,7 +53,7 @@ public class SkillObject_Shard :SkillObject_Base
     //爆炸
     public void Explode()
     {
-        DamageEnemiesIndius(transform, checkRadius);//造成伤害
+        DamageEnemiesIndius(transform, attackCheckRadius);//造成伤害
         GameObject vfx= Instantiate(vfxPrefab, transform.position, Quaternion.identity);//实例化预制体
         vfx.GetComponentInChildren<SpriteRenderer>().color = shard.player.vfx.GetElementColor(usedElement);
         OnExplode?.Invoke();

@@ -3,6 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class  SlowEffect
+{
+    public float duration;
+    public float slowDownPercent;
+
+    public SlowEffect(float duration, float slowDownPercent)
+    {
+        this.duration = duration;
+        this.slowDownPercent = slowDownPercent;
+    }
+}
+
 public class Entity : MonoBehaviour
 {
     public event Action OnFlipped;
@@ -22,8 +34,10 @@ public class Entity : MonoBehaviour
     private bool isKnocked;
     private Coroutine slowDownCo;
 
+    protected List<SlowEffect> slowList=new List<SlowEffect>();
+
     [Header("Colliction Detection")]
-    [SerializeField] protected LayerMask whatIsGround;
+    public LayerMask whatIsGround;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float wallChckDistance;
     [SerializeField] private Transform groundCheck;
@@ -74,20 +88,48 @@ public class Entity : MonoBehaviour
     {
 
     }
-    //冰冻效果减速
-    public virtual void SlowDownEntity(float duration,float slowMultiplier)
+
+
+    //减速效果
+    public virtual void SlowDownEntity(float duration,float slowMultiplier,bool canOverrideSlowEffect=false)
     {
+        /*
         if (slowDownCo != null)
         {
-            StopCoroutine(slowDownCo);
-        }
+            if (canOverrideSlowEffect)
+                StopCoroutine(slowDownCo);
+            else return;
+        }*/
         slowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier));
+        
     }
     
 
     public virtual IEnumerator SlowDownEntityCo(float duration,float slowMultiplier)
     {
         yield return null;
+    }
+
+
+    public virtual void StopSlowDown()
+    {
+        slowDownCo = null;
+    }
+
+    public virtual void ChangeSpeed()
+    {
+
+    }
+    //计算减速值
+    public virtual float CalculateActiveSlowMultiplier()
+    {
+        float slowMultiplier = 1;
+        foreach (var effect in slowList)
+        {
+            if (1 - effect.slowDownPercent < slowMultiplier)
+                slowMultiplier = effect.slowDownPercent;
+        }
+        return slowMultiplier;
     }
 
     //设置速度

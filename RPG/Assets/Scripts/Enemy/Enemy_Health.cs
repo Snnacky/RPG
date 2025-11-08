@@ -14,7 +14,16 @@ public class Enemy_Health : Entity_Health
 
         //玩家偷袭的时候,敌人进行锁定
         if (damageDealer.CompareTag("Player"))
-            enemy.TryEnterBattleState(damageDealer);
+        {
+            //如果是玩家技能复制的假人攻击的敌人,则获取释放技能的玩家
+            if(damageDealer.GetComponent<SkillObject_TimeEcho>()!=null)
+            {
+                enemy.TryEnterBattleState(damageDealer.GetComponent<SkillObject_TimeEcho>().originalPlayer);
+            }else
+            {
+                enemy.TryEnterBattleState(damageDealer);
+            }
+        }
         return true;
     }
 }

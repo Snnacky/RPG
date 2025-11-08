@@ -24,13 +24,20 @@ public class Entity_StatusHandler : MonoBehaviour
         entityStats= GetComponent<Entity_Stats>();
         entityHealth = GetComponent<Entity_Health>();
     }
-
+    //清空负面效果
+    public void RemoveAllNegativeEffects()
+    {
+        StopAllCoroutines();
+        currentEffect = ElementType.None;
+        entityVfx.StopAllvfx();
+    }
 
     //应用元素攻击效果
     public void ApplyStatusEffect(ElementType element,ElementalEffectData effectData)
     {
         if (element == ElementType.Ice && CanBeApplied(ElementType.Ice))
             ApplyChilledEffect(effectData.chillDuration, effectData.chillSlowMulltiplier);
+        
         if (element == ElementType.Fire && CanBeApplied(ElementType.Fire))
             ApplyBurnEffect(effectData.burnDuration, effectData.totalBurnDamage);
         if (element == ElementType.Lightning && CanBeApplied(ElementType.Lightning))
@@ -77,7 +84,7 @@ public class Entity_StatusHandler : MonoBehaviour
         StopShockEffect();
     }
 
-    public void ApplyBurnEffect(float duration,float fireDamage)
+    private void ApplyBurnEffect(float duration,float fireDamage)
     {
         float fireResistance = entityStats.GetElementalResistance(ElementType.Fire);
         float finalDamage = fireDamage * (1 - fireResistance);
@@ -102,7 +109,7 @@ public class Entity_StatusHandler : MonoBehaviour
         currentEffect = ElementType.None;
     }
 
-    public void ApplyChilledEffect(float duration,float slowMultiplier)
+    private void ApplyChilledEffect(float duration,float slowMultiplier)
     {
         float iceResistance = entityStats.GetElementalResistance(ElementType.Ice);//冰抗
         float reduceDuration = duration * (1 - iceResistance);
@@ -119,10 +126,14 @@ public class Entity_StatusHandler : MonoBehaviour
         currentEffect = ElementType.None;
     }
 
+    
     public bool CanBeApplied(ElementType elementType)
     {
         if(elementType==ElementType.Lightning&&currentEffect==ElementType.Lightning)
             return true;
+        if (elementType == ElementType.Ice && currentEffect == ElementType.Ice)
+            return true;
+        //得是当前没有其他元素覆盖,才可应用
         return currentEffect == ElementType.None;
     }
 }
