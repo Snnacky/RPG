@@ -11,18 +11,22 @@ public class Entity_StatusHandler : MonoBehaviour
     private Entity_Health entityHealth;
     private ElementType currentEffect = ElementType.None;
 
+    private string slowSourceName = "chilledEffect";
+
     [Header("Shock effect details")]
     [SerializeField] private GameObject lightningStrikeVfx;
     [SerializeField] private float currentCharge;
     [SerializeField] private float maximumCharge = 1;
     private Coroutine ShockCo;
 
+    private DamageCalculator damageCalculator;
     private void Awake()
     {
         entity = GetComponent<Entity>();
         entityVfx = GetComponent<Entity_VFX>();
         entityStats= GetComponent<Entity_Stats>();
         entityHealth = GetComponent<Entity_Health>();
+        damageCalculator=new DamageCalculator();
     }
     //清空负面效果
     public void RemoveAllNegativeEffects()
@@ -47,7 +51,8 @@ public class Entity_StatusHandler : MonoBehaviour
     //雷击效果
     public void ApplyShockEffect(float duration,float damage,float charge)
     {
-        float lightningResistance = entityStats.GetElementalResistance(ElementType.Lightning);//元素抗性
+        //元素抗性导致累计的电击值降低
+        float lightningResistance =damageCalculator.GetElementalResistance(entityStats,ElementType.Lightning);
         float finalCharge = charge * (1 - lightningResistance);
 
         currentCharge += finalCharge;
@@ -86,7 +91,8 @@ public class Entity_StatusHandler : MonoBehaviour
 
     private void ApplyBurnEffect(float duration,float fireDamage)
     {
-        float fireResistance = entityStats.GetElementalResistance(ElementType.Fire);
+        //元素抗性导致累计的电击值降低
+        float fireResistance = damageCalculator.GetElementalResistance(entityStats, ElementType.Fire);
         float finalDamage = fireDamage * (1 - fireResistance);
         StartCoroutine(BurnEffectCo(duration, finalDamage));
     }
@@ -111,7 +117,7 @@ public class Entity_StatusHandler : MonoBehaviour
 
     private void ApplyChilledEffect(float duration,float slowMultiplier)
     {
-        float iceResistance = entityStats.GetElementalResistance(ElementType.Ice);//冰抗
+        float iceResistance = damageCalculator.GetElementalResistance(entityStats, ElementType.Ice);//冰抗
         float reduceDuration = duration * (1 - iceResistance);
 
         StartCoroutine(ChilledEffectCo(reduceDuration,slowMultiplier));
@@ -120,7 +126,7 @@ public class Entity_StatusHandler : MonoBehaviour
     private IEnumerator ChilledEffectCo(float Duration,float slowMultiplier)
     {
         currentEffect = ElementType.Ice;
-        entity.SlowDownEntity(Duration, slowMultiplier);//动画减速
+        entity.SlowDownEntity(Duration, slowMultiplier,slowSourceName);//动画减速
         entityVfx.PlayOnStatusVfx(Duration, ElementType.Ice);//冰冻颜色效果
         yield return new WaitForSeconds(Duration);
         currentEffect = ElementType.None;

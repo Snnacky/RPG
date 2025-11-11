@@ -33,7 +33,7 @@ public class SkillObject_TimeEcho : SkillObject_Base
     {
         this.echoManager = echoManager;
         playerStats = echoManager.player.stats;
-        damageScaleData = echoManager.damageScaleData;
+        damageData = echoManager.damageData;
         originalPlayer = echoManager.player.transform;
         playerHealth= echoManager.player.health;
         skillManager = echoManager.skillManager;

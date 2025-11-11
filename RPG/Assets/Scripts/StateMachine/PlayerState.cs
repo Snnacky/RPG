@@ -56,12 +56,10 @@ public abstract class PlayerState:EntityState//定义为抽象类,确保无法直接使用
             return false;
         }
 
-        if(stateMachine.currentState == player.dashState)
+        if(stateMachine.currentState == player.dashState || stateMachine.currentState == player.domainExpansionState)
         {
             return false;
         }
-        //if(player.dashCoolDownTimer>0)
-         //   return false;
         return true;
     }
 

@@ -5,10 +5,12 @@ public class Entity_Health : MonoBehaviour, IDamgable
 {
     public float currentHp;
     public bool isDead;
+    public bool canTakeDamage = true;
     private Entity_VFX entity_VFX;
     private Entity entity;
     private Slider healthBar;
     private Entity_Stats entityStats;
+    private DamageCalculator damageCalculator;
 
     public float lastDamageTaken { get; private set; }
 
@@ -30,6 +32,7 @@ public class Entity_Health : MonoBehaviour, IDamgable
         entity_VFX = GetComponent<Entity_VFX>();
         healthBar = GetComponentInChildren<Slider>();
         entityStats = GetComponent<Entity_Stats>();
+        damageCalculator=new DamageCalculator();
         SetupHealth();
 
     }
@@ -42,28 +45,21 @@ public class Entity_Health : MonoBehaviour, IDamgable
         InvokeRepeating(nameof(RegenerateHealth), 0, regenInterval);
     }
 
-    public virtual bool TakeDamage(float damage, float elementalDamage, ElementType elementType, Transform damageDealer)//攻击他的人
+    public virtual bool TakeDamage(float physicalDamage, float elementalDamage, ElementType elementType, Transform damageDealer)//攻击他的人
     {
-        if (isDead) return false;
+        if (isDead || canTakeDamage == false) return false;
         if (AttackEvaded())
         {
             return false;
         }
 
-        Entity_Stats attackerStats = damageDealer.GetComponent<Entity_Stats>();
-        float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;//护甲减免
-
-        float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0;//计算护甲减免转换成伤害减免(百分比)
-        float physicalDamageTaken = damage * (1 - mitigation);//伤害减免后的最终物理伤害
-
-        float resistance = entityStats != null ? entityStats.GetElementalResistance(elementType) : 0;//元素抗性
-        float elementalDamageTaken = elementalDamage * (1 - resistance);//伤害减免后的最终元素伤害
-
-        ReduceHp(physicalDamageTaken + elementalDamageTaken);//扣血
-        TakeKnockback(damageDealer, physicalDamageTaken);//击退效果
-        lastDamageTaken = physicalDamageTaken + elementalDamageTaken;
+        lastDamageTaken = physicalDamage + elementalDamage;
+        ReduceHp(physicalDamage + elementalDamage);//扣血
+        TakeKnockback(damageDealer, physicalDamage+elementalDamage);
         return true;
     }
+
+    public void SetCanTakeDamage(bool canTakeDamage)=>this.canTakeDamage = canTakeDamage;
 
     private void RegenerateHealth()
     {
@@ -87,12 +83,9 @@ public class Entity_Health : MonoBehaviour, IDamgable
     //是否闪避掉
     private bool AttackEvaded()
     {
-        if(entityStats==null) return false;
-        else return Random.Range(0, 100) < entityStats.GetEvasion();
+        return Random.Range(0, 100) < damageCalculator.GetEvasion(entityStats);
     }
   
-
-
     public void ReduceHp(float damage)
     {
         entity_VFX?.PlayOnDamageVfx();//更换角色颜色

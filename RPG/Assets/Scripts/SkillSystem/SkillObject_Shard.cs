@@ -19,9 +19,9 @@ public class SkillObject_Shard :SkillObject_Base
         transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
     }
     //朝着距离最近的目标移动
-    public void MoveTowardsClosestTarget(float speed)
+    public void MoveTowardsClosestTarget(float speed ,Transform newTarget = null)
     {
-        target = FindClosestTarget();
+        target = newTarget == null ? FindClosestTarget() : newTarget;
         this.speed = speed;
     }
 
@@ -31,23 +31,23 @@ public class SkillObject_Shard :SkillObject_Base
     {
         this.shard = shard;
         playerStats = shard.player.stats;
-        damageScaleData = shard.damageScaleData;
+        damageData = shard.damageData;
         originalPlayer = shard.player.transform;
         float detonationTime=shard.GetDetonationTime();
 
         Invoke(nameof(Explode),detonationTime); //设置定时爆炸
     }
 
-    public void SetupShard(Skill_Shard shard,float detonationTime,bool canMove,float shardSpeed)
+    public void SetupShard(Skill_Shard shard,float detonationTime,bool canMove,float shardSpeed,Transform target=null)
     {
         this.shard = shard;
         playerStats = shard.player.stats;
-        damageScaleData = shard.damageScaleData;
+        damageData = shard.damageData;
         originalPlayer = shard.player.transform;
         Invoke(nameof(Explode), detonationTime);
 
         if (canMove)
-            MoveTowardsClosestTarget(shardSpeed);
+            MoveTowardsClosestTarget(shardSpeed, target);
     }
 
     //爆炸

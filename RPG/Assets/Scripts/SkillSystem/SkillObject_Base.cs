@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SkillObject_Base : MonoBehaviour
 {
+   
+    [Space]
     public Transform originalPlayer;//释放该技能的玩家
     [SerializeField] private GameObject onHitVfx;
     [Space]
@@ -11,14 +13,15 @@ public class SkillObject_Base : MonoBehaviour
     [SerializeField] protected Transform targetCheck;
     [SerializeField] protected float attackCheckRadius = 1;
     [SerializeField] protected float enemyCheckRadius = 10;
+    protected DamageData damageData;
 
     protected Rigidbody2D rb;
     protected Animator anim;
     protected Entity_Stats playerStats;//player身上的
-    protected DamageScaleData damageScaleData;
     protected ElementType usedElement;//应用在SkillObject_Shard的explode
     protected bool targetGotHit;
     protected Transform lastTarget;
+    
     protected virtual void Awake()
     {
         anim=GetComponentInChildren<Animator>();
@@ -28,32 +31,33 @@ public class SkillObject_Base : MonoBehaviour
     //伤害判定
     protected void DamageEnemiesIndius(Transform t,float enemyCheckRadius)
     {
-        foreach (var target in GetEnemiersAround(t,enemyCheckRadius))
+        foreach (var enemy in GetEnemiersAround(t,enemyCheckRadius))
         {
-            IDamgable damgable = target.GetComponent<IDamgable>();
+            IDamgable damgable = enemy.GetComponent<IDamgable>();
             if (damgable == null) continue;
-
-            AttackData attackData = playerStats.GetAttackData(damageScaleData);
+            Entity_Stats defender_Stats=enemy.GetComponent<Entity_Stats>();
+            if(defender_Stats==null) continue;
+            AttackData attackData = playerStats.GetAttackData(damageData,defender_Stats);
 
             //物理伤害
             float physicalDamage = attackData.physicalDamage;
             //元素伤害
             float elemDamage = attackData.elementalDamage;
 
-            ElementType element = attackData.element;
+            ElementType elementType = attackData.elementType;
 
-            usedElement = element;
+            usedElement = elementType;
        
-            targetGotHit = damgable.TakeDamage(physicalDamage, elemDamage, element, originalPlayer.transform);
+            targetGotHit = damgable.TakeDamage(physicalDamage, elemDamage, elementType, originalPlayer.transform);
             //造成伤害
             if (targetGotHit)
             {
-                lastTarget = target.transform;
-                Instantiate(onHitVfx, target.transform.position, Quaternion.identity);
+                lastTarget = enemy.transform;
+                Instantiate(onHitVfx, enemy.transform.position, Quaternion.identity);
             }
 
-            if(element!=ElementType.None)//应用元素效果
-                target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(element, attackData.effectData);
+            if(elementType!=ElementType.None)//应用元素效果
+                enemy.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(elementType, attackData.effectData);
         }
     }
 

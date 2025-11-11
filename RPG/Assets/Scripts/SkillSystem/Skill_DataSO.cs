@@ -25,6 +25,6 @@ public class UpgradeData
 {
     public SkillUpgradeType upgradeType;
     public float cooldown;
-    public DamageScaleData damageScale;
+    public DamageData damageData;//该技能或武器拥有的伤害加成
 }
 

@@ -114,7 +114,7 @@ public class SkillObject_SwordBounce : SkillObject_Sword
         List<Transform> aliveTargets = new List<Transform>();
         foreach (var enemy in enemyTargets)
         {
-            if(enemy!=null && enemy.GetComponent<Entity_Health>().isDead==false)
+            if(enemy!=null && enemy.GetComponent<Entity_Health>().isDead == false)
             {
                 aliveTargets.Add(enemy.transform);
             }

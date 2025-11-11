@@ -14,18 +14,20 @@ public class ElementalEffectData
 
     public float shockDuration;
     public float shockDamage;
-    public float shockCharge;
+    public float shockCharge;//电力累计值
 
-    public ElementalEffectData(Entity_Stats entityStats,DamageScaleData damageScale)
+    public ElementalEffectData(Entity_Stats attacker_Stats,DamageData damageData)
     {
-        chillDuration = damageScale.chillDuration;
-        chillSlowMulltiplier = damageScale.chillSlowMultiplier;
+        chillDuration = damageData.chillDuration;
+        chillSlowMulltiplier = damageData.chillSlowMultiplier;
 
-        burnDuration = damageScale.burnDuration;
-        totalBurnDamage = entityStats.offense.fireDamage.GetValue() * damageScale.burnDamageScale;
+        burnDuration = damageData.burnDuration;
+        totalBurnDamage = damageData.burnDamage * damageData.burnDamageScale;//持续燃烧总伤害  只计算武器或技能携带的倍率和伤害
+        //totalBurnDamage = attacker_Stats.offense.fireDamage.GetValue() * damageData.burnDamageScale;
 
-        shockDuration=damageScale.shockDuration;
-        shockDamage=entityStats.offense.lightningDamage.GetValue() * damageScale.shockDamageScale;
-        shockCharge=damageScale.shockCharge;
+        shockDuration=damageData.shockDuration;
+        shockDamage=damageData.shockDamage*damageData.shockDamageScale;//强力电击伤害    只计算武器或技能携带的倍率和伤害
+        //shockDamage=attacker_Stats.offense.lightningDamage.GetValue() * damageData.shockDamageScale;
+        shockCharge =damageData.shockCharge;
     }
 }

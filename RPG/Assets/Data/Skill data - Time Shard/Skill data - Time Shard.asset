@@ -24,13 +24,16 @@ MonoBehaviour:
   upgradeData:
     upgradeType: 6
     cooldown: 1
-    damageScale:
-      physical: 0
-      elemental: 1.5
+    damageData:
+      elementType: 2
+      physicalDamage: 0
+      chillDamage: 10
       chillDuration: 3
       chillSlowMultiplier: 0.2
+      burnDamage: 0
       burnDuration: 3
       burnDamageScale: 1
+      shockDamage: 0
       shockDuration: 3
       shockDamageScale: 1
       shockCharge: 0.4

@@ -7,11 +7,13 @@ public class  SlowEffect
 {
     public float duration;
     public float slowDownPercent;
+    public string source;
 
-    public SlowEffect(float duration, float slowDownPercent)
+    public SlowEffect(float duration, float slowDownPercent, string source)
     {
         this.duration = duration;
         this.slowDownPercent = slowDownPercent;
+        this.source = source;
     }
 }
 
@@ -91,32 +93,26 @@ public class Entity : MonoBehaviour
 
 
     //¼õËÙÐ§¹û
-    public virtual void SlowDownEntity(float duration,float slowMultiplier,bool canOverrideSlowEffect=false)
+    public virtual void SlowDownEntity(float duration,float slowMultiplier,string source,bool canOverrideSlowEffect=false)
     {
-        /*
-        if (slowDownCo != null)
-        {
-            if (canOverrideSlowEffect)
-                StopCoroutine(slowDownCo);
-            else return;
-        }*/
-        slowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier));
-        
+        slowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier, source));
     }
     
 
-    public virtual IEnumerator SlowDownEntityCo(float duration,float slowMultiplier)
+    public virtual IEnumerator SlowDownEntityCo(float duration,float slowMultiplier,string source)
     {
         yield return null;
     }
 
 
-    public virtual void StopSlowDown()
-    {
-        slowDownCo = null;
-    }
+    
 
     public virtual void ChangeSpeed()
+    {
+
+    }
+
+    public virtual void RemoveSlow(string source)
     {
 
     }

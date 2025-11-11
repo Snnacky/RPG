@@ -30,7 +30,7 @@ public class Player_SkillManager : MonoBehaviour
     }
 
     //通过类型寻找技能
-    public Skill_Base GetSkillByType(SkillType type)
+    public Skill_Base GetSkillBaseByType(SkillType type)
     {
         switch (type)
         {

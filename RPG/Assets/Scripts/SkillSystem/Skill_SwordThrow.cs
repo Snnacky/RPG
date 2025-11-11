@@ -66,6 +66,7 @@ public class Skill_SwordThrow : Skill_Base
         GameObject newsword = Instantiate(swordPrefab, dots[1].position,Quaternion.identity);
         currentSword = newsword.GetComponent<SkillObject_Sword>();
         currentSword.SetupSword(this, GetThrowPower());
+        SetSkillOnCoolDown();
     }
 
     private GameObject GetSwordPrefab()

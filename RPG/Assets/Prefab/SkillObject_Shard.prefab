@@ -46,6 +46,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95debc19a623a5449a669e37774d6937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageData:
+    elementType: 2
+    physicalScale: 1
+    elementalScale: 1
+    physicalDamage: 0
+    chillDamage: 10
+    chillDuration: 3
+    chillSlowMultiplier: 0.2
+    burnDamage: 0
+    burnDuration: 3
+    burnDamageScale: 1
+    shockDamage: 0
+    shockDuration: 3
+    shockDamageScale: 1
+    shockCharge: 0.4
   originalPlayer: {fileID: 0}
   onHitVfx: {fileID: 5989842939695768604, guid: 15c2ccabbd0d8d744b1634578af8d2b5, type: 3}
   whatIsEnemy:

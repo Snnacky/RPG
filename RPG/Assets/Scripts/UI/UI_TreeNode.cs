@@ -73,7 +73,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         connectHandler.UnlockConnectionImage(true);//改变连接线颜色
 
         //获取skill_base,再设置升级类型
-        skillTree.skillManager.GetSkillByType(skillData.skillType).
+        skillTree.skillManager.GetSkillBaseByType(skillData.skillType).
             SetSkillUpgrade(skillData.upgradeData);
     }
 

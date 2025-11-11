@@ -9,7 +9,9 @@ public class SkillObject_DomainExpansion : SkillObject_Base
     private float duration;
     private Vector3 targetScale;
     private bool isShrinking;//缩小
+    private string slowSourceName = "domainExpansion";
 
+    //初始化
     public void SetupDomain(Skill_DomainExpansion domainManager)
     {
         this.domainManager = domainManager;
@@ -23,6 +25,7 @@ public class SkillObject_DomainExpansion : SkillObject_Base
 
         targetScale = Vector3.one * maxSize;
 
+        //持续时间到了缩小
         Invoke(nameof(ShrinkDomain), duration);
     }
 
@@ -40,13 +43,17 @@ public class SkillObject_DomainExpansion : SkillObject_Base
             transform.localScale = Vector3.Lerp(transform.localScale, targetScale, expandSpeed * Time.deltaTime);
 
         if (isShrinking && sizeDifference <= .1f)
+        {
+            domainManager.ClearTarget();
             Destroy(gameObject);
+        }
+
     }
 
     private void ShrinkDomain()
     {
         targetScale = Vector3.zero;
-        isShrinking = true;
+        isShrinking = true;//缩小
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -54,7 +61,8 @@ public class SkillObject_DomainExpansion : SkillObject_Base
         Enemy enemy=collision.GetComponent<Enemy>();
         if (enemy == null)
             return;
-        enemy.SlowDownEntity(duration,slowDownPercent,true);
+        domainManager.AddTarget(enemy);
+        enemy.SlowDownEntity(duration,slowDownPercent,slowSourceName,true);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -62,6 +70,6 @@ public class SkillObject_DomainExpansion : SkillObject_Base
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy == null)
             return;
-        enemy.ChangeSpeed();
+        enemy.RemoveSlow(slowSourceName);//删去该来源的所有减速效果
     }
 }

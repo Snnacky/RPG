@@ -13,6 +13,7 @@ public class Player_DashState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        player.health.SetCanTakeDamage(false);
         skillManager.dash.OnStartEffect();//开始冲刺时的效果
         player.vfx.DoImageEchoEffect(player.dashDuration);//dash虚影效果
 
@@ -43,6 +44,7 @@ public class Player_DashState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        player.health.SetCanTakeDamage(true);
         skillManager.dash.OnendEffect();//冲刺退出时的效果
         player.SetVelocity(0, 0);
         rb.gravityScale= originalGravityScale;

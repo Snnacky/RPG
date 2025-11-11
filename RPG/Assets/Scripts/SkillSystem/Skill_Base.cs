@@ -5,8 +5,8 @@ using UnityEngine;
 public class Skill_Base : MonoBehaviour
 {
     public Player player { get; private set; }
-    public Player_SkillManager skillManager { get; private set; }   
-    public DamageScaleData damageScaleData {  get; private set; }
+    public Player_SkillManager skillManager { get; private set; }
+    public DamageData damageData;
 
     [Header("General details")]
     [SerializeField] protected float cooldown;
@@ -19,7 +19,7 @@ public class Skill_Base : MonoBehaviour
         player=GetComponentInParent<Player>();
         skillManager = GetComponentInParent<Player_SkillManager>();
         lastTimeUsed -= cooldown;//确保在出生的时候就可以使用技能
-        damageScaleData = new DamageScaleData();
+        damageData=new DamageData();
     }
 
     public virtual void  TryUseSkill()
@@ -32,7 +32,8 @@ public class Skill_Base : MonoBehaviour
     {
         upgradeType = upgrade.upgradeType;
         cooldown = upgrade.cooldown;//修改升级技能后的冷却时间
-        damageScaleData = upgrade.damageScale;
+        damageData = upgrade.damageData;//攻击数据为skill_dataSO的
+        ResetCoolDown();
     }
 
     public virtual bool CanUseSkill()
@@ -51,6 +52,6 @@ public class Skill_Base : MonoBehaviour
     public bool OnCoolDown() => Time.time < lastTimeUsed + cooldown;//冷却
     public void SetSkillOnCoolDown() => lastTimeUsed = Time.time;//强制进入冷却
     public void ReduceCooldownBy(float cooldownReduction) => lastTimeUsed += cooldownReduction;
-    public void ResetCoolDown()=>lastTimeUsed=Time.time;
+    public void ResetCoolDown() => lastTimeUsed = Time.time - cooldown;
 
 }

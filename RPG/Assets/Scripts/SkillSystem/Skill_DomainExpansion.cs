@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,39 +9,119 @@ public class Skill_DomainExpansion : Skill_Base
     [SerializeField] private float slowDownPercent = .8f;
     [SerializeField] private float slowDownDomainDuration = 5;
 
-    [Header("Spell Casting Upgrade")]
-    [SerializeField] private float spellCastingDomainSlowDown = 1;
-    [SerializeField] private float spellCastingDomainDuration = 8;
+    [Header("Shard Casti Upgrade")]
+    [SerializeField] private int shardsToCast = 10;
+    [SerializeField] private float shardCastDomainSlow = 1;
+    [SerializeField] private float shardCastDomainDuration = 8;
+    private float spellCastTimer;
+    private float spellsPerSecond;
+
+    [Header("Time echo cast Upgrade")]
+    [SerializeField] private int echoToCast = 8;
+    [SerializeField] private float echoCastDomainSlow = 1;
+    [SerializeField] private float echoCastDomainDuration = 6;
+    [SerializeField] private float healthToRestoreWithEcho = .05f;
 
     [Header("Domain Detail")]
-    public float maxDomainSize = 10;
+    public float maxDomainSize = 15;
     public float expandSpeed = 3;
+
+    private List<Enemy> trappedTargets = new List<Enemy>();
+    private Transform currentTarget;
+
+    //生成黑色圆圈
+    public void CreateDomain()
+    {
+        spellsPerSecond = GetSpellsToCast() / GetDomainDuration();
+        GameObject domain = Instantiate(domainPrefab, transform.position, Quaternion.identity);
+        domain.GetComponent<SkillObject_DomainExpansion>().SetupDomain(this);
+    }
+
+    public void DoSpellCasting()
+    {
+        spellCastTimer -= Time.deltaTime;
+        if (currentTarget == null)
+            currentTarget = FindTargetInDomain();
+
+        if (currentTarget != null && spellCastTimer < 0)
+        {
+            CastSpell(currentTarget);
+            spellCastTimer = 1 / spellsPerSecond;
+            currentTarget = null;
+        }
+    }
+
+    private void CastSpell(Transform target)
+    {
+        if (upgradeType == SkillUpgradeType.Domain_EchoSpam)
+        {
+            Vector3 offest = Random.value < .5f ? new Vector2(1, 0) : new Vector2(-1, 0);
+            skillManager.timeEcho.CreateTimeEcho(target.position + offest);
+        }
+        if (upgradeType == SkillUpgradeType.Domain_ShardSpam)
+        {
+            skillManager.shard.CreateRawShard(target, true);
+        }
+    }
+
+    //获取在范围内的敌人
+    private Transform FindTargetInDomain()
+    {
+        trappedTargets.RemoveAll(target => target == null || target.entity_Health.isDead);
+
+        if (trappedTargets.Count == 0)
+            return null;
+
+        int randomIndex=Random.Range(0, trappedTargets.Count);
+        return trappedTargets[randomIndex].transform;
+    }
 
     public float GetDomainDuration()
     {
         if (upgradeType == SkillUpgradeType.Domain_SlowingDown)
             return slowDownDomainDuration;
-        else
-            return spellCastingDomainDuration;
+        else if (upgradeType == SkillUpgradeType.Domain_ShardSpam)
+            return shardCastDomainDuration;
+        else if (upgradeType == SkillUpgradeType.Domain_EchoSpam)
+            return echoCastDomainDuration;
+        return 0;
     }
-
+    //获取减速比例
     public float GetSlowPercentage()
     {
         if (upgradeType == SkillUpgradeType.Domain_SlowingDown)
             return slowDownPercent;
-        else
-            return spellCastingDomainSlowDown;
+        else if (upgradeType == SkillUpgradeType.Domain_ShardSpam)
+            return shardCastDomainSlow;
+        else if (upgradeType == SkillUpgradeType.Domain_EchoSpam)
+            return echoCastDomainSlow;
+        return 0;
     }
+
+    private int GetSpellsToCast()
+    {
+        if (upgradeType == SkillUpgradeType.Domain_ShardSpam)
+            return shardsToCast;
+        else if (upgradeType == SkillUpgradeType.Domain_EchoSpam)
+            return echoToCast;
+        return 0;
+    }
+
     public bool InstantDomain()
     {
         return upgradeType != SkillUpgradeType.Domain_EchoSpam
             && upgradeType != SkillUpgradeType.Domain_ShardSpam;
     }
 
-    public void CreateDomain()
+
+
+    public void AddTarget(Enemy targetToAdd)
     {
-        GameObject domain=Instantiate(domainPrefab,transform.position,Quaternion.identity);
-        domain.GetComponent<SkillObject_DomainExpansion>().SetupDomain(this);
+        trappedTargets.Add(targetToAdd);
     }
 
+    public void ClearTarget()
+    {
+        trappedTargets = new List<Enemy>();
+    }
 }

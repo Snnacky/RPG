@@ -25,7 +25,7 @@ public class SkillObject_Sword : SkillObject_Base
         this.swordManager = swordManager;
 
         playerStats = swordManager.player.stats;
-        damageScaleData = swordManager.damageScaleData;
+        damageData = swordManager.damageData;
 
         //playerTransform = swordManager.transform.root;
         originalPlayer = swordManager.player.transform;

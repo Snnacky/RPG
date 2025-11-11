@@ -18,6 +18,7 @@ public class Player_DomainExpansionState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        player.health.SetCanTakeDamage(false);
 
         originalPosition = player.transform.position;
         originalGravity = rb.gravityScale;
@@ -35,6 +36,7 @@ public class Player_DomainExpansionState : PlayerState
         }
         if(isLevitating)
         {
+            skillManager.domainExpansion.DoSpellCasting();
             if(stateTimer<=0)
             {
                 stateMachine.ChangeState(player.idleState);
@@ -45,6 +47,7 @@ public class Player_DomainExpansionState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        player.health.SetCanTakeDamage(true);
         rb.gravityScale = originalGravity;
         isLevitating = false;
         createDomain = false;
@@ -55,7 +58,7 @@ public class Player_DomainExpansionState : PlayerState
         isLevitating = true;
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
-        stateTimer = 2;
+        stateTimer = skillManager.domainExpansion.GetDomainDuration();//状态持续时间
 
         if(createDomain==false)
         {

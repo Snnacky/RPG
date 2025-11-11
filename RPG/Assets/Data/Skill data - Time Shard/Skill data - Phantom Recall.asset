@@ -12,12 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e3df5f07b0dda4f976d73852b41b7c, type: 3}
   m_Name: Skill data - Phantom Recall
   m_EditorClassIdentifier: 
+  displayName: Phantom Recall
+  description: Press skill button again,to change places with shard you created.
+  icon: {fileID: 1820519540, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
   cost: 2
   unlockedByDefualt: 0
   skillType: 2
   upgradeData:
     upgradeType: 9
     cooldown: 3
-  displayName: Phantom Recall
-  description: Press skill button again,to change places with shard you created.
-  icon: {fileID: 1820519540, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+    damageData:
+      elementType: 2
+      physicalDamage: 0
+      chillDamage: 10
+      chillDuration: 3
+      chillSlowMultiplier: 0.2
+      burnDamage: 0
+      burnDuration: 3
+      burnDamageScale: 1
+      shockDamage: 0
+      shockDuration: 3
+      shockDamageScale: 1
+      shockCharge: 0.4

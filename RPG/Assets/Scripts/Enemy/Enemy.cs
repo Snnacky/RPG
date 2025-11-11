@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
+    public Entity_Health entity_Health {  get; private set; }
     public Enemy_IdleState idleState;
     public Enemy_MoveState moveState;
     public Enemy_AttackState attackState;
@@ -43,6 +44,7 @@ public class Enemy : Entity
     private float originalBattleSpeed;
     private float originalAnimSpeed;
     #endregion
+
     //改变速度
     public override void ChangeSpeed()
     {
@@ -74,32 +76,26 @@ public class Enemy : Entity
         originalSpeed = moveSpeed;
         originalBattleSpeed = battleMoveSpeed;
         originalAnimSpeed = anim.speed;
+        entity_Health = GetComponent<Entity_Health>();
     }
-    public override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
+    public override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier, string source)
     {
-        /*
-        activeSlowMultiplier = 1 - slowMultiplier;//减慢40%,相当于剩下原来的60%
-
-        anim.speed = anim.speed * activeSlowMultiplier;
-
-        yield return new WaitForSeconds(duration);
-        StopSlowDown();
-        */
-        SlowEffect effect = new SlowEffect(duration, slowMultiplier);
+        SlowEffect effect = new SlowEffect(duration, slowMultiplier, source);
         slowList.Add(effect);
         ChangeSpeed();
         yield return new WaitForSeconds(duration);
         slowList.Remove(effect);
         ChangeSpeed();
-        // if(slowList.Count==0)
-        //   StopSlowDown();
     }
 
 
-    public override void StopSlowDown()
+
+    //删去所有来自于source的减速效果
+    public override void RemoveSlow(string source)
     {
+        base.RemoveSlow(source);
+        slowList.RemoveAll(s => s.source == source);
         ChangeSpeed();
-        base.StopSlowDown();
     }
 
     //是否可以被反击

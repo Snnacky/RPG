@@ -16,10 +16,11 @@ public class Stat_SetupSO : ScriptableObject
     public float critPower = 150;
     public float armorReduction;
 
-    [Header("Offense - Elemental Damage")]
-    public float fireDamage;
-    public float iceDamage;
-    public float LightningDamage;
+    [Header("Offense - damageScale")]
+    public float physicalScale = 1;
+    public float chillScale = 1;
+    public float fireScale = 1;
+    public float lightningScale = 1;
 
     [Header("Defense - Physical Damage")]
     public float armor;

@@ -7,7 +7,7 @@ public class Entity_Combat : MonoBehaviour
     private Entity_VFX vfx;//视觉效果
     private Entity_Stats stats;
 
-    public DamageScaleData basicAttackScale;
+    public DamageData damageData;//玩家自身的伤害
 
     [Header("Target detection")]
     [SerializeField] private Transform targetCheck;
@@ -23,27 +23,31 @@ public class Entity_Combat : MonoBehaviour
 
     public void PerformAttack()
     {
-        foreach (var target in GetDetectedColliders())
+        foreach (var enemy in GetDetectedColliders())
         {
-            IDamgable damegable = target.GetComponent<IDamgable>();//entity_health
-            if (damegable == null)
-                continue;
+            IDamgable damegable = enemy.GetComponent<IDamgable>();//entity_health
+            Entity_Stats defender_Stats = enemy.GetComponent<Entity_Stats>();
+            if (damegable == null || defender_Stats == null) continue;
 
-            AttackData attackData = stats.GetAttackData(basicAttackScale);
-            Entity_StatusHandler statusHandler=target.GetComponent<Entity_StatusHandler>();
+           
+            AttackData attackData = stats.GetAttackData(damageData, defender_Stats);
+            Entity_StatusHandler statusHandler = enemy.GetComponent<Entity_StatusHandler>();
 
             float physicalDamage = attackData.physicalDamage;//获取物理伤害
-            
+
             float elementalDamage = attackData.elementalDamage;//获取元素伤害
 
-            ElementType elementType = attackData.element;
-           
+            ElementType elementType = attackData.elementType;
+
             bool targetGetHit = damegable.TakeDamage(physicalDamage, elementalDamage, elementType, transform);
             //如果元素不是空,附加元素效果
-            if(elementType!=ElementType.None)
+            if (elementType != ElementType.None)
                 statusHandler?.ApplyStatusEffect(elementType, attackData.effectData);
             if (targetGetHit)//敌方受到攻击
-                vfx.CreatOnHitVfx(target.transform,attackData.isCrit,elementType);//打在敌人身上的效果
+                vfx.CreatOnHitVfx(enemy.transform, attackData.isCrit, elementType);//打在敌人身上的效果
+            
+
+            
 
 
         }

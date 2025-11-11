@@ -155,44 +155,10 @@ public class Player : Entity
         return base.CalculateActiveSlowMultiplier();
     }
 
-    public override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
+    public override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier,string source)
     {
-        /*
-        float originalMoveSpeed = moveSpeed;
-        float originalJumpForce = jumpForce;
-        float originalAnimSpeed = anim.speed;
-        Vector2 originalWallJump = wallJumpForce;
-        Vector2 originalJumpAttack = fallAttackVelocity;
-        Vector2[] originalAttackVelocity= attackVelocity;
 
-        float speedMultiplier = 1 - slowMultiplier;
-
-        moveSpeed = moveSpeed * speedMultiplier;
-        jumpForce = jumpForce * speedMultiplier;
-        anim.speed = anim.speed * speedMultiplier;
-        wallJumpForce = wallJumpForce * speedMultiplier;
-        fallAttackVelocity = fallAttackVelocity * speedMultiplier;
-
-        for(int i=0; i<attackVelocity.Length; i++)
-        {
-            attackVelocity[i]=attackVelocity[i] * speedMultiplier;
-        }
-
-        yield return new WaitForSeconds(duration);
-
-        moveSpeed = originalMoveSpeed;
-        jumpForce = originalJumpForce;
-        anim.speed = originalAnimSpeed;
-        wallJumpForce = originalWallJump;
-        fallAttackVelocity = originalJumpAttack;
-
-        for(int i=0;i<attackVelocity.Length; i++)
-        {
-            attackVelocity[i] = originalAttackVelocity[i];
-        }
-        */
-
-        SlowEffect effect = new SlowEffect(duration, slowMultiplier);
+        SlowEffect effect = new SlowEffect(duration, slowMultiplier,source);
         slowList.Add(effect);
         ChangeSpeed();
         yield return new WaitForSeconds(duration);
@@ -213,6 +179,15 @@ public class Player : Entity
         yield return new WaitForEndOfFrame();
         stateMachine.ChangeState(basicAttackState);
     }
+
+    //删去所有来自于source的减速效果
+    public override void RemoveSlow(string source)
+    {
+        base.RemoveSlow(source);
+        slowList.RemoveAll(s => s.source == source);
+        ChangeSpeed();
+    }
+
     public override void EntityDeath()
     {
         base.EntityDeath();
