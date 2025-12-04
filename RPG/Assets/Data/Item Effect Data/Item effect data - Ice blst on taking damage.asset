@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b88873ec9067054eb5879d9b6109108, type: 3}
+  m_Name: Item effect data - Ice blst on taking damage
+  m_EditorClassIdentifier: 
+  effectDescription: "\u5F53\u8840\u91CF\u964D\u4F4E\u81F3\u767E\u5206\u4E4B25\u65F6\u4EA7\u751F\u51B0\u7206"
+  effectData:
+    chillDuration: 3
+    chillSlowMulltiplier: 0.6
+    burnDuration: 0
+    totalBurnDamage: 0
+    shockDuration: 0
+    shockDamage: 0
+    shockCharge: 0
+  iceDamage: 0
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 256
+  healthPercentTrigger: 0.25
+  coolDown: 4
+  iceBlastVfx: {fileID: 8653050336322676777, guid: 74280fd57e29d6a449586b6485a99bef, type: 3}
+  onHitVfx: {fileID: 5989842939695768604, guid: 15c2ccabbd0d8d744b1634578af8d2b5, type: 3}

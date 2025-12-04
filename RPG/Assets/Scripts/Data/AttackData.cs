@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//¹¥»÷Êý¾Ý
 [Serializable]
 public class AttackData 
 {
@@ -18,7 +19,7 @@ public class AttackData
     public AttackData(Entity_Stats attacker_Stats,DamageData damageData,Entity_Stats defender_Stats)
     {
         damageCalculator=new DamageCalculator();
-        physicalDamage = damageCalculator.GetPhysicalDamage(out isCrit, attacker_Stats, defender_Stats, damageData);
+        physicalDamage = damageCalculator.GetPhysicalDamage(out isCrit, attacker_Stats, defender_Stats);
         elementalDamage = damageCalculator.GetElementalDamage(out elementType,out isCrit, attacker_Stats, defender_Stats, damageData);
 
         effectData=new ElementalEffectData(attacker_Stats, damageData);

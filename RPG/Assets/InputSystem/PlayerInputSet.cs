@@ -125,6 +125,24 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleInventoryUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""2eed8429-1b9c-4a5c-ab7d-b124d1d1262a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""ec939b55-22d0-4cc0-bf64-b0d896c9ce95"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -252,7 +270,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""09be68ab-0fb1-4bf3-94d9-4c3bc2c55040"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";KeyBoard&Mouse"",
@@ -292,6 +310,28 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""action"": ""UltimateSpell"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78e5bda3-c661-4648-ba53-5056b59332a1"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyBoard&Mouse"",
+                    ""action"": ""ToggleInventoryUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3cfa3fee-0963-4ab7-b63d-74e556bdffae"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyBoard&Mouse"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -328,6 +368,8 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         m_Player_RangeAttack = m_Player.FindAction("RangeAttack", throwIfNotFound: true);
         m_Player_Mouse = m_Player.FindAction("Mouse", throwIfNotFound: true);
         m_Player_UltimateSpell = m_Player.FindAction("UltimateSpell", throwIfNotFound: true);
+        m_Player_ToggleInventoryUI = m_Player.FindAction("ToggleInventoryUI", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
     }
 
     ~@PlayerInputSet()
@@ -405,6 +447,8 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RangeAttack;
     private readonly InputAction m_Player_Mouse;
     private readonly InputAction m_Player_UltimateSpell;
+    private readonly InputAction m_Player_ToggleInventoryUI;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @PlayerInputSet m_Wrapper;
@@ -420,6 +464,8 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         public InputAction @RangeAttack => m_Wrapper.m_Player_RangeAttack;
         public InputAction @Mouse => m_Wrapper.m_Player_Mouse;
         public InputAction @UltimateSpell => m_Wrapper.m_Player_UltimateSpell;
+        public InputAction @ToggleInventoryUI => m_Wrapper.m_Player_ToggleInventoryUI;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -462,6 +508,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @UltimateSpell.started += instance.OnUltimateSpell;
             @UltimateSpell.performed += instance.OnUltimateSpell;
             @UltimateSpell.canceled += instance.OnUltimateSpell;
+            @ToggleInventoryUI.started += instance.OnToggleInventoryUI;
+            @ToggleInventoryUI.performed += instance.OnToggleInventoryUI;
+            @ToggleInventoryUI.canceled += instance.OnToggleInventoryUI;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -499,6 +551,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @UltimateSpell.started -= instance.OnUltimateSpell;
             @UltimateSpell.performed -= instance.OnUltimateSpell;
             @UltimateSpell.canceled -= instance.OnUltimateSpell;
+            @ToggleInventoryUI.started -= instance.OnToggleInventoryUI;
+            @ToggleInventoryUI.performed -= instance.OnToggleInventoryUI;
+            @ToggleInventoryUI.canceled -= instance.OnToggleInventoryUI;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -538,5 +596,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         void OnRangeAttack(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
         void OnUltimateSpell(InputAction.CallbackContext context);
+        void OnToggleInventoryUI(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

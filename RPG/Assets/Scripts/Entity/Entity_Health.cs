@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Entity_Health : MonoBehaviour, IDamgable
 {
+    public event Action OnTakingDamage;//ItemEffect_IceBlastOnTakingDamage
+
     public float currentHp;
     public bool isDead;
     public bool canTakeDamage = true;
@@ -11,7 +14,7 @@ public class Entity_Health : MonoBehaviour, IDamgable
     private Slider healthBar;
     private Entity_Stats entityStats;
     private DamageCalculator damageCalculator;
-
+   
     public float lastDamageTaken { get; private set; }
 
     [Header("血量再生")]
@@ -45,17 +48,19 @@ public class Entity_Health : MonoBehaviour, IDamgable
         InvokeRepeating(nameof(RegenerateHealth), 0, regenInterval);
     }
 
-    public virtual bool TakeDamage(float physicalDamage, float elementalDamage, ElementType elementType, Transform damageDealer)//攻击他的人
+    public virtual bool TakeDamage(float physicalDamage, float elementalDamage, ElementType elementType, Transform attacker)//攻击他的人
     {
         if (isDead || canTakeDamage == false) return false;
-        if (AttackEvaded())
+        if (AttackEvaded())//闪避
         {
             return false;
         }
 
         lastDamageTaken = physicalDamage + elementalDamage;
         ReduceHp(physicalDamage + elementalDamage);//扣血
-        TakeKnockback(damageDealer, physicalDamage+elementalDamage);
+        TakeKnockback(attacker, physicalDamage+elementalDamage);//击退
+
+        OnTakingDamage?.Invoke();
         return true;
     }
 
@@ -83,7 +88,7 @@ public class Entity_Health : MonoBehaviour, IDamgable
     //是否闪避掉
     private bool AttackEvaded()
     {
-        return Random.Range(0, 100) < damageCalculator.GetEvasion(entityStats);
+        return UnityEngine.Random.Range(0, 100) < damageCalculator.GetEvasion(entityStats);
     }
   
     public void ReduceHp(float damage)

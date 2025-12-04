@@ -13,15 +13,18 @@ public enum StatType
     Vitality,
 
     AttackSpeed,
-    bascalPhysicalDamage,
+    BasicalPhysicalDamage,
+    ChillDamage,
+    FireDamage,
+    LightningDamage,
     CritChance,
     CritPower,
     ArmorReduction,
 
-    physicalScale,
-    chillScale,
-    fireScale,
-    lightningScale,
+    PhysicalScale,
+    ChillScale,
+    FireScale,
+    LightningScale,
 
     Armor,
     Evasion,

@@ -274,9 +274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132edba58ce57d740a0e6d3c51c329cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basicAttackScale:
-    physical: 1
-    elemental: 1
+  damageData:
+    elementType: 0
     chillDuration: 3
     chillSlowMultiplier: 0.2
     burnDuration: 3
@@ -303,6 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHp: 0
   isDead: 0
+  canTakeDamage: 1
   regenInterval: 1
   canRegenerateHealth: 1
   knockbackDuration: 0.3
@@ -368,8 +368,17 @@ MonoBehaviour:
     attackSpeed:
       baseValue: 1
       modifiers: []
-    damage:
-      baseValue: 10
+    basicalPhysicalDamage:
+      baseValue: 40
+      modifiers: []
+    chillDamage:
+      baseValue: 0
+      modifiers: []
+    fireDamage:
+      baseValue: 0
+      modifiers: []
+    lightningDamage:
+      baseValue: 0
       modifiers: []
     critPower:
       baseValue: 150
@@ -380,14 +389,17 @@ MonoBehaviour:
     armorRedction:
       baseValue: 0
       modifiers: []
-    fireDamage:
-      baseValue: 0
+    physicalScale:
+      baseValue: 1
       modifiers: []
-    iceDamage:
-      baseValue: 0
+    chillScale:
+      baseValue: 1
       modifiers: []
-    lightningDamage:
-      baseValue: 0
+    fireScale:
+      baseValue: 1
+      modifiers: []
+    lightningScale:
+      baseValue: 1
       modifiers: []
   defense:
     armor:
@@ -396,13 +408,13 @@ MonoBehaviour:
     evasion:
       baseValue: 0
       modifiers: []
-    fireRes:
+    fireResistance:
       baseValue: 0
       modifiers: []
-    iceRes:
+    iceResistance:
       baseValue: 0
       modifiers: []
-    lightningRes:
+    lightningResistance:
       baseValue: 0
       modifiers: []
 --- !u!114 &2665150794408337479

@@ -14,6 +14,7 @@ public class Player : Entity
     public Player_VFX vfx { get; private set; }
     public Entity_Health health { get; private set; }
     public Entity_StatusHandler statusHandler { get; private set; }
+    public Player_Combat combat { get; private set; }
 
     public Vector2 mousePosition { get; private set; }
     #region Stat Variables
@@ -93,6 +94,7 @@ public class Player : Entity
         vfx = GetComponent<Player_VFX>();
         health = GetComponent<Entity_Health>();
         statusHandler = GetComponent<Entity_StatusHandler>();
+        combat =GetComponent<Player_Combat>();
 
         originalMoveSpeed = moveSpeed;
         originalJumpForce = jumpForce;
@@ -194,6 +196,34 @@ public class Player : Entity
         OnPlayerDeathh?.Invoke();
         stateMachine.ChangeState(deadState);
     }
+
+   
+    private void TryInteract()
+    {
+        Transform closest = null;
+        float closestDistance = Mathf.Infinity;
+        Collider2D[] objectsAround = Physics2D.OverlapCircleAll(transform.position, .8f);
+        foreach(var target in objectsAround)
+        {
+            IInteractable interactable=target.GetComponent<IInteractable>();
+            if(interactable==null) continue;
+            
+            float distance=Vector2.Distance(target.transform.position, transform.position);
+            if(distance<closestDistance)
+            {
+                closestDistance = distance;
+                closest = target.transform;
+            }
+        }
+
+        if (closest == null) return;
+        bool activeSelf =  closest.GetComponent<Object_NPC>().interactToolTip.activeSelf;
+        if (activeSelf)
+        {
+            closest.GetComponent<IInteractable>().Interact();
+        }
+    }
+
     private void OnEnable()
     {
         input.Enable();
@@ -204,11 +234,15 @@ public class Player : Entity
         input.Player.Jump.started += ctx => jumpPressed = true;
         input.Player.Jump.canceled += ctx => jumpPressed = false;
 
-        input.Player.ToggleSkillTreeUI.performed += ctx => ui.ToggleSkillTreeUI();//开关技能ui
         input.Player.Spell.performed += ctx => skillManager.shard.TryUseSkill();//爆炸碎片攻击
         input.Player.Spell.performed += ctx => skillManager.timeEcho.TryUseSkill();//复制player进行攻击
 
         input.Player.Mouse.performed += ctx => mousePosition = ctx.ReadValue<Vector2>();
+
+        input.Player.ToggleSkillTreeUI.performed += ctx => ui.ToggleSkillTreeUI();//开关技能ui
+        input.Player.ToggleInventoryUI.performed += ctx => ui.ToggleInventoryUI();//开关统计ui
+
+        input.Player.Interact.performed += ctx => TryInteract();
     }
 
     private void OnDisable()
@@ -233,5 +267,6 @@ public class Player : Entity
         dashCoolDownTimer -= Time.deltaTime;
     }
 
+    
     public void TeleportPlayer(Vector3 position)=>transform.position = position;//变换位置
 }

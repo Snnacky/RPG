@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Inventory_Base : MonoBehaviour
+{
+    public event Action OnInventoryChange;//事件触发在ui_Inventory,ui_PlayerStats
+
+    public int maxInventorySize = 10;//最大持有物品数量
+    public List<Inventory_Item> itemList = new List<Inventory_Item>();//持有物品列表
+
+    protected virtual void Awake()
+    {
+
+    }
+
+    //使用物品
+    public void TryUseItem(Inventory_Item itemToUse)
+    {
+        Inventory_Item consumable = itemList.Find(item => item == itemToUse);
+        if (consumable == null) return;
+
+        consumable.itemEffectData.ExecuteEffect();//物品效果
+
+        if(consumable.stackSize>1)
+            consumable.RemoveStack();
+        else
+            RemoveOneItem(consumable);
+        OnInventoryChange?.Invoke(); 
+    }
+
+    public bool CanAddItem(Inventory_Item itemToAdd)
+    {
+        bool hasStackable = FindStackable(itemToAdd) != null;
+        return hasStackable || itemList.Count < maxInventorySize;
+    }
+    public Inventory_Item FindStackable(Inventory_Item itemToAdd)
+    {
+        List<Inventory_Item> stackableItems = itemList.FindAll(item => item.itemData == itemToAdd.itemData);
+        foreach (var stackableItem in stackableItems)
+        {
+            if (stackableItem.CanAddStack())
+                return stackableItem;
+        }
+        
+        return null;
+    }
+    //添加物品
+    public void AddItem(Inventory_Item itemToAdd)
+    {
+        Inventory_Item itemInInventory = FindStackable(itemToAdd);//查找UI栏里面是否已经有相同的物品
+        if (itemInInventory != null )//如果有并且没有超过存放范围
+        {
+            itemInInventory.AddStack();//数量增1
+        }
+        else
+        {
+            //新添加一个栏
+            itemList.Add(itemToAdd);
+        }
+        OnInventoryChange?.Invoke();//触发事件,更新ui
+    }
+    //移除物品
+    public void RemoveOneItem(Inventory_Item itemToRemove)
+    {
+        Inventory_Item itenInInventory = itemList.Find(item => item == itemToRemove);
+        if (itenInInventory.stackSize > 1)
+            itenInInventory.stackSize--;
+        else
+            itemList.Remove(itenInInventory);
+        OnInventoryChange?.Invoke();
+    }
+
+    //根据data寻找item
+    public Inventory_Item FindItem(ItemDataSO itemData)
+    {
+        return itemList.Find(item => item.itemData == itemData);
+    }
+
+    public void TriggerUpdateUI() => OnInventoryChange?.Invoke();
+}

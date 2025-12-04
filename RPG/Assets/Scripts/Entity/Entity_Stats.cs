@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Entity_Stats : MonoBehaviour//统计数据
 {
-    public Stat_SetupSO defalutStatSetup;
+    public StatSetupDataSO defalutStatSetup;
 
     public Stat_ResourceGroup resources;
     [Header("角色基础属性")]
@@ -11,6 +11,11 @@ public class Entity_Stats : MonoBehaviour//统计数据
     public Stat_OffenseGroup offense;
     [Header("防御")]
     public Stat_DefenseGroup defense;
+
+    protected virtual void Awake()
+    {
+
+    }
 
     public AttackData GetAttackData(DamageData damageData,Entity_Stats defender_Stats)
     {
@@ -41,15 +46,18 @@ public class Entity_Stats : MonoBehaviour//统计数据
             case StatType.Vitality: return major.vitality;
 
             case StatType.AttackSpeed: return offense.attackSpeed;
-            case StatType.bascalPhysicalDamage: return offense.basicalPhysicalDamage;
+            case StatType.BasicalPhysicalDamage: return offense.basicalPhysicalDamage;
+            case StatType.ChillDamage:return offense.chillDamage;
+            case StatType.FireDamage: return offense.fireDamage;
+            case StatType.LightningDamage: return offense.lightningDamage;
             case StatType.CritChance: return offense.critChance;
             case StatType.CritPower: return offense.critPower;
             case StatType.ArmorReduction: return offense.armorRedction;
             
-            case StatType.physicalScale: return offense.physicalScale;
-            case StatType.chillScale: return offense.chillScale;
-            case StatType.fireScale: return offense.fireScale;
-            case StatType.lightningScale: return offense.lightningScale;
+            case StatType.PhysicalScale: return offense.physicalScale;
+            case StatType.ChillScale: return offense.chillScale;
+            case StatType.FireScale: return offense.fireScale;
+            case StatType.LightningScale: return offense.lightningScale;
 
             case StatType.Armor: return defense.armor;
             case StatType.Evasion: return defense.evasion;
@@ -87,6 +95,10 @@ public class Entity_Stats : MonoBehaviour//统计数据
         offense.critChance.SetBaseValue(defalutStatSetup.critChance);
         offense.critPower.SetBaseValue(defalutStatSetup.critPower);
         offense.armorRedction.SetBaseValue(defalutStatSetup.armorReduction);
+
+        offense.chillDamage.SetBaseValue(defalutStatSetup.chillDamage);
+        offense.fireDamage.SetBaseValue(defalutStatSetup.fireDamage);
+        offense.lightningDamage.SetBaseValue(defalutStatSetup.lightningDamage);
 
         offense.physicalScale.SetBaseValue(defalutStatSetup.physicalScale);
         offense.chillScale.SetBaseValue(defalutStatSetup.chillScale);

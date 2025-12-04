@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Entity_Combat : MonoBehaviour
 {
+    public event Action<float> OnDoingPhysicalDamage;//ItemEffect_HealOnDoingDamage
+    public event Action<Collider2D> OnDoingDamage;//ItemEffect_ThunderClaw
+
     private Entity_VFX vfx;//视觉效果
     private Entity_Stats stats;
 
@@ -44,7 +48,11 @@ public class Entity_Combat : MonoBehaviour
             if (elementType != ElementType.None)
                 statusHandler?.ApplyStatusEffect(elementType, attackData.effectData);
             if (targetGetHit)//敌方受到攻击
+            {
+                OnDoingPhysicalDamage?.Invoke(physicalDamage);
+                OnDoingDamage?.Invoke(enemy);
                 vfx.CreatOnHitVfx(enemy.transform, attackData.isCrit, elementType);//打在敌人身上的效果
+            }
             
 
             
