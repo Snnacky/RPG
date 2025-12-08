@@ -11,21 +11,29 @@ public class UI_Storage : MonoBehaviour
     [SerializeField] private UI_ItemSlotParent storageParent;//存储父级
     [SerializeField] private UI_ItemSlotParent materialStashParent;//材料存储父级
 
-    public void SetupStorage(Inventory_Player inventory, Inventory_Storage storage)
+    //初始化
+    public void SetupStorageUI( Inventory_Storage storage)
     {
-        this.inventory = inventory;
+        inventory = storage.playerInventory;
         this.storage = storage;
         storage.OnInventoryChange += UpdateUI;
 
         UI_StorageSlot[] storageSlots=GetComponentsInChildren<UI_StorageSlot>();
 
         foreach(var slot in storageSlots)
-            slot.SetStorage(storage);
+            slot.SetStorage(storage);//初始化栏
+
         UpdateUI();
     }
 
+    private void OnEnable()
+    {
+        UpdateUI();
+    }
     private void UpdateUI()
     {
+        if(storage==null) return;
+
         inventoryParent.UpdateSlots(inventory.itemList);
         storageParent.UpdateSlots(storage.itemList);
         materialStashParent.UpdateSlots(storage.materialStash);

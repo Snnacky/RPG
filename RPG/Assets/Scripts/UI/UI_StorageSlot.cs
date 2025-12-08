@@ -15,6 +15,8 @@ public class UI_StorageSlot : UI_ItemSlot
     {
         if (itemInSlot == null) return;
 
+        if (itemInSlot.itemData.itemType == ItemType.Material) return;
+
         bool transferFullStack = Input.GetKey(KeyCode.LeftControl);
 
         if(slotType==StorageSlotType.StorageSlot)

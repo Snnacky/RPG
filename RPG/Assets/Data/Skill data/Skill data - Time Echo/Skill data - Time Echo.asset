@@ -25,14 +25,11 @@ MonoBehaviour:
     cooldown: 0
     damageData:
       elementType: 1
-      physicalDamage: 10
-      chillDamage: 0
       chillDuration: 3
       chillSlowMultiplier: 0.2
-      burnDamage: 10
       burnDuration: 3
       burnDamageScale: 1
-      shockDamage: 0
       shockDuration: 3
       shockDamageScale: 1
       shockCharge: 0.4
+  skillModifier: []

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Equipment data - Thunder Claw
   m_EditorClassIdentifier: 
   itemName: Thunder Claw
-  itemIcon: {fileID: 1616638255, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  itemIcon: {fileID: -146300068, guid: 748ab983f671666478e286155eaa530d, type: 3}
   itemType: 1
   maxStackSize: 1
   itemEffect: {fileID: 11400000, guid: 8448403d9e7d38f47a529baf46afecb7, type: 2}

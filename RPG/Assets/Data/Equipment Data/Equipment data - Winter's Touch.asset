@@ -13,10 +13,17 @@ MonoBehaviour:
   m_Name: Equipment data - Winter's Touch
   m_EditorClassIdentifier: 
   itemName: Winter's Touch
-  itemIcon: {fileID: -1723175588, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  itemIcon: {fileID: 556382589, guid: 748ab983f671666478e286155eaa530d, type: 3}
   itemType: 2
   maxStackSize: 1
   itemEffect: {fileID: 11400000, guid: 845efcd3f1c982b48afcdf3971af47fd, type: 2}
+  craftRecipe:
+  - itemData: {fileID: 11400000, guid: edd26f8942c56cb48993cc0fb0c90b8f, type: 2}
+    stackSize: 5
+    itemEffectData: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: 8f4305a58b6ef2f438b278141d7af8b6, type: 2}
+    stackSize: 5
+    itemEffectData: {fileID: 0}
   modifiers:
   - statType: 0
     value: 250

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Equipment data - Ring Of Luck
   m_EditorClassIdentifier: 
   itemName: Ring Of Luck
-  itemIcon: {fileID: 70580676, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  itemIcon: {fileID: 583239525, guid: 748ab983f671666478e286155eaa530d, type: 3}
   itemType: 3
   maxStackSize: 1
+  itemEffect: {fileID: 0}
   modifiers:
   - statType: 8
     value: 15

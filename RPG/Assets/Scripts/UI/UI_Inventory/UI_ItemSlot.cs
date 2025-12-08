@@ -15,6 +15,8 @@ public class UI_ItemSlot : MonoBehaviour,IPointerDownHandler,IPointerEnterHandle
     [SerializeField] private Image itemIcon;
     [SerializeField] private TextMeshProUGUI itemStackSize;
 
+    [SerializeField] private bool canPointerDown = true;
+
     protected void Awake()
     {
         rect = GetComponent<RectTransform>();
@@ -24,7 +26,7 @@ public class UI_ItemSlot : MonoBehaviour,IPointerDownHandler,IPointerEnterHandle
     //Êó±êµã»÷
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        if (itemInSlot == null)
+        if (itemInSlot == null || canPointerDown == false)
             return;
 
         if (itemInSlot.itemData.itemType==ItemType.Counsumable)

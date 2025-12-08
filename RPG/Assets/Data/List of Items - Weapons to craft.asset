@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3023f1a5ec472c4bacb0d1355f4025f, type: 3}
-  m_Name: Material data -Animal Leather
+  m_Script: {fileID: 11500000, guid: d42bd828a3afaa548aa91f34f5a7119d, type: 3}
+  m_Name: List of Items - Weapons to craft
   m_EditorClassIdentifier: 
-  itemName: Aniaml Leather
-  itemIcon: {fileID: 1324232918, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
-  itemType: 0
-  maxStackSize: 2
+  itemList:
+  - {fileID: 11400000, guid: e9a67c02295ea1042bd732266f1bffe2, type: 2}
+  - {fileID: 11400000, guid: 794e89b6cee422b41a5769efdcc7f08d, type: 2}

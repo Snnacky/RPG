@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Inventory_Player : Inventory_Base
 {
+    public int gold = 100000;
     private Player player;
     public List<Inventory_EquipmentSlot> equipList;//持有装备列表
     public Inventory_Storage storage { get; private set; }

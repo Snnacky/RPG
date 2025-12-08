@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Consumable data - Small Health Potion
   m_EditorClassIdentifier: 
   itemName: Small Health Potion
-  itemIcon: {fileID: -1143008621, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  itemIcon: {fileID: -253528035, guid: 748ab983f671666478e286155eaa530d, type: 3}
   itemType: 4
   maxStackSize: 5
   itemEffect: {fileID: 11400000, guid: 32292286b55db5d4aa62f7e21ee7fd6d, type: 2}

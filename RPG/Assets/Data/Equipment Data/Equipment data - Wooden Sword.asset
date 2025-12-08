@@ -13,9 +13,17 @@ MonoBehaviour:
   m_Name: Equipment data - Wooden Sword
   m_EditorClassIdentifier: 
   itemName: Wooden Sword
-  itemIcon: {fileID: -904253311, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  itemIcon: {fileID: 260377368, guid: 748ab983f671666478e286155eaa530d, type: 3}
   itemType: 1
   maxStackSize: 1
+  itemEffect: {fileID: 0}
+  craftRecipe:
+  - itemData: {fileID: 11400000, guid: 66bf9f4b47ed5e94b8b0323899a0ce94, type: 2}
+    stackSize: 3
+    itemEffectData: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: edd26f8942c56cb48993cc0fb0c90b8f, type: 2}
+    stackSize: 2
+    itemEffectData: {fileID: 0}
   modifiers:
   - statType: 7
     value: 10
