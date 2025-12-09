@@ -57,7 +57,7 @@ public class UI_ItemSlot : MonoBehaviour,IPointerDownHandler,IPointerEnterHandle
         itemStackSize.text = item.stackSize > 1 ? item.stackSize.ToString() : "";
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public virtual void OnPointerEnter(PointerEventData eventData)
     {
         if (itemInSlot == null) return;
         ui.itemToolTip.ShowToolTip(true, rect, itemInSlot);

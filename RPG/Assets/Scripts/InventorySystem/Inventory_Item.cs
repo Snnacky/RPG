@@ -61,12 +61,26 @@ public class Inventory_Item
 
     public string GetItemInfo()
     {
-        if (itemData.itemType == ItemType.Material)
-            return "用于制作";
-        if (itemData.itemType == ItemType.Counsumable)
-            return itemData.itemEffect.effectDescription;
-
         StringBuilder stringBuilder = new StringBuilder();
+        if (itemData.itemType == ItemType.Material)
+        {
+            stringBuilder.AppendLine("");
+            stringBuilder.AppendLine("");
+            stringBuilder.AppendLine("Used For Craft");
+            stringBuilder.AppendLine("");
+            return stringBuilder.ToString();
+        }
+            
+        if (itemData.itemType == ItemType.Counsumable)
+        {
+            stringBuilder.AppendLine("");
+            stringBuilder.AppendLine("");
+            stringBuilder.AppendLine(itemData.itemEffect.effectDescription);
+            stringBuilder.AppendLine("");
+            return stringBuilder.ToString();
+
+        }
+
 
         stringBuilder.AppendLine("");
 
@@ -83,6 +97,7 @@ public class Inventory_Item
             stringBuilder.AppendLine("Unique effect:");
             stringBuilder.AppendLine(itemEffectData.effectDescription);
         }
+        stringBuilder.AppendLine("");
 
         return stringBuilder.ToString();
     }
