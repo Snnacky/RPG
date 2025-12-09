@@ -71,10 +71,18 @@ public class Inventory_Base : MonoBehaviour
         OnInventoryChange?.Invoke();
     }
 
-    //根据data寻找item
-    public Inventory_Item FindItem(ItemDataSO itemData)
+    public void RemoveFullStack(Inventory_Item itemToRemove)
     {
-        return itemList.Find(item => item.itemData == itemData);
+        for (int i = 0; i < itemToRemove.stackSize; i++)
+        {
+            RemoveOneItem(itemToRemove);
+        }
+    }
+
+    //根据data寻找item
+    public Inventory_Item FindItem(Inventory_Item itemToFind)
+    {
+        return itemList.Find(item => item == itemToFind);
     }
 
     public void TriggerUpdateUI() => OnInventoryChange?.Invoke();

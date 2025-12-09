@@ -10,19 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39935aaa44724af46851a3efbe90db60, type: 3}
-  m_Name: Equipment data - Thunder Claw
+  m_Name: Equipment data - Amulet Of Doom
   m_EditorClassIdentifier: 
-  itemName: Thunder Claw
-  itemIcon: {fileID: -146300068, guid: 748ab983f671666478e286155eaa530d, type: 3}
-  itemType: 1
+  itemName: Amulet Of Doom
+  itemIcon: {fileID: -1598660910, guid: 748ab983f671666478e286155eaa530d, type: 3}
+  itemType: 3
   maxStackSize: 1
-  itemEffect: {fileID: 11400000, guid: 8448403d9e7d38f47a529baf46afecb7, type: 2}
+  itemRarity: 718
+  dropChance: 28.3
+  maxDropChance: 65
+  itemEffect: {fileID: 0}
+  craftRecipe: []
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 1
   modifiers:
-  - statType: 7
-    value: 40
-  - statType: 10
-    value: 40
-  - statType: 6
+  - statType: 2
+    value: 10
+  - statType: 4
+    value: 10
+  - statType: 1
     value: 1
-  - statType: 17
-    value: 0.1

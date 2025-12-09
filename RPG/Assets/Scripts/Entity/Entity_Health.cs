@@ -14,7 +14,8 @@ public class Entity_Health : MonoBehaviour, IDamgable
     private Slider healthBar;
     private Entity_Stats entityStats;
     private DamageCalculator damageCalculator;
-   
+
+    private Entity_DropManager dropManager;
     public float lastDamageTaken { get; private set; }
 
     [Header("血量再生")]
@@ -36,6 +37,7 @@ public class Entity_Health : MonoBehaviour, IDamgable
         healthBar = GetComponentInChildren<Slider>();
         entityStats = GetComponent<Entity_Stats>();
         damageCalculator=new DamageCalculator();
+        dropManager = GetComponent<Entity_DropManager>();
         SetupHealth();
 
     }
@@ -105,6 +107,7 @@ public class Entity_Health : MonoBehaviour, IDamgable
         isDead = true;
         entity.EntityDeath();
         Invoke(nameof(DestroyGameObject), 2f);
+        dropManager?.DropItems();
     }
 
     //获取当前生命的百分比

@@ -12,15 +12,35 @@ public class ItemDataSO : ScriptableObject
     public ItemType itemType;
     public int maxStackSize = 1;
 
-    [Header("Item Effect")]
+    [Header("Drop Details   掉落")]
+    [Range(0, 1000)]
+    public int itemRarity = 100;
+    [Range(0, 100)]
+    public float dropChance;
+    [Range(0, 100)]
+    public float maxDropChance = 65f;
+
+    [Header("Item Effect  物品效果")]
     public ItemEffectDataSO itemEffect;
 
-    [Header("Craft details")]
+    [Header("Craft details  制作")]
     public Inventory_Item[] craftRecipe;
 
-    [Header("Merchant details")]
+    [Header("Merchant details  商店")]
     [Range(0, 10000)]
     public int itemPrice = 100;
     public int minStackSizeAtShop = 1;
     public int maxStackSizeAtShop = 1;
+
+    private void OnValidate()
+    {
+        dropChance = GetDropChance();
+    }
+
+    public float GetDropChance()
+    {
+        float maxRarity = 1000;
+        float chance = (maxRarity - itemRarity + 1) / maxRarity * 100;
+        return Mathf.Min(chance, maxDropChance);
+    }
 }

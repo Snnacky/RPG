@@ -16,6 +16,9 @@ MonoBehaviour:
   itemIcon: {fileID: 556382589, guid: 748ab983f671666478e286155eaa530d, type: 3}
   itemType: 2
   maxStackSize: 1
+  itemRarity: 901
+  dropChance: 10
+  maxDropChance: 65
   itemEffect: {fileID: 11400000, guid: 845efcd3f1c982b48afcdf3971af47fd, type: 2}
   craftRecipe:
   - itemData: {fileID: 11400000, guid: edd26f8942c56cb48993cc0fb0c90b8f, type: 2}
@@ -24,6 +27,9 @@ MonoBehaviour:
   - itemData: {fileID: 11400000, guid: 8f4305a58b6ef2f438b278141d7af8b6, type: 2}
     stackSize: 5
     itemEffectData: {fileID: 0}
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 1
   modifiers:
   - statType: 0
     value: 250

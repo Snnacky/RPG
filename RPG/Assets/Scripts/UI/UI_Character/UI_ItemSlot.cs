@@ -29,13 +29,23 @@ public class UI_ItemSlot : MonoBehaviour,IPointerDownHandler,IPointerEnterHandle
         if (itemInSlot == null || canPointerDown == false)
             return;
 
-        if (itemInSlot.itemData.itemType==ItemType.Counsumable)
+        bool alternativeInput = Input.GetKey(KeyCode.LeftControl);
+        if(alternativeInput)
         {
-            if(itemInSlot.itemEffectData.CanBeUse()==false) return;
-            inventory.TryUseItem(itemInSlot);
+            inventory.RemoveOneItem(itemInSlot);
         }
         else
-            inventory.TryEquipItem(itemInSlot);
+        {
+            if (itemInSlot.itemData.itemType == ItemType.Counsumable)
+            {
+                if (itemInSlot.itemEffectData.CanBeUse() == false) return;
+                inventory.TryUseItem(itemInSlot);
+            }
+            else
+                inventory.TryEquipItem(itemInSlot);
+        }
+
+        
         ui.itemToolTip.ShowToolTip(false, null);
     }
 

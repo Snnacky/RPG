@@ -29,10 +29,10 @@ public class Entity_Combat : MonoBehaviour
     {
         foreach (var enemy in GetDetectedColliders())
         {
-            IDamgable damegable = enemy.GetComponent<IDamgable>();//entity_health
+            
+            IDamgable damegable = enemy.GetComponent<IDamgable>();//entity_health,object_Chest
             Entity_Stats defender_Stats = enemy.GetComponent<Entity_Stats>();
             if (damegable == null || defender_Stats == null) continue;
-
            
             AttackData attackData = stats.GetAttackData(damageData, defender_Stats);
             Entity_StatusHandler statusHandler = enemy.GetComponent<Entity_StatusHandler>();

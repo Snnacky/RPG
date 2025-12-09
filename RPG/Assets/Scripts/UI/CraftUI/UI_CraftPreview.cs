@@ -49,11 +49,10 @@ public class UI_CraftPreview : MonoBehaviour
             changeButton = StartCoroutine(ChangeButtonText());
             return;
         }
-
-        if (storage.HasEnoughMaterials(itemToCraft) && storage.playerInventory.CanAddItem(itemToCraft))
+        //ÖÆ×÷
+        if (storage.CanCraftItem(itemToCraft))
         {
-            storage.ConsumeMaterials(itemToCraft);
-            storage.playerInventory.AddItem(itemToCraft);
+            storage.CraftItem(itemToCraft);
         }
 
         UpdateCraftPreviewSlots();

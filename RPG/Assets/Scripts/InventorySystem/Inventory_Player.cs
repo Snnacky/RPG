@@ -17,7 +17,7 @@ public class Inventory_Player : Inventory_Base
     //尝试装备物品
     public void TryEquipItem(Inventory_Item item)
     {
-        var inventoryItem = FindItem(item.itemData);//从物品栏里面找到该物品
+        var inventoryItem = FindItem(item);//从物品栏里面找到该物品
         var matchingSlot = equipList.FindAll(slot => slot.slotType == item.itemData.itemType);//装备栏中寻找所有类型相同的栏
         if (matchingSlot.Count == 0) return;
         foreach (var slot in matchingSlot)

@@ -16,4 +16,11 @@ MonoBehaviour:
   itemIcon: {fileID: -813457153, guid: 748ab983f671666478e286155eaa530d, type: 3}
   itemType: 4
   maxStackSize: 5
+  itemRarity: 769
+  dropChance: 23.2
+  maxDropChance: 65
   itemEffect: {fileID: 11400000, guid: 9db2fbc614b75894fae2ee9d0b000121, type: 2}
+  craftRecipe: []
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 1

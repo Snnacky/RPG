@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6664274545914721364}
   - component: {fileID: 3118162603395007928}
   - component: {fileID: 5302239064449877284}
+  - component: {fileID: -387532153815699112}
   m_Layer: 8
   m_Name: Object_Chest
   m_TagString: Untagged
@@ -121,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockback: {x: 0, y: 5}
+  canDropItems: 1
 --- !u!114 &5302239064449877284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +142,93 @@ MonoBehaviour:
   critHitvfx: {fileID: 0}
   chillvfx: {r: 0, g: 1, b: 1, a: 1}
   burnvfx: {r: 1, g: 0, b: 0, a: 1}
-  electrifyvfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  shockvfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!114 &-387532153815699112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2633611451046136446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84250b87042df5e41959fa659b056c63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defalutStatSetup: {fileID: 11400000, guid: 9d8e928bc3ad14848809fa1efeaccbe5, type: 2}
+  resources:
+    maxHealth:
+      baseValue: 1
+      modifiers: []
+    healthRegen:
+      baseValue: 0
+      modifiers: []
+  major:
+    strength:
+      baseValue: 0
+      modifiers: []
+    agility:
+      baseValue: 0
+      modifiers: []
+    intelligence:
+      baseValue: 0
+      modifiers: []
+    vitality:
+      baseValue: 0
+      modifiers: []
+  offense:
+    attackSpeed:
+      baseValue: 0
+      modifiers: []
+    basicalPhysicalDamage:
+      baseValue: 0
+      modifiers: []
+    chillDamage:
+      baseValue: 0
+      modifiers: []
+    fireDamage:
+      baseValue: 0
+      modifiers: []
+    lightningDamage:
+      baseValue: 0
+      modifiers: []
+    critPower:
+      baseValue: 0
+      modifiers: []
+    critChance:
+      baseValue: 0
+      modifiers: []
+    armorRedction:
+      baseValue: 0
+      modifiers: []
+    physicalScale:
+      baseValue: 0
+      modifiers: []
+    chillScale:
+      baseValue: 0
+      modifiers: []
+    fireScale:
+      baseValue: 0
+      modifiers: []
+    lightningScale:
+      baseValue: 0
+      modifiers: []
+  defense:
+    armor:
+      baseValue: 0
+      modifiers: []
+    evasion:
+      baseValue: 0
+      modifiers: []
+    fireResistance:
+      baseValue: 0
+      modifiers: []
+    iceResistance:
+      baseValue: 0
+      modifiers: []
+    lightningResistance:
+      baseValue: 0
+      modifiers: []
 --- !u!1 &3062412248703252164
 GameObject:
   m_ObjectHideFlags: 0
