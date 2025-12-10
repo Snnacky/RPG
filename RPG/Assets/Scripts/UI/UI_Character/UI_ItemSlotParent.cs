@@ -9,6 +9,7 @@ public class UI_ItemSlotParent : MonoBehaviour
     //¸üÐÂslotsµÄui
     public void UpdateSlots(List<Inventory_Item> itemList)
     {
+
         if(slots==null)
             slots = GetComponentsInChildren<UI_ItemSlot>();
 

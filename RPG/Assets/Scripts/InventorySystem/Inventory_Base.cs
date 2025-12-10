@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory_Base : MonoBehaviour
 {
-    public event Action OnInventoryChange;//事件触发在ui_Inventory,ui_PlayerStats
+    public event Action OnInventoryChange;//事件触发在ui_Inventory,ui_PlayerStats,UI_Merchant
 
     public int maxInventorySize = 10;//最大持有物品数量
     public List<Inventory_Item> itemList = new List<Inventory_Item>();//持有物品列表
@@ -26,7 +26,7 @@ public class Inventory_Base : MonoBehaviour
             consumable.RemoveStack();
         else
             RemoveOneItem(consumable);
-        OnInventoryChange?.Invoke(); 
+        TriggerUpdateUI();
     }
 
     public bool CanAddItem(Inventory_Item itemToAdd)
@@ -58,7 +58,7 @@ public class Inventory_Base : MonoBehaviour
             //新添加一个栏
             itemList.Add(itemToAdd);
         }
-        OnInventoryChange?.Invoke();//触发事件,更新ui
+        TriggerUpdateUI();//触发事件,更新ui
     }
     //移除物品
     public void RemoveOneItem(Inventory_Item itemToRemove)
@@ -68,7 +68,7 @@ public class Inventory_Base : MonoBehaviour
             itenInInventory.stackSize--;
         else
             itemList.Remove(itenInInventory);
-        OnInventoryChange?.Invoke();
+        TriggerUpdateUI();
     }
 
     public void RemoveFullStack(Inventory_Item itemToRemove)
@@ -85,5 +85,5 @@ public class Inventory_Base : MonoBehaviour
         return itemList.Find(item => item == itemToFind);
     }
 
-    public void TriggerUpdateUI() => OnInventoryChange?.Invoke();
+    public virtual void TriggerUpdateUI() => OnInventoryChange?.Invoke();
 }

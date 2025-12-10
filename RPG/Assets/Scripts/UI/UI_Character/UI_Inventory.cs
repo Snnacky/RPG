@@ -13,8 +13,6 @@ public class UI_Inventory : MonoBehaviour
 
     private void Awake()
     {
-
-
         inventory=FindFirstObjectByType<Inventory_Player>();
         inventory.OnInventoryChange += UpdateUI;
         UpdateUI();

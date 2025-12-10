@@ -16,6 +16,12 @@ public class Inventory_Merchant :Inventory_Base
         FillShopList();
     }
 
+    public override void TriggerUpdateUI()
+    {
+        base.TriggerUpdateUI();
+    }
+
+    //买
     public void TryBuyItem(Inventory_Item itemToBuy,bool buyFullStack)
     {
         int amuntToBuy = buyFullStack ? itemToBuy.stackSize : 1;
@@ -29,6 +35,7 @@ public class Inventory_Merchant :Inventory_Base
 
             if(itemToBuy.itemData.itemType==ItemType.Material)
             {
+                Debug.Log("m,ai");
                 playerInventory.storage.AddMaterialToStash(itemToBuy);
             }else
             {
@@ -43,7 +50,7 @@ public class Inventory_Merchant :Inventory_Base
             RemoveOneItem(itemToBuy);
         }
 
-        TriggerUpdateUI();
+        TriggerUpdateUI();//触发了的
     }
 
     public void TrySellItem(Inventory_Item itemToSell,bool sellFullStack)
@@ -70,7 +77,7 @@ public class Inventory_Merchant :Inventory_Base
         foreach(var itemData in shopData.itemList)
         {
             int randoziedStack = Random.Range(itemData.minStackSizeAtShop, itemData.maxStackSizeAtShop + 1);
-            int finalStack=Mathf.Clamp(randoziedStack,1,itemData.maxStackSize);//该物品的数量
+            int finalStack=Mathf.Clamp(randoziedStack,1,itemData.maxStackSizeAtShop);//该物品的数量
 
             Inventory_Item itemToAdd = new Inventory_Item(itemData);
             itemToAdd.stackSize = finalStack;

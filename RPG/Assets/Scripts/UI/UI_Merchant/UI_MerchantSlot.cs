@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_MerchantSlot : UI_ItemSlot
+public class UI_MerchantSlot : UI_ItemSlot//,IPointerClickHandler
 {
     private Inventory_Merchant merchant;
     public enum MerchantSlotType { MerchantSlot,PlayerSlot}
     public MerchantSlotType slotType;
 
+
     public override void OnPointerDown(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+
         if (itemInSlot == null)
             return;
+
         //Âô
         if(slotType==MerchantSlotType.PlayerSlot)
         {
@@ -40,4 +44,5 @@ public class UI_MerchantSlot : UI_ItemSlot
     }
 
     public void SetupMerchantUI(Inventory_Merchant merchant) => this.merchant = merchant;
+
 }

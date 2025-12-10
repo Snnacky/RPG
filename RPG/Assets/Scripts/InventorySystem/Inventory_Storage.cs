@@ -101,11 +101,18 @@ public class Inventory_Storage : Inventory_Base
     public void AddMaterialToStash(Inventory_Item itemToAdd)
     {
         var stackableItem = StackableInStash(itemToAdd);
-
+        Debug.Log("1");
         if (stackableItem != null)
+        {
+            Debug.Log("2");
             stackableItem.AddStack();
+        }
         else
-            materialStash.Add(itemToAdd);
+        {
+            var item = new Inventory_Item(itemToAdd.itemData);
+            Debug.Log("3");
+            materialStash.Add(item);
+        }
         
         TriggerUpdateUI();
     }

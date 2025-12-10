@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Ice Crystal
   itemIcon: {fileID: -1111798112, guid: 748ab983f671666478e286155eaa530d, type: 3}
   itemType: 0
-  maxStackSize: 99
+  maxStackSize: 2
   itemRarity: 759
   dropChance: 24.2
   maxDropChance: 65
@@ -23,4 +23,4 @@ MonoBehaviour:
   craftRecipe: []
   itemPrice: 100
   minStackSizeAtShop: 1
-  maxStackSizeAtShop: 99
+  maxStackSizeAtShop: 20
