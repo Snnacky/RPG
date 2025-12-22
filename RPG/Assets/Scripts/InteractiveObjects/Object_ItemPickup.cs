@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 //添加在物品模型
 public class Object_ItemPickup : MonoBehaviour
 {
@@ -12,12 +13,28 @@ public class Object_ItemPickup : MonoBehaviour
     [SerializeField] private Collider2D col;
     [SerializeField] private SpriteRenderer sr;
 
+    private bool mustStop = false;
+
+    private float dropDuration = 1.5f;
+
     private void OnValidate()
     {
         if (itemData == null) return;
 
         sr=GetComponent<SpriteRenderer>();
         
+    }
+
+    private void Start()
+    {
+        // 启动一个计时器，在 DropDuration 秒后调用 StopMovement
+        Invoke("StopMovement", dropDuration);
+    }
+
+    void StopMovement()
+    {
+        mustStop = true;
+        rb.velocity = new Vector2(0, rb.velocity.y);
     }
 
     public void SetupItem(ItemDataSO itemData)
@@ -32,11 +49,16 @@ public class Object_ItemPickup : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") && col.isTrigger == false)
+        if(mustStop)
         {
-            col.isTrigger = true;
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") && col.isTrigger == false)
+            {
+                 col.isTrigger = true;
+                 col.excludeLayers = 0;
+                 rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
         }
+        
     }
 
     private void SetupVisuals()

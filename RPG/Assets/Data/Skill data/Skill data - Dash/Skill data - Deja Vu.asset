@@ -23,10 +23,9 @@ MonoBehaviour:
   skillType: 0
   upgradeData:
     upgradeType: 3
-    cooldown: 3
-    damageScale:
-      physical: 1
-      elemental: 1
+    cooldown: 0.5
+    damageData:
+      elementType: 0
       chillDuration: 3
       chillSlowMultiplier: 0.2
       burnDuration: 3
@@ -34,3 +33,4 @@ MonoBehaviour:
       shockDuration: 3
       shockDamageScale: 1
       shockCharge: 0.4
+  skillModifier: []

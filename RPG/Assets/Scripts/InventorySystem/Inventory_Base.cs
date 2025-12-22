@@ -64,6 +64,7 @@ public class Inventory_Base : MonoBehaviour
     public void RemoveOneItem(Inventory_Item itemToRemove)
     {
         Inventory_Item itenInInventory = itemList.Find(item => item == itemToRemove);
+        Debug.Log("3");
         if (itenInInventory.stackSize > 1)
             itenInInventory.stackSize--;
         else

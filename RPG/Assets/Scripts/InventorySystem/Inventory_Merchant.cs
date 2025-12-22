@@ -5,6 +5,7 @@ using UnityEngine;
 public class Inventory_Merchant :Inventory_Base
 {
     private Inventory_Player playerInventory;
+    private Inventory_Storage storage;
 
     [SerializeField] private ItemListDataSO shopData;//所有可售出的物品
     [SerializeField] private int minItemsAmount = 4;
@@ -14,6 +15,7 @@ public class Inventory_Merchant :Inventory_Base
     {
         base.Awake();
         FillShopList();
+        storage = FindAnyObjectByType<Inventory_Storage>(FindObjectsInactive.Include);
     }
 
     public override void TriggerUpdateUI()
@@ -35,7 +37,6 @@ public class Inventory_Merchant :Inventory_Base
 
             if(itemToBuy.itemData.itemType==ItemType.Material)
             {
-                Debug.Log("m,ai");
                 playerInventory.storage.AddMaterialToStash(itemToBuy);
             }else
             {
@@ -53,7 +54,7 @@ public class Inventory_Merchant :Inventory_Base
         TriggerUpdateUI();//触发了的
     }
 
-    public void TrySellItem(Inventory_Item itemToSell,bool sellFullStack)
+    public void TrySellItem(Inventory_Item itemToSell,bool sellFullStack,bool isInventorySlot )
     {
         int amountToSell = sellFullStack ? itemToSell.stackSize : 1;
         for (int i = 0; i < amountToSell; i++)
@@ -61,7 +62,10 @@ public class Inventory_Merchant :Inventory_Base
             int sellPrice = Mathf.FloorToInt(itemToSell.sellPrice);
 
             playerInventory.gold += sellPrice;
-            playerInventory.RemoveOneItem(itemToSell);
+            if (isInventorySlot)
+                playerInventory.RemoveOneItem(itemToSell);
+            else
+                storage.RemoveMaterial(itemToSell);
         }
 
         TriggerUpdateUI();

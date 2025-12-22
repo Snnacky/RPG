@@ -12,12 +12,21 @@ public class UI_ItemToolTip : UI_ToolTip
     [SerializeField] private TextMeshProUGUI itemPrice;
     [SerializeField] private Transform merchantInfo;
     [SerializeField] private Transform inventoryInfo;
+    [TextArea]
+    [SerializeField] private string merchantInfoText;
+    [TextArea]
+    [SerializeField] private string inventoryInfoText;
 
-    public void ShowToolTip(bool show, RectTransform targetRect, Inventory_Item itemToShow, bool buyPrice=false, bool showMerchantInfo=false)
+    public void ShowToolTip(bool show, RectTransform targetRect, Inventory_Item itemToShow, bool buyPrice=false, bool showMerchantInfo=false , bool isMerchantSlot = false)
     {
         base.ShowToolTip(show, targetRect);
+        var textMeshPro=merchantInfo.GetComponent<TextMeshProUGUI>();
+        if (showMerchantInfo && isMerchantSlot)
+            textMeshPro.text = merchantInfoText;
+        else if (showMerchantInfo && isMerchantSlot == false)
+            textMeshPro.text = inventoryInfoText;
 
-        merchantInfo.gameObject.SetActive(showMerchantInfo);
+            merchantInfo.gameObject.SetActive(showMerchantInfo);
         inventoryInfo.gameObject.SetActive(!showMerchantInfo);
 
         int price = buyPrice ? itemToShow.buyPrice : Mathf.FloorToInt(itemToShow.sellPrice);

@@ -101,19 +101,26 @@ public class Inventory_Storage : Inventory_Base
     public void AddMaterialToStash(Inventory_Item itemToAdd)
     {
         var stackableItem = StackableInStash(itemToAdd);
-        Debug.Log("1");
         if (stackableItem != null)
         {
-            Debug.Log("2");
             stackableItem.AddStack();
         }
         else
         {
             var item = new Inventory_Item(itemToAdd.itemData);
-            Debug.Log("3");
             materialStash.Add(item);
         }
         
+        TriggerUpdateUI();
+    }
+
+    public void RemoveMaterial(Inventory_Item itemToRemove)
+    {
+        Inventory_Item itenInInventory = materialStash.Find(item => item == itemToRemove);
+        if (itenInInventory.stackSize > 1)
+            itenInInventory.stackSize--;
+        else
+            materialStash.Remove(itenInInventory);
         TriggerUpdateUI();
     }
 
