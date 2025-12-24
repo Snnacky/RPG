@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Vital Anchor
   description: When you swap payerces with the Time Shard,your health reverts to
     the amount you had when the Time Shrd was created.
-  icon: {fileID: -541909463, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  icon: {fileID: 1950828800, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 3
   unlockedByDefualt: 0
   skillType: 2
@@ -24,14 +24,11 @@ MonoBehaviour:
     cooldown: 4
     damageData:
       elementType: 2
-      physicalDamage: 0
-      chillDamage: 10
       chillDuration: 3
       chillSlowMultiplier: 0.2
-      burnDamage: 0
       burnDuration: 3
       burnDamageScale: 1
-      shockDamage: 0
       shockDuration: 3
       shockDamageScale: 1
       shockCharge: 0.4
+  skillModifier: []

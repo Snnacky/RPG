@@ -7,6 +7,7 @@ public class Object_Chest : MonoBehaviour , IDamgable
     private Rigidbody2D rb =>GetComponent<Rigidbody2D>();
     private Animator anim=>GetComponentInChildren<Animator>();
     private Entity_VFX fx =>GetComponent<Entity_VFX>();
+    private BoxCollider2D col => GetComponent<BoxCollider2D>();
 
     private Entity_DropManager dropManager=>GetComponent<Entity_DropManager>();
     [Header("Open Details")]
@@ -21,6 +22,10 @@ public class Object_Chest : MonoBehaviour , IDamgable
         anim?.SetBool("chestOpen", true);
         rb.velocity = knockback;
         rb.angularVelocity = Random.Range(-50f, 50f);
+
+
+        gameObject.layer = 0;
+        col.excludeLayers = LayerMask.GetMask("Player");
         return true;
     }
 

@@ -13,24 +13,21 @@ MonoBehaviour:
   m_Name: Skill data - Endless Possibility
   m_EditorClassIdentifier: 
   displayName: Endless Posibility
-  description: The Time echo has a 30% chance to duplicate itself.
-  icon: {fileID: -1757438891, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  description: "\u65F6\u95F4\u56DE\u58F0\u670930%\u7684\u673A\u4F1A\u590D\u5236\u81EA\u5DF1\u3002"
+  icon: {fileID: -357765113, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 2
   unlockedByDefualt: 0
   skillType: 1
   upgradeData:
     upgradeType: 18
-    cooldown: 0
+    cooldown: 2
     damageData:
       elementType: 1
-      physicalDamage: 0
-      chillDamage: 0
       chillDuration: 3
       chillSlowMultiplier: 0.2
-      burnDamage: 10
       burnDuration: 3
       burnDamageScale: 1
-      shockDamage: 0
       shockDuration: 3
       shockDamageScale: 1
       shockCharge: 0.4
+  skillModifier: []

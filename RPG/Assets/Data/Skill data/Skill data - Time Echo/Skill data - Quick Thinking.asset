@@ -13,24 +13,21 @@ MonoBehaviour:
   m_Name: Skill data - Quick Thinking
   m_EditorClassIdentifier: 
   displayName: Quick Thinking
-  description: "The healing wisp reduces cooldowns of your other skills by 1 second.\u52A0\u5FEB\u6280\u80FD\u51B7\u53741\u79D2"
-  icon: {fileID: 1364871877, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  description: "\u7597\u6108\u5C0F\u7CBE\u7075\u4F1A\u5C06\u4F60\u5176\u4ED6\u6280\u80FD\u7684\u51B7\u5374\u65F6\u95F4\u51CF\u5C111\u79D2"
+  icon: {fileID: -125747137, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 3
   unlockedByDefualt: 0
   skillType: 1
   upgradeData:
     upgradeType: 21
-    cooldown: 0
+    cooldown: 2
     damageData:
       elementType: 1
-      physicalDamage: 0
-      chillDamage: 0
       chillDuration: 3
       chillSlowMultiplier: 0.2
-      burnDamage: 10
       burnDuration: 3
       burnDamageScale: 1
-      shockDamage: 0
       shockDuration: 3
       shockDamageScale: 1
       shockCharge: 0.4
+  skillModifier: []

@@ -13,24 +13,21 @@ MonoBehaviour:
   m_Name: Skill data - Echo Barrage
   m_EditorClassIdentifier: 
   displayName: Echo Barrage
-  description: The Time echo can perform 3 attack.
-  icon: {fileID: 883857307, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  description: "\u65F6\u95F4\u56DE\u58F0\u53EF\u4EE5\u6267\u884C3\u6B21\u653B\u51FB\u3002"
+  icon: {fileID: 299436986, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 2
   unlockedByDefualt: 0
   skillType: 1
   upgradeData:
     upgradeType: 17
-    cooldown: 0
+    cooldown: 2
     damageData:
       elementType: 1
-      physicalDamage: 0
-      chillDamage: 0
       chillDuration: 3
       chillSlowMultiplier: 0.2
-      burnDamage: 10
       burnDuration: 3
       burnDamageScale: 1
-      shockDamage: 0
       shockDuration: 3
       shockDamageScale: 1
       shockCharge: 0.4
+  skillModifier: []

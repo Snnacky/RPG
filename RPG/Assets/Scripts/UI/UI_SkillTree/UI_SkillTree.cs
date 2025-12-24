@@ -6,21 +6,29 @@ public class UI_SkillTree : MonoBehaviour
 {
     [SerializeField] private int skillPoints;
     [SerializeField] private UI_TreeConnectHandler[] parentNodes;
+    private UI_TreeNode[] allTreeNodes;
 
     public Player_SkillManager skillManager { get; private set; }
     public bool EnoughSkillPoints(int cost) => skillPoints >= cost;
     public void RemoveSkillPoints(int cost) => skillPoints -= cost;
     public void AddSkillPoints(int points) => skillPoints += points;
 
-    private void Awake()
-    {
-        skillManager = FindAnyObjectByType<Player_SkillManager>();
-    }
 
     private void Start()
     {
         UpdateAllConnections();
     }
+
+    //解锁初始技能
+    public void UnlockDefaultSkills()
+    {
+        skillManager = FindAnyObjectByType<Player_SkillManager>();
+        allTreeNodes=GetComponentsInChildren<UI_TreeNode>(true);
+
+        foreach(var node in allTreeNodes)
+            node.UnlockDefaultSkill();
+    }
+
 
     [ContextMenu("Reset Skill Tree")]
     public void RefundAllSkills()//返回所有的技能点

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d42bd828a3afaa548aa91f34f5a7119d, type: 3}
-  m_Name: List of items - Armors tocraft
+  m_Name: List of items - Armors to craft
   m_EditorClassIdentifier: 
   itemList:
   - {fileID: 11400000, guid: d7f6c506f34cfb943bec7b014d176a9c, type: 2}

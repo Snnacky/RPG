@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: The Buffetswrd
   description: Launch a sword that flies forward,plercing through up to N enemies
     in its path.
-  icon: {fileID: 492229180, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  icon: {fileID: 1396357970, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 2
   unlockedByDefualt: 0
   skillType: 3

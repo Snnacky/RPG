@@ -145,7 +145,7 @@ public class DamageCalculator:ScriptableObject
         switch (elementType)
         {
             case ElementType.Ice:return attacker_Stats.offense.chillDamage.GetValue();
-            case ElementType.Fire:return attacker_Stats.offense.fireScale.GetValue();
+            case ElementType.Fire:return attacker_Stats.offense.fireDamage.GetValue();
             case ElementType.Lightning:return attacker_Stats.offense.lightningDamage.GetValue();
             case ElementType.None:return 0;
             default: return 0;

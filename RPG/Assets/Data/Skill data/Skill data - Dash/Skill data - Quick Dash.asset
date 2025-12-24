@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 'Dash to avoid attacks.
 
     You cannot take damage while dashing.'
-  icon: {fileID: 1095764707, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  icon: {fileID: 1452724251, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 0
   unlockedByDefualt: 1
   skillType: 0

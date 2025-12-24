@@ -7,10 +7,11 @@ public class Inventory_Storage : Inventory_Base
     public Inventory_Player playerInventory;
     public List<Inventory_Item> materialStash;
 
+    //制作物品
     public void CraftItem(Inventory_Item itemToCraft)
     {
-        ConsumeMaterials(itemToCraft);
-        playerInventory.AddItem(itemToCraft);
+        ConsumeMaterials(itemToCraft);//消耗材料
+        playerInventory.AddItem(itemToCraft);//添加物品
     }
 
     public bool CanCraftItem(Inventory_Item itemToCraft)
@@ -18,20 +19,20 @@ public class Inventory_Storage : Inventory_Base
         return HasEnoughMaterials(itemToCraft) && playerInventory.CanAddItem(itemToCraft);
     }
 
-
+    //消耗材料
     private void ConsumeMaterials(Inventory_Item itemToCraft)
     {
         foreach (var requiredItem in itemToCraft.itemData.craftRecipe)
         {
             int amountToConsume = requiredItem.stackSize;
 
-            amountToConsume -= ConsumedMaterilasAmount(playerInventory.itemList, requiredItem);
+            amountToConsume -= ConsumedMaterilasAmount(playerInventory.itemList, requiredItem);//消耗玩家身上的
 
             if (amountToConsume > 0)
-                amountToConsume -= ConsumedMaterilasAmount(itemList, requiredItem);
+                amountToConsume -= ConsumedMaterilasAmount(itemList, requiredItem);//消耗仓库里面的
 
             if (amountToConsume > 0)
-                amountToConsume -= ConsumedMaterilasAmount(materialStash, requiredItem);
+                amountToConsume -= ConsumedMaterilasAmount(materialStash, requiredItem);//消耗材料库里面的
         }
     }
 
@@ -40,8 +41,9 @@ public class Inventory_Storage : Inventory_Base
     {
         int amountNeeded = neededItem.stackSize;
         int consumedAmount = 0;
+        List<Inventory_Item> list = new List<Inventory_Item>(itemList);
 
-        foreach(var item in itemList)
+        foreach(var item in list)
         {
             if (item.itemData != neededItem.itemData)
                 continue;

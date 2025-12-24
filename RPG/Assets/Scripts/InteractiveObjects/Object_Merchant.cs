@@ -16,8 +16,6 @@ public class Object_Merchant : Object_NPC, IInteractable
     protected override void Update()
     {
         base.Update();
-        if(Input.GetKeyDown(KeyCode.Z))
-            merchant.FillShopList();
     }
 
     public void Interact()

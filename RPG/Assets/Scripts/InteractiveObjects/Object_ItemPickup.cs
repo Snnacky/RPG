@@ -5,7 +5,7 @@ using UnityEngine.Assertions.Must;
 //添加在物品模型
 public class Object_ItemPickup : MonoBehaviour
 {
-    [SerializeField] private Vector2 dropForce = new Vector2(3, 10);
+    [SerializeField] private Vector2 dropForce = new Vector2(3, 10);//丢出的力
     [SerializeField] private ItemDataSO itemData;
 
     [Space]
@@ -27,7 +27,7 @@ public class Object_ItemPickup : MonoBehaviour
 
     private void Start()
     {
-        // 启动一个计时器，在 DropDuration 秒后调用 StopMovement
+        // 启动一个计时器，在 dropDuration 秒后调用 StopMovement
         Invoke("StopMovement", dropDuration);
     }
 
@@ -37,6 +37,7 @@ public class Object_ItemPickup : MonoBehaviour
         rb.velocity = new Vector2(0, rb.velocity.y);
     }
 
+    //初始化
     public void SetupItem(ItemDataSO itemData)
     {
         this.itemData = itemData;
@@ -54,7 +55,7 @@ public class Object_ItemPickup : MonoBehaviour
             if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") && col.isTrigger == false)
             {
                  col.isTrigger = true;
-                 col.excludeLayers = 0;
+                 col.excludeLayers = 0;//不排除所有层
                  rb.constraints = RigidbodyConstraints2D.FreezeAll;
             }
         }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Entity_Health : MonoBehaviour, IDamgable
 {
     public event Action OnTakingDamage;//ItemEffect_IceBlastOnTakingDamage
+    public event Action OnHealthUpdate;//ui_inGame
 
     public float currentHp;
     public bool isDead;
@@ -46,6 +47,8 @@ public class Entity_Health : MonoBehaviour, IDamgable
     {
         if (entityStats == null) return;
         currentHp = entityStats.GetMaxHealth();
+
+        OnHealthUpdate += updateHealthBar;
         updateHealthBar();
         InvokeRepeating(nameof(RegenerateHealth), 0, regenInterval);
     }
@@ -84,8 +87,11 @@ public class Entity_Health : MonoBehaviour, IDamgable
         float maxHp = entityStats.GetMaxHealth();
 
         currentHp = Mathf.Min(newHp, maxHp);
-        updateHealthBar();
+
+        OnHealthUpdate?.Invoke();
     }
+
+    public float GetCurrentHealth() => currentHp;
 
     //是否闪避掉
     private bool AttackEvaded()
@@ -95,9 +101,10 @@ public class Entity_Health : MonoBehaviour, IDamgable
   
     public void ReduceHp(float damage)
     {
-        entity_VFX?.PlayOnDamageVfx();//更换角色颜色
         currentHp -= damage;
-        updateHealthBar();
+        entity_VFX?.PlayOnDamageVfx();//更换角色颜色
+        OnHealthUpdate?.Invoke();
+
         if (currentHp <= 0)
             Die();
     }
@@ -116,7 +123,7 @@ public class Entity_Health : MonoBehaviour, IDamgable
     public void SetHealthToPercent(float percent)
     {
         currentHp = entityStats.GetMaxHealth() * Mathf.Clamp01(percent);
-        updateHealthBar();
+        OnHealthUpdate?.Invoke();
     }
 
     //计算击退的效果大小

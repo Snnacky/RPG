@@ -12,7 +12,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public UI_TreeNode[] neededNodes;//解锁所需node
     public UI_TreeNode[] conflictNodes;
     public bool isUnlocked;//已经解开了
-    public bool isLocked;//被锁住了(技能冲突)
+    public bool isLimited;//被锁住了(技能冲突)
 
     [Header("Skill details")]
     public Skill_DataSO skillData;
@@ -35,28 +35,34 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         gameObject.name = "UI_TreeNode - " + skillData.displayName;
     }
 
-    private void Awake()
+
+    //获取组件
+    private void GetNeededComponents()
     {
         ui = GetComponentInParent<UI>();
         rect = GetComponent<RectTransform>();
-        skillTree = GetComponentInParent<UI_SkillTree>();
+        skillTree = GetComponentInParent<UI_SkillTree>(true);
         connectHandler = GetComponent<UI_TreeConnectHandler>();
-        UpdateIconColor(GetColorByHex(lockedColorHex));//初始化颜色
     }
 
     private void Start()
     {
+        UnlockDefaultSkill();
+    }
+
+    public void UnlockDefaultSkill()
+    {
+        GetNeededComponents();
         //默认解锁
         if (skillData.unlockedByDefualt)
             Unlock();
-        
     }
 
     private void OnEnable()
     {
         //没有被解开
         if(isUnlocked==false)
-            UpdateIconColor(GetColorByHex(lockedColorHex));
+            UpdateIconColor(GetColorByHex(lockedColorHex));//灰色颜色
 
     }
 
@@ -65,7 +71,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (isUnlocked == false || skillData.unlockedByDefualt)
             return;
         isUnlocked = false;
-        isLocked = false;
+        isLimited = false;
         UpdateIconColor(GetColorByHex(lockedColorHex));
 
         skillTree.AddSkillPoints(skillData.cost);//增加技能点
@@ -75,6 +81,9 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     //解锁
     private void Unlock()
     {
+        if (isUnlocked)
+            return;
+
         isUnlocked = true;
         UpdateIconColor(Color.white);
         LockConflictNodes();
@@ -90,7 +99,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     //检查是否可以解锁
     private bool CanBeUnlocked()
     {
-        if (isLocked || isUnlocked)
+        if (isLimited || isUnlocked)
             return false;
         if (skillTree.EnoughSkillPoints(skillData.cost) == false)
             return false;
@@ -114,14 +123,14 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         foreach (var node in conflictNodes)
         {
-            node.isLocked = true;
+            node.isLimited = true;
             node.LockChildNodes();//锁定冲突技能以下的所有技能
         }
     }
     //锁定冲突技能以下的所有技能
     public void LockChildNodes()
     {
-        isLocked = true;
+        isLimited = true;
         foreach (var node in connectHandler.GetChildNodes())
             node.LockChildNodes();
     }
@@ -139,7 +148,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (CanBeUnlocked())
             Unlock();
-        else if (isLocked)
+        else if (isLimited)
             ui.skillToolTip.LockedSkillEffect();
 
     }
@@ -147,9 +156,9 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     //鼠标点进区域
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ui.skillToolTip.ShowToolTip(true, rect, this);
+        ui.skillToolTip.ShowToolTip(true, rect, skillData, this);
 
-        if (isUnlocked || isLocked)
+        if (isUnlocked || isLimited)
             return;
         ToggleNodeHighlight(true);//高亮
 
@@ -160,7 +169,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         ui.skillToolTip.ShowToolTip(false, rect);
 
-        if (isUnlocked || isLocked)
+        if (isUnlocked || isLimited)
             return;
 
         ToggleNodeHighlight(false);//关闭高亮
@@ -182,7 +191,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void OnDisable()
     {
-        if (isLocked)
+        if (isLimited)
             UpdateIconColor(GetColorByHex(lockedColorHex));
         if (isUnlocked)
             UpdateIconColor(Color.white);

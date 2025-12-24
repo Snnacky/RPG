@@ -31,11 +31,12 @@ public class SkillObject_Base : MonoBehaviour
     //伤害判定
     protected void DamageEnemiesIndius(Transform t,float enemyCheckRadius)
     {
-        foreach (var enemy in GetEnemiersAround(t,enemyCheckRadius))
+        //范围内的敌人
+        foreach (var defender in GetEnemiersAround(t,enemyCheckRadius))
         {
-            IDamgable damgable = enemy.GetComponent<IDamgable>();
+            IDamgable damgable = defender.GetComponent<IDamgable>();
             if (damgable == null) continue;
-            Entity_Stats defender_Stats=enemy.GetComponent<Entity_Stats>();
+            Entity_Stats defender_Stats=defender.GetComponent<Entity_Stats>();
             if(defender_Stats==null) continue;
             AttackData attackData = playerStats.GetAttackData(damageData,defender_Stats);
 
@@ -52,12 +53,12 @@ public class SkillObject_Base : MonoBehaviour
             //造成伤害
             if (targetGotHit)
             {
-                lastTarget = enemy.transform;
-                Instantiate(onHitVfx, enemy.transform.position, Quaternion.identity);
+                lastTarget = defender.transform;
+                Instantiate(onHitVfx, defender.transform.position, Quaternion.identity);
             }
 
             if(elementType!=ElementType.None)//应用元素效果
-                enemy.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(elementType, attackData.effectData);
+                defender.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(elementType, attackData.effectData);
         }
     }
 

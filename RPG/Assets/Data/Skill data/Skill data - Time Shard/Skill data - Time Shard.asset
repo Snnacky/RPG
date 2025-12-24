@@ -17,7 +17,7 @@ MonoBehaviour:
 
     The shard explodes
     when touched by an enemy or when time goes up.'
-  icon: {fileID: 658542408, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  icon: {fileID: -30954946, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 0
   unlockedByDefualt: 0
   skillType: 2
@@ -26,14 +26,11 @@ MonoBehaviour:
     cooldown: 1
     damageData:
       elementType: 2
-      physicalDamage: 0
-      chillDamage: 10
       chillDuration: 3
       chillSlowMultiplier: 0.2
-      burnDamage: 0
       burnDuration: 3
       burnDamageScale: 1
-      shockDamage: 0
       shockDuration: 3
       shockDamageScale: 1
       shockCharge: 0.4
+  skillModifier: []

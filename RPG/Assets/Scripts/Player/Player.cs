@@ -7,7 +7,7 @@ public class Player : Entity
 {
     public static event Action OnPlayerDeathh;
 
-    private UI ui;
+    public UI ui {  get; private set; }
     public PlayerInputSet input { get; private set; }//ÊäÈë
     public Vector2 moveInput { get; private set; }
     public Player_SkillManager skillManager { get; private set; }
@@ -226,6 +226,8 @@ public class Player : Entity
 
     private void OnEnable()
     {
+        if (input == null)
+            input = new PlayerInputSet();
         input.Enable();
 
         input.Player.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();

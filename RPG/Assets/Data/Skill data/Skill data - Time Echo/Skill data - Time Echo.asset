@@ -13,16 +13,14 @@ MonoBehaviour:
   m_Name: Skill data - Time Echo
   m_EditorClassIdentifier: 
   displayName: Time Echo
-  description: 'Creat a time echo of yourself.
-
-    The echo distracts enemies.'
-  icon: {fileID: -130879899, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  description: "\u521B\u9020\u4F60\u81EA\u5DF1\u7684\u65F6\u95F4\u56DE\u58F0\u3002\n\u56DE\u58F0\u53EF\u4EE5\u5206\u6563\u654C\u4EBA\u7684\u6CE8\u610F\u529B\u3002"
+  icon: {fileID: -1337565846, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 1
   unlockedByDefualt: 0
   skillType: 1
   upgradeData:
     upgradeType: 15
-    cooldown: 0
+    cooldown: 2
     damageData:
       elementType: 1
       chillDuration: 3

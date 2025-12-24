@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6116760201853737025}
   - component: {fileID: 8351005789768495465}
   - component: {fileID: -8386827347491887771}
+  - component: {fileID: 3678797926688640938}
   m_Layer: 7
   m_Name: SkillObject_TimeEcho
   m_TagString: Player
@@ -112,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b5e989614934c458209c8dffd287a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalPlayer: {fileID: 0}
   onHitVfx: {fileID: 5989842939695768604, guid: 15c2ccabbd0d8d744b1634578af8d2b5, type: 3}
   whatIsEnemy:
     serializedVersion: 2
@@ -119,6 +121,7 @@ MonoBehaviour:
   targetCheck: {fileID: 5127595321491902384}
   attackCheckRadius: 1
   enemyCheckRadius: 10
+  wispMoveSpeed: 15
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
@@ -137,6 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHp: 1
   isDead: 0
+  canTakeDamage: 1
   regenInterval: 1
   canRegenerateHealth: 0
   knockbackDuration: 0.2
@@ -144,6 +148,92 @@ MonoBehaviour:
   heavyDamageThreshold: 0.3
   heavyKnockbackDuration: 0.5
   onHeavyDamageKnockback: {x: 7, y: 7}
+--- !u!114 &3678797926688640938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36141950851800601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cafd2d90ec53447498b7f8e13936adb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defalutStatSetup: {fileID: 11400000, guid: 8306f54ddac7e0d48830d3a8cd7447f2, type: 2}
+  resources:
+    maxHealth:
+      baseValue: 1
+      modifiers: []
+    healthRegen:
+      baseValue: 0
+      modifiers: []
+  major:
+    strength:
+      baseValue: 0
+      modifiers: []
+    agility:
+      baseValue: 0
+      modifiers: []
+    intelligence:
+      baseValue: 0
+      modifiers: []
+    vitality:
+      baseValue: 0
+      modifiers: []
+  offense:
+    attackSpeed:
+      baseValue: 0
+      modifiers: []
+    basicalPhysicalDamage:
+      baseValue: 0
+      modifiers: []
+    chillDamage:
+      baseValue: 0
+      modifiers: []
+    fireDamage:
+      baseValue: 0
+      modifiers: []
+    lightningDamage:
+      baseValue: 0
+      modifiers: []
+    critPower:
+      baseValue: 0
+      modifiers: []
+    critChance:
+      baseValue: 0
+      modifiers: []
+    armorRedction:
+      baseValue: 0
+      modifiers: []
+    physicalScale:
+      baseValue: 0
+      modifiers: []
+    chillScale:
+      baseValue: 0
+      modifiers: []
+    fireScale:
+      baseValue: 0
+      modifiers: []
+    lightningScale:
+      baseValue: 0
+      modifiers: []
+  defense:
+    armor:
+      baseValue: 0
+      modifiers: []
+    evasion:
+      baseValue: 0
+      modifiers: []
+    fireResistance:
+      baseValue: 0
+      modifiers: []
+    iceResistance:
+      baseValue: 0
+      modifiers: []
+    lightningResistance:
+      baseValue: 0
+      modifiers: []
 --- !u!1 &3032228049335307295
 GameObject:
   m_ObjectHideFlags: 0

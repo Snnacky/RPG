@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Mirror Shard
   description: Time shard now has 3 charges.
-  icon: {fileID: -16720653, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  icon: {fileID: -1274634490, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 3
   unlockedByDefualt: 0
   skillType: 2
@@ -23,14 +23,11 @@ MonoBehaviour:
     cooldown: 4
     damageData:
       elementType: 3
-      physicalDamage: 0
-      chillDamage: 0
       chillDuration: 3
       chillSlowMultiplier: 0.2
-      burnDamage: 0
       burnDuration: 3
       burnDamageScale: 1
-      shockDamage: 10
       shockDuration: 3
       shockDamageScale: 1
       shockCharge: 0.4
+  skillModifier: []

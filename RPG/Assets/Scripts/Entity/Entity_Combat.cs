@@ -27,15 +27,13 @@ public class Entity_Combat : MonoBehaviour
 
     public void PerformAttack()
     {
-        foreach (var enemy in GetDetectedColliders())
+        foreach (var defender in GetDetectedColliders())
         {
-            
-            IDamgable damegable = enemy.GetComponent<IDamgable>();//entity_health,object_Chest
-            Entity_Stats defender_Stats = enemy.GetComponent<Entity_Stats>();
+            IDamgable damegable = defender.GetComponent<IDamgable>();//entity_health,object_Chest
+            Entity_Stats defender_Stats = defender.GetComponent<Entity_Stats>();
             if (damegable == null || defender_Stats == null) continue;
-           
             AttackData attackData = stats.GetAttackData(damageData, defender_Stats);
-            Entity_StatusHandler statusHandler = enemy.GetComponent<Entity_StatusHandler>();
+            Entity_StatusHandler statusHandler = defender.GetComponent<Entity_StatusHandler>();
 
             float physicalDamage = attackData.physicalDamage;//获取物理伤害
 
@@ -50,14 +48,9 @@ public class Entity_Combat : MonoBehaviour
             if (targetGetHit)//敌方受到攻击
             {
                 OnDoingPhysicalDamage?.Invoke(physicalDamage);
-                OnDoingDamage?.Invoke(enemy);
-                vfx.CreatOnHitVfx(enemy.transform, attackData.isCrit, elementType);//打在敌人身上的效果
+                OnDoingDamage?.Invoke(defender);
+                vfx.CreatOnHitVfx(defender.transform, attackData.isCrit, elementType);//打在敌人身上的效果
             }
-            
-
-            
-
-
         }
     }
 

@@ -34,19 +34,24 @@ public class UI_SkillToolTip : UI_ToolTip
         base.ShowToolTip(show, targetRect);
     }
 
-    public void ShowToolTip(bool show, RectTransform targetRect, UI_TreeNode node)
+    public void ShowToolTip(bool show, RectTransform targetRect,Skill_DataSO skillData , UI_TreeNode node)
     {
         base.ShowToolTip(show, targetRect);
 
         if (show == false)
             return;
 
-        skillName.text = node.skillData.displayName;
-        skillDescription.text = node.skillData.description;
-        skillCoolDown.text = "Cooldown: " + node.skillData.upgradeData.cooldown + "s.  ";
+        skillName.text = skillData.displayName;
+        skillDescription.text =skillData.description;
+        skillCoolDown.text = "Cooldown: " + skillData.upgradeData.cooldown + "s.  ";
 
+        if(node==null)
+        {
+            skillRequirements.text = "";
+            return;
+        }
         string skillLockedText = GetColoredText(importantInfoHex, lockedSkillText);
-        string requirements=node.isLocked?skillLockedText: GetRequirements(node.skillData.cost, node.neededNodes, node.conflictNodes);
+        string requirements=node.isLimited?skillLockedText: GetRequirements(node.skillData.cost, node.neededNodes, node.conflictNodes);
 
         skillRequirements.text = requirements;
     }

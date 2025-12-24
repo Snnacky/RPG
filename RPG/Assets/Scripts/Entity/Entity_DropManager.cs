@@ -18,6 +18,7 @@ public class Entity_DropManager : MonoBehaviour
             DropItems();
     }
 
+    //掉落物品
     public virtual void DropItems()
     {
         if(dropData == null)
@@ -35,13 +36,14 @@ public class Entity_DropManager : MonoBehaviour
         }
     }
 
-
+    //生成掉落物
     protected void CreateItemDrop(ItemDataSO itemToDrop)
     {
         GameObject newItem = Instantiate(itemDropPrefab,transform.position,Quaternion.identity);
         newItem.GetComponent<Object_ItemPickup>().SetupItem(itemToDrop);
     }
 
+    //选择要掉落的物品
     public List<ItemDataSO> RollDrops()
     {
         List<ItemDataSO> possibleDrops=new List<ItemDataSO>();

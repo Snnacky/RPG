@@ -43,8 +43,8 @@ public class SkillObject_TimeEcho : SkillObject_Base
         FlipToTarget();
 
         maxAttacks=echoManager.GetMaxAttacks();//获取攻击次数
-        anim.SetBool("canAttack", maxAttacks > 0);
-        Invoke(nameof(HandleDeath),echoManager.GetEchoDuration());
+        anim.SetBool("canAttack", maxAttacks > 0);//攻击
+        Invoke(nameof(HandleDeath),echoManager.GetEchoDuration());//一段时间后自动死亡
 
         wispTrail=GetComponentInChildren<TrailRenderer>();
         wispTrail.gameObject.SetActive(false);
@@ -57,11 +57,12 @@ public class SkillObject_TimeEcho : SkillObject_Base
         else
         {
             anim.SetFloat("yVelocity", rb.velocity.y);
-            StopHorizontalMovement();
+            StopHorizontalMovement();//固定,禁止横向移动
         }    
             
     }
 
+    //治疗精灵移动向玩家
     private void HandleWispMovement()
     {
         transform.position = Vector2.MoveTowards(transform.position, originalPlayer.position, wispMoveSpeed * Time.deltaTime);
@@ -72,6 +73,7 @@ public class SkillObject_TimeEcho : SkillObject_Base
         }
     }
 
+    //处理精灵效果
     private void HandlePlayerTouch()
     {
         //治疗的血量
@@ -87,10 +89,10 @@ public class SkillObject_TimeEcho : SkillObject_Base
 
     public void PerformAttack()
     {
-        DamageEnemiesIndius(targetCheck, 1);
+        DamageEnemiesIndius(targetCheck, 1);//攻击
         if (targetGotHit == false)
             return;
-        bool canDuplicate = Random.value < echoManager.GetDuplicateChance();
+        bool canDuplicate = Random.value < echoManager.GetDuplicateChance();//复制可能性
         float xOffset = transform.position.x < lastTarget.position.x ? 1 : -1;
         if(canDuplicate)
         {
@@ -98,12 +100,13 @@ public class SkillObject_TimeEcho : SkillObject_Base
         }
     }
 
+    //处理死亡
     public void HandleDeath()
     {
-        Instantiate(onDeathVfx,transform.position, Quaternion.identity);
+        Instantiate(onDeathVfx,transform.position, Quaternion.identity);//死亡效果
         if(echoManager.ShouldBeWisp())
         {
-            TurnIntoWisp();
+            TurnIntoWisp();//变成精灵
         }
         else
         {

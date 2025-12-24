@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: The Chainsaw
   description: The sword spins like a raging chainsaw,dealing damage to nearby enemies
     for N seconds.
-  icon: {fileID: -386509272, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  icon: {fileID: 1034120801, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 0
   unlockedByDefualt: 0
   skillType: 3

@@ -17,7 +17,7 @@ MonoBehaviour:
 
     (Inherits all upgrades of
     Time shard Ability)'
-  icon: {fileID: -992517808, guid: f438f076154f02f49ba19b7bdd2c1dba, type: 3}
+  icon: {fileID: -172661879, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 2
   unlockedByDefualt: 0
   skillType: 0

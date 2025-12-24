@@ -38,6 +38,7 @@ public class Skill_TimeEcho : Skill_Base
             || upgradeType == SkillUpgradeType.TimeEcho_CooldownWisp;
     }
 
+    //获取复制的可能性
     public float GetDuplicateChance()
     {
         if (upgradeType != SkillUpgradeType.TimeEcho_ChanceToDuplicate)
@@ -62,6 +63,7 @@ public class Skill_TimeEcho : Skill_Base
     {
         if (CanUseSkill() == false) return;
         CreateTimeEcho();
+        SetSkillOnCoolDown();
     }
 
     public void CreateTimeEcho(Vector3? targetPosition=null)
