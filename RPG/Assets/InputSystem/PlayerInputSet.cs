@@ -143,6 +143,24 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickItemSlot1"",
+                    ""type"": ""Button"",
+                    ""id"": ""c3c5ebc4-cc01-4674-afa7-73c8c691c979"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickItemSlot2"",
+                    ""type"": ""Button"",
+                    ""id"": ""6af141f1-dfa4-4cc2-b13a-ea7ccb5dd47c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -332,6 +350,28 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5e64f47-d421-4ff8-a1cb-3ce09fe6fd96"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickItemSlot1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54ddbd0f-a0f9-49b8-8463-b7a6b31e114c"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickItemSlot2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -370,6 +410,8 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         m_Player_UltimateSpell = m_Player.FindAction("UltimateSpell", throwIfNotFound: true);
         m_Player_ToggleInventoryUI = m_Player.FindAction("ToggleInventoryUI", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_QuickItemSlot1 = m_Player.FindAction("QuickItemSlot1", throwIfNotFound: true);
+        m_Player_QuickItemSlot2 = m_Player.FindAction("QuickItemSlot2", throwIfNotFound: true);
     }
 
     ~@PlayerInputSet()
@@ -449,6 +491,8 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_UltimateSpell;
     private readonly InputAction m_Player_ToggleInventoryUI;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_QuickItemSlot1;
+    private readonly InputAction m_Player_QuickItemSlot2;
     public struct PlayerActions
     {
         private @PlayerInputSet m_Wrapper;
@@ -466,6 +510,8 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         public InputAction @UltimateSpell => m_Wrapper.m_Player_UltimateSpell;
         public InputAction @ToggleInventoryUI => m_Wrapper.m_Player_ToggleInventoryUI;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @QuickItemSlot1 => m_Wrapper.m_Player_QuickItemSlot1;
+        public InputAction @QuickItemSlot2 => m_Wrapper.m_Player_QuickItemSlot2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -514,6 +560,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @QuickItemSlot1.started += instance.OnQuickItemSlot1;
+            @QuickItemSlot1.performed += instance.OnQuickItemSlot1;
+            @QuickItemSlot1.canceled += instance.OnQuickItemSlot1;
+            @QuickItemSlot2.started += instance.OnQuickItemSlot2;
+            @QuickItemSlot2.performed += instance.OnQuickItemSlot2;
+            @QuickItemSlot2.canceled += instance.OnQuickItemSlot2;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -557,6 +609,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @QuickItemSlot1.started -= instance.OnQuickItemSlot1;
+            @QuickItemSlot1.performed -= instance.OnQuickItemSlot1;
+            @QuickItemSlot1.canceled -= instance.OnQuickItemSlot1;
+            @QuickItemSlot2.started -= instance.OnQuickItemSlot2;
+            @QuickItemSlot2.performed -= instance.OnQuickItemSlot2;
+            @QuickItemSlot2.canceled -= instance.OnQuickItemSlot2;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -598,5 +656,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         void OnUltimateSpell(InputAction.CallbackContext context);
         void OnToggleInventoryUI(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnQuickItemSlot1(InputAction.CallbackContext context);
+        void OnQuickItemSlot2(InputAction.CallbackContext context);
     }
 }

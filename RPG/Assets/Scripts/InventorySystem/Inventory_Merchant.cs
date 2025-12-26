@@ -18,6 +18,12 @@ public class Inventory_Merchant :Inventory_Base
         storage = FindAnyObjectByType<Inventory_Storage>(FindObjectsInactive.Include);
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+            FillShopList();
+    }
+
     public override void TriggerUpdateUI()
     {
         base.TriggerUpdateUI();

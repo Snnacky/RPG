@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Inventory_Base : MonoBehaviour
 {
+    protected Player player;
     public event Action OnInventoryChange;//事件触发在ui_Inventory,ui_PlayerStats,UI_Merchant
 
     public int maxInventorySize = 10;//最大持有物品数量
@@ -11,7 +12,7 @@ public class Inventory_Base : MonoBehaviour
 
     protected virtual void Awake()
     {
-
+        player = GetComponent<Player>();
     }
 
     //使用物品
@@ -19,6 +20,9 @@ public class Inventory_Base : MonoBehaviour
     {
         Inventory_Item consumable = itemList.Find(item => item == itemToUse);
         if (consumable == null) return;
+
+        if (consumable.itemEffectData.CanBeUse(player) == false) return;
+
 
         consumable.itemEffectData.ExecuteEffect();//物品效果
 
@@ -80,10 +84,15 @@ public class Inventory_Base : MonoBehaviour
         }
     }
 
-    //根据data寻找item
+    //寻找同一个东西
     public Inventory_Item FindItem(Inventory_Item itemToFind)
     {
         return itemList.Find(item => item == itemToFind);
+    }
+    //寻找同一个itemdata的东西
+    public Inventory_Item FindSameItem(Inventory_Item itemToFind)
+    {
+        return itemList.Find(item=>item.itemData==itemToFind.itemData);
     }
 
     public virtual void TriggerUpdateUI() => OnInventoryChange?.Invoke();

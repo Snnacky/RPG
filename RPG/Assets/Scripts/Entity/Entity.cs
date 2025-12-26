@@ -24,7 +24,7 @@ public class Entity : MonoBehaviour
     public Animator anim { get; private set; }//动画
     public Rigidbody2D rb { get; private set; }
 
-    public Entity_Stats stats { get; private set; }
+
     public bool groundDetected { get; private set; }
     public bool wallDetected { get; private set; }
 
@@ -50,7 +50,7 @@ public class Entity : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         stateMachine = new StateMachine();//定义化状态机
-        stats = GetComponent<Entity_Stats>();
+
     }
   
     protected virtual void Update()

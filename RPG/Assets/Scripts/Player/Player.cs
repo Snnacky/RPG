@@ -15,8 +15,9 @@ public class Player : Entity
     public Entity_Health health { get; private set; }
     public Entity_StatusHandler statusHandler { get; private set; }
     public Player_Combat combat { get; private set; }
-
+    public Inventory_Player inventory { get; private set; }
     public Vector2 mousePosition { get; private set; }
+    public Player_Stats stats { get; private set; }
     #region Stat Variables
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
@@ -94,7 +95,9 @@ public class Player : Entity
         vfx = GetComponent<Player_VFX>();
         health = GetComponent<Entity_Health>();
         statusHandler = GetComponent<Entity_StatusHandler>();
-        combat =GetComponent<Player_Combat>();
+        combat = GetComponent<Player_Combat>();
+        inventory = GetComponent<Inventory_Player>();
+        stats=GetComponent<Player_Stats>(); 
 
         originalMoveSpeed = moveSpeed;
         originalJumpForce = jumpForce;
@@ -243,6 +246,10 @@ public class Player : Entity
 
         input.Player.ToggleSkillTreeUI.performed += ctx => ui.ToggleSkillTreeUI();//开关技能ui
         input.Player.ToggleInventoryUI.performed += ctx => ui.ToggleInventoryUI();//开关统计ui
+
+        input.Player.QuickItemSlot1.performed += ctx => inventory.TryUseQuickItemInSlot(1);//快捷栏
+        input.Player.QuickItemSlot2.performed += ctx => inventory.TryUseQuickItemInSlot(2);//快捷栏
+
 
         input.Player.Interact.performed += ctx => TryInteract();
     }

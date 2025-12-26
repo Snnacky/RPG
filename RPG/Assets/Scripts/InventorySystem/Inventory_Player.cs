@@ -1,18 +1,52 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory_Player : Inventory_Base
 {
+    public event Action<int> OnQuickSlotUsed;//ui_inGame
     public int gold = 100000;
-    private Player player;
     public List<Inventory_EquipmentSlot> equipList;//持有装备列表
     public Inventory_Storage storage { get; private set; }
+
+    [Header("Quick Item Slots")]
+    public Inventory_Item[] quickItems = new Inventory_Item[2];//快捷栏的物品
     protected override void Awake()
     {
         base.Awake();
-        player = GetComponent<Player>();
         storage=FindFirstObjectByType<Inventory_Storage>();
     }
+
+    //设置快捷栏
+    public void SetQuickItemInSlot(int slotNumber, Inventory_Item itemToSlot)
+    {
+        quickItems[slotNumber - 1] = itemToSlot;
+        TriggerUpdateUI();
+    }
+    //尝试使用快捷栏物品
+    public void TryUseQuickItemInSlot(int passedSlotNumber)
+    {
+        int slotNumber = passedSlotNumber - 1;//0/1
+        var itemToUse=quickItems[slotNumber];
+
+        if (itemToUse == null) return;
+
+        TryUseItem(itemToUse);
+
+        //使用完物品,替换Inventory里面还有相同的物品
+        if(FindItem(itemToUse)==null)
+        {
+            //如果俩个快捷栏装备同一个消耗品
+            var item = quickItems[(slotNumber + 1) % 2];
+            if (item == itemToUse)
+                quickItems[(slotNumber + 1) % 2] = FindSameItem(itemToUse);
+
+            quickItems[slotNumber] = FindSameItem(itemToUse);
+        }
+        TriggerUpdateUI();
+        OnQuickSlotUsed?.Invoke(slotNumber);//虚拟按钮效果
+    }
+
 
     //尝试装备物品
     public void TryEquipItem(Inventory_Item item)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Inventory_Storage : Inventory_Base
@@ -114,6 +115,7 @@ public class Inventory_Storage : Inventory_Base
         }
         
         TriggerUpdateUI();
+        materialStash = materialStash.OrderBy(item=>item.itemData.name).ToList();//еепР
     }
 
     public void RemoveMaterial(Inventory_Item itemToRemove)
