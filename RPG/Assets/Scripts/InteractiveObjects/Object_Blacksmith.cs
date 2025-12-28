@@ -10,16 +10,11 @@ public class Object_Blacksmith : Object_NPC, IInteractable
 
     public void Interact()//玩家靠近铁匠按f触发
     {
-        if(ui.craftUI.gameObject.activeSelf || ui.storageUI.gameObject.activeSelf)
-        {
-            ui.storageUI.gameObject.SetActive(false);
-            ui.craftUI.gameObject.SetActive(false);
-            return;
-        }    
+
         ui.storageUI.SetupStorageUI(storage);//设置ui
         ui.craftUI.SetupCraftUI(storage);
-        //ui.craftUI.gameObject.SetActive(!ui.craftUI.gameObject.activeSelf);
-        ui.storageUI.gameObject.SetActive(!ui.storageUI.gameObject.activeSelf);
+
+        ui.OpenStorageUI(true);//打开ui
     }
 
     protected override void Awake()
@@ -38,8 +33,10 @@ public class Object_Blacksmith : Object_NPC, IInteractable
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
-        ui.SwithoffAllToolTips();
+        ui.HideAllToolTips();
         ui.storageUI.gameObject.SetActive(false);
         ui.craftUI.gameObject.SetActive(false);
+
+        ui.OpenStorageUI(false);
     }
 }

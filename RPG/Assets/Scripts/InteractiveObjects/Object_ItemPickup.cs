@@ -15,7 +15,7 @@ public class Object_ItemPickup : MonoBehaviour
 
     private bool mustStop = false;
 
-    private float dropDuration = 1.5f;
+    private float dropDuration = 0.5f;
 
     private void OnValidate()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UI_Merchant : MonoBehaviour
@@ -8,6 +9,8 @@ public class UI_Merchant : MonoBehaviour
     private Inventory_Merchant merchant;
     private Inventory_Storage storage;
 
+    [SerializeField] private TextMeshProUGUI goldText;
+    [Space]
     [SerializeField] private UI_ItemSlotParent merchantSlots;
     [SerializeField] private UI_ItemSlotParent inventorySlots;
     [SerializeField] private UI_ItemSlotParent materialSlots;
@@ -40,5 +43,6 @@ public class UI_Merchant : MonoBehaviour
         merchantSlots.UpdateSlots(merchant.itemList);
         inventorySlots.UpdateSlots(inventory.itemList);
         materialSlots.UpdateSlots(storage.materialStash);
+        goldText.text = inventory.gold.ToString("N0") + "g.";//N + 数字零,N:千位分隔符,0:保留0位小数
     }
 }

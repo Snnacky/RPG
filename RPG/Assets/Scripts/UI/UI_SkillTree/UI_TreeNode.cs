@@ -168,6 +168,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData eventData)
     {
         ui.skillToolTip.ShowToolTip(false, rect);
+        ui.skillToolTip.StopLockedSkillEffect();//Í£Ö¹ÉÁË¸Ð§¹û
 
         if (isUnlocked || isLimited)
             return;

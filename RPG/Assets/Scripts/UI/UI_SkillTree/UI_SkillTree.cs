@@ -1,22 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UI_SkillTree : MonoBehaviour
 {
     [SerializeField] private int skillPoints;
+    [SerializeField] private TextMeshProUGUI skillPointsText;
     [SerializeField] private UI_TreeConnectHandler[] parentNodes;
     private UI_TreeNode[] allTreeNodes;
 
     public Player_SkillManager skillManager { get; private set; }
     public bool EnoughSkillPoints(int cost) => skillPoints >= cost;
-    public void RemoveSkillPoints(int cost) => skillPoints -= cost;
-    public void AddSkillPoints(int points) => skillPoints += points;
+    public void RemoveSkillPoints(int cost)
+    {
+        skillPoints -= cost;
+        UpdateSkillPointsUI();
+    }
+    public void AddSkillPoints(int points)
+    {
+        skillPoints += points;
+        UpdateSkillPointsUI() ;
+    }
 
 
     private void Start()
     {
         UpdateAllConnections();
+        UpdateSkillPointsUI();
+    }
+
+    private void UpdateSkillPointsUI()
+    {
+        skillPointsText.text = skillPoints.ToString();
     }
 
     //解锁初始技能

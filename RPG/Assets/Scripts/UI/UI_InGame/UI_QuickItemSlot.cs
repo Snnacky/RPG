@@ -33,8 +33,6 @@ public class UI_QuickItemSlot : UI_ItemSlot
     //¸üÐÂ¿ì½ÝÀ¸
     public void UpdateQuickSlotUI(Inventory_Item currentItemInSlot)
     {
-        if (slotNumber == 2)
-            Debug.Log("1");
         if (currentItemInSlot == null || currentItemInSlot.itemData == null)
         {
             itemIcon.sprite = defaultSprite;

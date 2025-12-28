@@ -31,6 +31,8 @@ public class Entity_Health : MonoBehaviour, IDamgable
     [SerializeField] private float heavyDamageThreshold = 0.3f;//严重损害的阈值
     [SerializeField] private float heavyKnockbackDuration = .5f;
     [SerializeField] private Vector2 onHeavyDamageKnockback = new Vector2(7, 7);
+
+    private bool miniHealthBarActive;
     private void Awake()
     {
         entity = GetComponent<Entity>();//Entity的子类也属于Entity
@@ -156,9 +158,11 @@ public class Entity_Health : MonoBehaviour, IDamgable
 
     private void updateHealthBar()
     {
-        if (healthBar == null) return;
+        if (healthBar == null && !healthBar.transform.parent.gameObject.activeSelf) return;
         healthBar.value = currentHp / entityStats.GetMaxHealth();
     }
+
+    public void EnableHealthBar(bool enabled) => healthBar.transform.parent.gameObject.SetActive(enabled);
 
     public void DestroyGameObject()
     {

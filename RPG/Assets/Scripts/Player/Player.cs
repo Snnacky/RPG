@@ -90,7 +90,6 @@ public class Player : Entity
     {
         base.Awake();
         ui=FindAnyObjectByType<UI>();
-        input = new PlayerInputSet();
         skillManager = GetComponent<Player_SkillManager>();
         vfx = GetComponent<Player_VFX>();
         health = GetComponent<Entity_Health>();
@@ -98,6 +97,9 @@ public class Player : Entity
         combat = GetComponent<Player_Combat>();
         inventory = GetComponent<Inventory_Player>();
         stats=GetComponent<Player_Stats>(); 
+
+        input = new PlayerInputSet();
+        ui.SetupControlsUI(input);
 
         originalMoveSpeed = moveSpeed;
         originalJumpForce = jumpForce;
@@ -244,8 +246,6 @@ public class Player : Entity
 
         input.Player.Mouse.performed += ctx => mousePosition = ctx.ReadValue<Vector2>();
 
-        input.Player.ToggleSkillTreeUI.performed += ctx => ui.ToggleSkillTreeUI();//开关技能ui
-        input.Player.ToggleInventoryUI.performed += ctx => ui.ToggleInventoryUI();//开关统计ui
 
         input.Player.QuickItemSlot1.performed += ctx => inventory.TryUseQuickItemInSlot(1);//快捷栏
         input.Player.QuickItemSlot2.performed += ctx => inventory.TryUseQuickItemInSlot(2);//快捷栏

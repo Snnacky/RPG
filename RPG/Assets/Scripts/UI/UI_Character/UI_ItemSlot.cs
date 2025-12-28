@@ -14,7 +14,7 @@ public class UI_ItemSlot : MonoBehaviour,IPointerDownHandler,IPointerEnterHandle
     [Header("UI Slot Setup")]
     [SerializeField] protected Image itemIcon;
     [SerializeField] protected TextMeshProUGUI itemStackSize;
-
+    [SerializeField] protected GameObject defaultIcon;
     [SerializeField] private bool canPointerDown = true;
 
     protected virtual void Awake()
@@ -53,6 +53,9 @@ public class UI_ItemSlot : MonoBehaviour,IPointerDownHandler,IPointerEnterHandle
     public void UpdateSlot(Inventory_Item item)
     {
         itemInSlot = item;
+        if(defaultIcon!=null)
+            defaultIcon.gameObject.SetActive(itemInSlot == null);
+
         if(itemInSlot == null)
         {
             itemStackSize.text = "";
