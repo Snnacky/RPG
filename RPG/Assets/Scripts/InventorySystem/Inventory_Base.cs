@@ -2,13 +2,16 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory_Base : MonoBehaviour
+public class Inventory_Base : MonoBehaviour, ISaveable
 {
     protected Player player;
     public event Action OnInventoryChange;//事件触发在ui_Inventory,ui_PlayerStats,UI_Merchant
 
     public int maxInventorySize = 10;//最大持有物品数量
     public List<Inventory_Item> itemList = new List<Inventory_Item>();//持有物品列表
+
+    [Header("ITEM DATA BASE")]
+    [SerializeField] protected ItemListDataSO itemDataBase;
 
     protected virtual void Awake()
     {
@@ -61,7 +64,11 @@ public class Inventory_Base : MonoBehaviour
     public void RemoveOneItem(Inventory_Item itemToRemove)
     {
         Inventory_Item itenInInventory = itemList.Find(item => item == itemToRemove);
-        Debug.Log("3");
+        if(itenInInventory ==null)
+        {
+            Debug.Log("Can Not Remove"+ itemToRemove);
+            return;
+        }
         if (itenInInventory.stackSize > 1)
             itenInInventory.stackSize--;
         else
@@ -89,4 +96,14 @@ public class Inventory_Base : MonoBehaviour
     }
 
     public virtual void TriggerUpdateUI() => OnInventoryChange?.Invoke();
+
+    public virtual void LoadData(GameData data)
+    {
+        
+    }
+
+    public virtual void SaveData(ref GameData data)
+    {
+        
+    }
 }

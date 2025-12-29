@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "RPG Setup/Item Data/Material Item", fileName = "Material data - ")]
 public class ItemDataSO : ScriptableObject
 {
+    public string saveID { get; private set; }
+
     [Header("Item Details")]
     public string itemName;
     public Sprite itemIcon;
@@ -35,6 +38,12 @@ public class ItemDataSO : ScriptableObject
     private void OnValidate()
     {
         dropChance = GetDropChance();
+
+        //只在编辑器模式下运行
+#if UNITY_EDITOR
+        string path = AssetDatabase.GetAssetPath(this);
+        saveID=AssetDatabase.AssetPathToGUID(path);//在asset的相对路径
+#endif
     }
 
     public float GetDropChance()

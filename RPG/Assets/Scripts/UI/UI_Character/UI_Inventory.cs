@@ -19,6 +19,13 @@ public class UI_Inventory : MonoBehaviour
         inventory.OnInventoryChange += UpdateUI;
         UpdateUI();
     }
+
+    private void OnEnable()
+    {
+        if(inventory!=null)
+            UpdateUI();
+    }
+
     private void UpdateUI()
     {
         uiEquipSlotParent.UpdateEquipmentSlots(inventory.equipList);

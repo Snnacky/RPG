@@ -3835,12 +3835,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 556134639}
-  - {fileID: 451675034}
-  - {fileID: 309488855}
-  - {fileID: 375813893}
-  - {fileID: 1588823666}
   - {fileID: 1264654633}
   - {fileID: 556825997}
+  - {fileID: 375813893}
+  - {fileID: 1588823666}
+  - {fileID: 451675034}
+  - {fileID: 309488855}
   m_Father: {fileID: 40766289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5246,8 +5246,8 @@ RectTransform:
   - {fileID: 1254325911}
   - {fileID: 1695601322}
   - {fileID: 1401300478}
-  - {fileID: 844324549}
   - {fileID: 1674562165}
+  - {fileID: 844324549}
   m_Father: {fileID: 40766289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -18615,6 +18615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInventorySize: 20
   itemList: []
+  itemDataBase: {fileID: 11400000, guid: 4577216ef0fc557488e4d0b8c2555827, type: 2}
   shopData: {fileID: 11400000, guid: cc2b7680f9f5aa84da9685e5220ec12b, type: 2}
   minItemsAmount: 4
 --- !u!1 &403836572
@@ -19269,7 +19270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInventorySize: 10
   itemList: []
-  gold: 100000
+  itemDataBase: {fileID: 11400000, guid: 4577216ef0fc557488e4d0b8c2555827, type: 2}
   equipList:
   - slotType: 1
     equipedItem:
@@ -19298,6 +19299,7 @@ MonoBehaviour:
   - itemData: {fileID: 0}
     stackSize: 0
     itemEffectData: {fileID: 0}
+  gold: 100000
 --- !u!114 &412214190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38376,6 +38378,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 504109772}
   m_CullTransparentMesh: 1
+--- !u!1 &505478093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 505478095}
+  - component: {fileID: 505478094}
+  m_Layer: 0
+  m_Name: Save
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &505478094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505478093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4f42f21f8b63b4198e4e881fa96576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: unitysky.json
+  encryptData: 0
+--- !u!4 &505478095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505478093}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.1943946, y: 5.7862067, z: -0.14735602}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &505646917
 GameObject:
   m_ObjectHideFlags: 0
@@ -55427,7 +55475,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInventorySize: 25
   itemList: []
-  playerInventory: {fileID: 0}
+  itemDataBase: {fileID: 11400000, guid: 4577216ef0fc557488e4d0b8c2555827, type: 2}
+  playerInventory: {fileID: 412214189}
   materialStash: []
 --- !u!1 &974895618
 GameObject:
@@ -95412,8 +95461,8 @@ RectTransform:
   - {fileID: 614675035}
   - {fileID: 2118646428}
   - {fileID: 2033962102}
-  - {fileID: 687639210}
   - {fileID: 318419126}
+  - {fileID: 687639210}
   m_Father: {fileID: 40766289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -113586,3 +113635,4 @@ SceneRoots:
   - {fileID: 970560316}
   - {fileID: 97998259}
   - {fileID: 1343319347}
+  - {fileID: 505478095}

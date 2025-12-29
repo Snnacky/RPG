@@ -5,12 +5,17 @@ using UnityEngine;
 public class Inventory_Player : Inventory_Base
 {
     public event Action<int> OnQuickSlotUsed;//ui_inGame
-    public int gold = 100000;
+
+  
+
     public List<Inventory_EquipmentSlot> equipList;//持有装备列表
     public Inventory_Storage storage { get; private set; }
 
     [Header("Quick Item Slots")]
     public Inventory_Item[] quickItems = new Inventory_Item[2];//快捷栏的物品
+
+    [Header("Gold Info")]
+    public int gold = 100000;
     protected override void Awake()
     {
         base.Awake();
@@ -101,5 +106,78 @@ public class Inventory_Player : Inventory_Base
 
         player.health.SetHealthToPercent(saveHealthPercent);
         AddItem(itemToUnequip);
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        data.gold = gold;
+
+        data.inventory.Clear();
+        data.equipedItems.Clear();
+
+        foreach (var item in itemList)
+        {
+            if(item !=null && item.itemData!=null)
+            {
+                string saveId = item.itemData.saveID;
+
+                //检查字典是否存在该item
+                if (data.inventory.ContainsKey(saveId) == false)
+                    data.inventory[saveId] = 0;
+
+                data.inventory[saveId] += item.stackSize;
+            }
+        }
+
+        foreach(var slot in equipList)
+        {
+            if (slot.HasItem())
+                data.equipedItems[slot.equipedItem.itemData.saveID] = slot.slotType;
+        }
+    }
+
+    public override void LoadData(GameData data)
+    {
+        gold = data.gold;
+
+        foreach (var item in data.inventory)
+        {
+            string saveId = item.Key;
+            int stackSize = item.Value;
+
+            ItemDataSO itemData = itemDataBase.GetItemData(saveId);
+
+            if(itemData==null)
+            {
+                Debug.LogWarning("Item not found:" + saveId);
+                continue;
+            }
+
+            
+            for(int i=0;i<stackSize;i++)
+            {
+                Inventory_Item itemToLoad = new Inventory_Item(itemData);
+                AddItem(itemToLoad);
+            }
+        }
+
+        foreach(var entry in data.equipedItems)
+        {
+            string saveId=entry.Key;
+            ItemType loadedSlotType=entry.Value;
+
+            ItemDataSO itemData = itemDataBase.GetItemData(saveId);
+            Inventory_Item itemToLoad = new Inventory_Item(itemData);
+
+            var slot = equipList.Find(slot => slot.slotType == loadedSlotType && slot.HasItem() == false);
+
+            EquipItem(itemToLoad, slot);
+
+            //slot.equipedItem = itemToLoad;
+            //slot.equipedItem.AddModifiers(player.stats);
+            //slot.equipedItem.AddItemEffect(player);
+        }
+
+        TriggerUpdateUI();
     }
 }
