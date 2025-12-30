@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UI_ToolTip : MonoBehaviour
@@ -8,18 +6,19 @@ public class UI_ToolTip : MonoBehaviour
     [SerializeField] private Vector2 offest = new Vector2(300, 20);
     protected virtual void Awake()
     {
-        rect= GetComponent<RectTransform>();
+        rect = GetComponent<RectTransform>();
     }
 
-    public virtual void ShowToolTip(bool show,RectTransform targetRect)//targetRect是技能图片
+    public virtual void ShowToolTip(bool show, RectTransform targetRect)//targetRect是技能图片
     {
-        if(show==false)
+        if (show == false)
         {
-            rect.position = new Vector2(9999, 9999);
+            if (rect != null)
+                rect.position = new Vector2(9999, 9999);
             return;
         }
         UpdatePosition(targetRect);
-    }    
+    }
 
     private void UpdatePosition(RectTransform targetRect)
     {
@@ -34,12 +33,12 @@ public class UI_ToolTip : MonoBehaviour
         float topY = targetPosition.y + veritcalHalf;//注解图的最高点
         float bottonY = targetPosition.y - veritcalHalf;//注解图的最低点
 
-        if(topY>screenTop)//注解图超出屏幕以上
-            targetPosition.y=screenTop-veritcalHalf-offest.y;
-        else if(bottonY<screenBottom)//以下
-            targetPosition.y=screenBottom+veritcalHalf+offest.y;
+        if (topY > screenTop)//注解图超出屏幕以上
+            targetPosition.y = screenTop - veritcalHalf - offest.y;
+        else if (bottonY < screenBottom)//以下
+            targetPosition.y = screenBottom + veritcalHalf + offest.y;
 
-            rect.position = targetPosition;//修改注解图位置
+        rect.position = targetPosition;//修改注解图位置
     }
     protected string GetColoredText(string color, string text)
     {

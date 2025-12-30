@@ -7,6 +7,7 @@ public class Player : Entity
 {
     public static event Action OnPlayerDeathh;
 
+    public static Player instance;
     public UI ui {  get; private set; }
     public PlayerInputSet input { get; private set; }// ‰»Î
     public Vector2 moveInput { get; private set; }
@@ -89,6 +90,8 @@ public class Player : Entity
     protected override void Awake()
     {
         base.Awake();
+        instance = this;
+
         ui=FindAnyObjectByType<UI>();
         skillManager = GetComponent<Player_SkillManager>();
         vfx = GetComponent<Player_VFX>();

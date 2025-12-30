@@ -5,12 +5,19 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
+    public static SaveManager instance;
+
     private FileDataHandler dataHandler;
     private GameData gameData;
     private List<ISaveable> allSaveables;
 
     [SerializeField] private string fileName = "unity-SKy.json";
     [SerializeField] private bool encryptData = true;
+
+    private void Awake()
+    {
+        instance = this;
+    }
     private IEnumerator Start()
     {
         Debug.Log(Application.persistentDataPath);//持久数据路径
@@ -20,6 +27,8 @@ public class SaveManager : MonoBehaviour
         yield return new WaitForSeconds(0.01f);
         LoadGame();
     }
+
+    public GameData GetGameData() => gameData;
 
     //加载游戏里所有数据
     private void LoadGame()

@@ -12,6 +12,12 @@ public class GameData
     public SerializableDictionary<string, int> storageMaterials;
 
     public SerializableDictionary<string, ItemType> equipedItems;//itemSaveId -> itemType
+
+    public int skillPoints; 
+    public SerializableDictionary<string, bool> skillTreeUI;//skill name -> unlock status
+    public SerializableDictionary<SkillType, SkillUpgradeType> skillUpgrades;//skill type -> upgrade type
+
+    public Vector3 savedCheckPoint;
     public GameData()
     {
         inventory = new SerializableDictionary<string, int>();
@@ -19,5 +25,8 @@ public class GameData
         storageMaterials = new SerializableDictionary<string, int>();
 
         equipedItems = new SerializableDictionary<string, ItemType>();
+
+        skillTreeUI = new SerializableDictionary<string, bool>();
+        skillUpgrades = new SerializableDictionary<SkillType, SkillUpgradeType>();
     }
 }
