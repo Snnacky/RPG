@@ -21,6 +21,12 @@ public class UI_InGame : MonoBehaviour
     private UI_QuickItemSlot[] quickItemSlots;//¿ì½ÝÀ¸
     private bool isOpen = false;
 
+    private void Awake()
+    {
+        skillSlots=GetComponentsInChildren<UI_SkillSlot>(true);
+
+    }
+
     private void Start()
     {
         quickItemSlots=GetComponentsInChildren<UI_QuickItemSlot>();
@@ -32,7 +38,7 @@ public class UI_InGame : MonoBehaviour
         inventory.OnInventoryChange += UpdateQuickSlotsUI;
         inventory.OnQuickSlotUsed += PlayerQuickSlotFeedback;
 
-        skillSlots=GetComponentsInChildren<UI_SkillSlot>(true);
+        //skillSlots=GetComponentsInChildren<UI_SkillSlot>(true);
     }
     //ÐéÄâ°´Å¥
     public void PlayerQuickSlotFeedback(int slotNumber) => quickItemSlots[slotNumber].SimulateButtonFeedback();

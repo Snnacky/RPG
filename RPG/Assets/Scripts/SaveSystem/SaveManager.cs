@@ -18,6 +18,7 @@ public class SaveManager : MonoBehaviour
     {
         instance = this;
     }
+
     private IEnumerator Start()
     {
         Debug.Log(Application.persistentDataPath);//持久数据路径

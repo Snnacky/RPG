@@ -161,7 +161,8 @@ public class UI : MonoBehaviour
     //…ÃµÍui
     public void OpenMerchantUI(bool openMerchantUI)
     {
-        merchantUI.gameObject.SetActive(openMerchantUI);
+        if (merchantUI.gameObject != null)
+            merchantUI.gameObject.SetActive(openMerchantUI);
         StopPlayerControlsIfNeeded();
         if (openMerchantUI == false)
             HideAllToolTips();
