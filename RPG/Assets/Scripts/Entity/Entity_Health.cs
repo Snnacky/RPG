@@ -115,7 +115,7 @@ public class Entity_Health : MonoBehaviour, IDamgable
     {
         isDead = true;
         entity.EntityDeath();
-        Invoke(nameof(DestroyGameObject), 2f);
+        
         dropManager?.DropItems();
     }
 

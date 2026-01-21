@@ -13,7 +13,6 @@ public class Player_Health : Entity_Health
     public override void Die()
     {
         base.Die();
-        GameManager.Instance.SetLastDeathPosition(transform.position);
-        GameManager.Instance.RestartScene();
+        Player.instance.ui.OpenDeathScreenUI();
     }
 }

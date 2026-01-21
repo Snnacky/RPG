@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3118162603395007928}
   - component: {fileID: 5302239064449877284}
   - component: {fileID: -387532153815699112}
+  - component: {fileID: 6311098072794257767}
   m_Layer: 8
   m_Name: Object_Chest
   m_TagString: Untagged
@@ -229,6 +230,22 @@ MonoBehaviour:
     lightningResistance:
       baseValue: 0
       modifiers: []
+--- !u!114 &6311098072794257767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2633611451046136446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4c88c4aae2227409582c2d7170ac08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDropPrefab: {fileID: 8398667642126833731, guid: 2e423af3cb7bc554cb0cc12b6e88d065, type: 3}
+  dropData: {fileID: 11400000, guid: cc2b7680f9f5aa84da9685e5220ec12b, type: 2}
+  maxRarityAmount: 1200
+  maxItemsToDrop: 3
 --- !u!1 &3062412248703252164
 GameObject:
   m_ObjectHideFlags: 0

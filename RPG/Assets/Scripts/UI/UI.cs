@@ -19,6 +19,7 @@ public class UI : MonoBehaviour
     public UI_Merchant merchantUI { get; private set; }
     public UI_InGame inGameUI { get; private set; }
     public UI_Options optionsUI { get; private set; }
+    public UI_DeathScene deathScreenUI { get; private set; }
     #endregion
     private bool skillTreeEnabled;
     private bool inventoryEnabled;
@@ -35,6 +36,7 @@ public class UI : MonoBehaviour
         merchantUI=GetComponentInChildren<UI_Merchant>(true);
         inGameUI = GetComponentInChildren<UI_InGame>(true);
         optionsUI= GetComponentInChildren<UI_Options>(true);
+        deathScreenUI=GetComponentInChildren<UI_DeathScene>(true);
 
         skillTreeEnabled = skillTreeUI.gameObject.activeSelf;
         inventoryEnabled = inventoryUI.gameObject.activeSelf;
@@ -86,47 +88,60 @@ public class UI : MonoBehaviour
         {
             if(element.activeSelf)
             {
+                Debug.Log(element);
                 input.Player.Disable();
                 return;
             }
         }
         input.Player.Enable();
+        Debug.Log("yes");
+    }
+
+    public void OpenDeathScreenUI()
+    {
+        SwitchTo(deathScreenUI.gameObject);
+        input.Disable();
     }
 
 
     //设置ui
     public void OpenOptionsUI()
     {
-        foreach (var element in uiElements)
-        {
-            element.gameObject.SetActive(false);
-        }
+        SwitchTo(optionsUI.gameObject);
 
         HideAllToolTips();
         StopPlayerControlsIfNeeded();
-        optionsUI.gameObject.SetActive(true);
+
 
     }
 
     //游玩ui
     public void SwitchToInGameUI()
     {
-        foreach(var element in uiElements)
-            element.gameObject.SetActive(false);
-
         HideAllToolTips();
+        SwitchTo(inGameUI.gameObject);//switchto要写在stop...ifneeded前面
+
         StopPlayerControlsIfNeeded();
-        inGameUI.gameObject.SetActive(true);
+
 
         skillTreeEnabled = false;
         inventoryEnabled = false;
     }
 
+    private void SwitchTo(GameObject objectToSwitchOn)
+    {
+        foreach(var element in uiElements)
+            element.gameObject.SetActive(false);
+
+        objectToSwitchOn.SetActive(true);
+    }
+
+
     //切换技能树ui开关
     public void ToggleSkillTreeUI()
     {
         skillTreeUI.transform.SetAsLastSibling();
-        SetTooltipsAsLastSibling();
+        SetTooltipsAsLastSibling();//设置优先级
 
         skillTreeEnabled = !skillTreeEnabled;
         skillTreeUI.gameObject.SetActive(skillTreeEnabled);

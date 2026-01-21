@@ -29,4 +29,10 @@ public class Enemy_Health : Entity_Health
         }
         return true;
     }
+
+    public override void Die()
+    {
+        base.Die();
+        Invoke(nameof(DestroyGameObject), 2f);
+    }
 }

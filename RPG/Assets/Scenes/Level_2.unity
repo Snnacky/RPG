@@ -16316,9 +16316,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7732491627300212869, guid: e56dbcbb28053dd43be8c8362218dc4c, type: 3}
       propertyPath: m_text
-      value: 'HHHH
-
-'
+      value: backyard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7732491627300212869, guid: e56dbcbb28053dd43be8c8362218dc4c, type: 3}
+      propertyPath: m_fontStyle
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

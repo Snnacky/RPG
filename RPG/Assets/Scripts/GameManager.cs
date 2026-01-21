@@ -5,10 +5,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour,ISaveable
 {
     public static GameManager Instance;
-    private Vector3 lastDeathPosition;
+    private Vector3 lastPlayerPosition;
+    private string lastScenePlayed;
 
     private void Awake()
     {
@@ -21,8 +22,13 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-    public void SetLastDeathPosition(Vector3 position) => lastDeathPosition = position;
+    public void SetLastPlayerPosition(Vector3 position) => lastPlayerPosition = position;
 
+    public void ContinuePlay()
+    {
+        Debug.LogWarning(lastScenePlayed);
+        ChangeScene(lastScenePlayed, RespawnType.NoneSpecific);
+    }
     public void RestartScene()
     {
         SaveManager.instance.SaveGame();
@@ -34,6 +40,7 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(string sceneName,RespawnType respawnType)
     {
         SaveManager.instance.SaveGame();
+        Time.timeScale = 1;
         StartCoroutine(ChangeSceneCo(sceneName,respawnType));
     }
 
@@ -44,12 +51,15 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene(sceneName);
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.2f);
+
+        Player player = Player.instance;
+        if (player == null) yield break;
 
         Vector3 position = GetNewPlayerPosition(respawnType);
         yield return new WaitForSeconds(.2f);
         if(position!=Vector3.zero)
-            Player.instance.TeleportPlayer(position);
+            player.TeleportPlayer(position);
     }
 
     private Vector3 GetNewPlayerPosition(RespawnType type)
@@ -85,7 +95,7 @@ public class GameManager : MonoBehaviour
                 return Vector3.zero;
 
             return selectedPositions
-                .OrderBy(position => Vector3.Distance(position, lastDeathPosition))
+                .OrderBy(position => Vector3.Distance(position, lastPlayerPosition))
                 .First();
         }
         return GetWaypointPosition(type);
@@ -106,4 +116,23 @@ public class GameManager : MonoBehaviour
         return Vector3.zero;
     }
 
+    public void LoadData(GameData data)
+    {
+        lastScenePlayed=data.lastScenePlayed;
+        lastPlayerPosition = data.lastPlayerPosition;
+
+        if(string.IsNullOrEmpty(lastScenePlayed))
+        {
+            lastScenePlayed = "Level_0";
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        string currentScene=SceneManager.GetActiveScene().name;
+
+        if (currentScene == "MainMenu") return;
+        data.lastScenePlayed = currentScene;
+        data.lastPlayerPosition = Player.instance.transform.position;
+    }
 }

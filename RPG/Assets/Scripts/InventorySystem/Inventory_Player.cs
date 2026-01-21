@@ -6,8 +6,6 @@ public class Inventory_Player : Inventory_Base
 {
     public event Action<int> OnQuickSlotUsed;//ui_inGame
 
-  
-
     public List<Inventory_EquipmentSlot> equipList;//持有装备列表
     public Inventory_Storage storage { get; private set; }
 
@@ -132,7 +130,8 @@ public class Inventory_Player : Inventory_Base
         foreach(var slot in equipList)
         {
             if (slot.HasItem())
-                data.equipedItems[slot.equipedItem.itemData.saveID] = slot.slotType;
+                //data.equipedItems[slot.equipedItem.itemData.saveID] = slot.slotType;
+                data.equipedItems[slot.equipedItem.itemData.saveID] = slot.equipedId;
         }
     }
 
@@ -164,12 +163,13 @@ public class Inventory_Player : Inventory_Base
         foreach(var entry in data.equipedItems)
         {
             string saveId=entry.Key;
-            ItemType loadedSlotType=entry.Value;
+            //ItemType loadedSlotType=entry.Value;
+            string equipedId=entry.Value;
 
             ItemDataSO itemData = itemDataBase.GetItemData(saveId);
             Inventory_Item itemToLoad = new Inventory_Item(itemData);
 
-            var slot = equipList.Find(slot => slot.slotType == loadedSlotType && slot.HasItem() == false);
+            var slot = equipList.Find(slot => slot.equipedId == equipedId && slot.HasItem() == false);
 
             EquipItem(itemToLoad, slot);
 

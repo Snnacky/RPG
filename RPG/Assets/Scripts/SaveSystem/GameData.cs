@@ -11,7 +11,8 @@ public class GameData
     public SerializableDictionary<string, int> storageItems;
     public SerializableDictionary<string, int> storageMaterials;
 
-    public SerializableDictionary<string, ItemType> equipedItems;//itemSaveId -> itemType
+    //public SerializableDictionary<string, ItemType> equipedItems;//itemSaveId -> itemType
+    public SerializableDictionary<string, string> equipedItems;//itemSaveId -> equipedId
 
     public int skillPoints; 
     public SerializableDictionary<string, bool> skillTreeUI;//skill name -> unlock status
@@ -22,6 +23,9 @@ public class GameData
 
     public string portalDestinationSceneName;
     public bool returningFromTown;
+
+    public string lastScenePlayed;
+    public Vector3 lastPlayerPosition;
     
     public GameData()
     {
@@ -29,7 +33,8 @@ public class GameData
         storageItems = new SerializableDictionary<string, int>();
         storageMaterials = new SerializableDictionary<string, int>();
 
-        equipedItems = new SerializableDictionary<string, ItemType>();
+        //equipedItems = new SerializableDictionary<string, ItemType>();
+        equipedItems = new SerializableDictionary<string, string>();
 
         skillTreeUI = new SerializableDictionary<string, bool>();
         skillUpgrades = new SerializableDictionary<SkillType, SkillUpgradeType>();
