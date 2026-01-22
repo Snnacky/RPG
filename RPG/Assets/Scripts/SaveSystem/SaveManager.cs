@@ -25,7 +25,7 @@ public class SaveManager : MonoBehaviour
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, encryptData);
         allSaveables = FindISaveables();//获取场景里所有ISaveable
 
-        yield return new WaitForSeconds(0.01f);
+        yield return null;
         LoadGame();
     }
 
@@ -62,6 +62,8 @@ public class SaveManager : MonoBehaviour
     {
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, encryptData);
         dataHandler.Delete();
+
+        LoadGame();
     }
 
     //在游戏退出的时候会调用

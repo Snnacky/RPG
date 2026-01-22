@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour,ISaveable
     public static GameManager Instance;
     private Vector3 lastPlayerPosition;
     private string lastScenePlayed;
+    private bool dataLoaded = false;
 
     private void Awake()
     {
@@ -47,19 +48,37 @@ public class GameManager : MonoBehaviour,ISaveable
 
     private IEnumerator ChangeSceneCo(string sceneName,RespawnType respawnType)
     {
-        yield return new WaitForSeconds(.5f);
+        UI_FadeScreen fadeScreen = FindFadeScreenUI();
+
+        fadeScreen.DoFadeOut();
+        yield return fadeScreen.fadeEffectCo;
 
         SceneManager.LoadScene(sceneName);
+        dataLoaded = false;//data loaded becomes true when you load game from save manager
+        yield return null;
 
-        yield return new WaitForSeconds(.2f);
+
+        while (dataLoaded == false)
+            yield return null;
+
+        fadeScreen=FindFadeScreenUI();
+        fadeScreen.DoFadeIn();
 
         Player player = Player.instance;
         if (player == null) yield break;
 
         Vector3 position = GetNewPlayerPosition(respawnType);
-        yield return new WaitForSeconds(.2f);
+        //yield return new WaitForSeconds(.2f);
         if(position!=Vector3.zero)
             player.TeleportPlayer(position);
+    }
+
+    private UI_FadeScreen FindFadeScreenUI()
+    {
+        if(UI.instance!=null)
+            return UI.instance.fadeScreenUI;
+        else
+            return FindFirstObjectByType<UI_FadeScreen>();
     }
 
     private Vector3 GetNewPlayerPosition(RespawnType type)
@@ -125,6 +144,7 @@ public class GameManager : MonoBehaviour,ISaveable
         {
             lastScenePlayed = "Level_0";
         }
+        dataLoaded = true;
     }
 
     public void SaveData(ref GameData data)
@@ -134,5 +154,6 @@ public class GameManager : MonoBehaviour,ISaveable
         if (currentScene == "MainMenu") return;
         data.lastScenePlayed = currentScene;
         data.lastPlayerPosition = Player.instance.transform.position;
+        dataLoaded = false;
     }
 }

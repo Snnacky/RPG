@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
+    public static UI instance;
+
     [SerializeField] private GameObject[] uiElements;
     public bool alternativeInput { get; private set; }
     private PlayerInputSet input;
@@ -20,12 +22,15 @@ public class UI : MonoBehaviour
     public UI_InGame inGameUI { get; private set; }
     public UI_Options optionsUI { get; private set; }
     public UI_DeathScene deathScreenUI { get; private set; }
+    public UI_FadeScreen fadeScreenUI { get; private set; }
     #endregion
     private bool skillTreeEnabled;
     private bool inventoryEnabled;
 
     private void Awake()
     {
+        instance = this;
+
         skillToolTip=GetComponentInChildren<UI_SkillToolTip>();
         itemToolTip=GetComponentInChildren<UI_ItemToolTip>();
         statToolTip=GetComponentInChildren<UI_StatToolTip>();
@@ -37,6 +42,7 @@ public class UI : MonoBehaviour
         inGameUI = GetComponentInChildren<UI_InGame>(true);
         optionsUI= GetComponentInChildren<UI_Options>(true);
         deathScreenUI=GetComponentInChildren<UI_DeathScene>(true);
+        fadeScreenUI= GetComponentInChildren<UI_FadeScreen>(true);
 
         skillTreeEnabled = skillTreeUI.gameObject.activeSelf;
         inventoryEnabled = inventoryUI.gameObject.activeSelf;
@@ -140,8 +146,11 @@ public class UI : MonoBehaviour
     //切换技能树ui开关
     public void ToggleSkillTreeUI()
     {
+        //设置优先级
         skillTreeUI.transform.SetAsLastSibling();
-        SetTooltipsAsLastSibling();//设置优先级
+        SetTooltipsAsLastSibling();
+        fadeScreenUI.transform.SetAsLastSibling();
+
 
         skillTreeEnabled = !skillTreeEnabled;
         skillTreeUI.gameObject.SetActive(skillTreeEnabled);
@@ -153,6 +162,7 @@ public class UI : MonoBehaviour
     {
         inventoryUI.transform.SetAsLastSibling();
         SetTooltipsAsLastSibling();
+        fadeScreenUI.transform.SetAsLastSibling();
 
         inventoryEnabled = !inventoryEnabled;
         inventoryUI.gameObject.SetActive(inventoryEnabled);
