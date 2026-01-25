@@ -23,7 +23,7 @@ public class Entity : MonoBehaviour
     protected StateMachine stateMachine;
     public Animator anim { get; private set; }//动画
     public Rigidbody2D rb { get; private set; }
-
+    public Entity_SFX sfx { get; private set; }
 
     public bool groundDetected { get; private set; }
     public bool wallDetected { get; private set; }
@@ -49,6 +49,7 @@ public class Entity : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        sfx = GetComponent<Entity_SFX>();
         stateMachine = new StateMachine();//定义化状态机
 
     }

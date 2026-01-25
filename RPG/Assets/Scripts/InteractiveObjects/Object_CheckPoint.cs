@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Object_CheckPoint : MonoBehaviour,ISaveable
+public class Object_CheckPoint : MonoBehaviour, ISaveable
 {
     [SerializeField] private string checkpointId;
     [SerializeField] private Transform respawnPoint;
-    public bool isActive { get;private set; }   
+    public bool isActive { get; private set; }
     private Animator anim;
 
+    private AudioSource audioSource;
     private void Awake()
     {
-        anim=GetComponentInChildren<Animator>();
-
+        anim = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public string GetCheckpointId() => checkpointId;
@@ -22,8 +21,8 @@ public class Object_CheckPoint : MonoBehaviour,ISaveable
     private void OnValidate()
     {
 #if UNITY_EDITOR
-        if(string.IsNullOrEmpty(checkpointId))
-            checkpointId=System.Guid.NewGuid().ToString();
+        if (string.IsNullOrEmpty(checkpointId))
+            checkpointId = System.Guid.NewGuid().ToString();
 #endif
     }
 
@@ -31,6 +30,10 @@ public class Object_CheckPoint : MonoBehaviour,ISaveable
     {
         isActive = activate;
         anim.SetBool("isActive", activate);
+        if (isActive && audioSource.isPlaying == false)
+            audioSource.Play();
+        if (isActive == false)
+            audioSource.Stop();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

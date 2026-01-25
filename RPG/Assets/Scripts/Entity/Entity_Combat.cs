@@ -8,6 +8,7 @@ public class Entity_Combat : MonoBehaviour
     public event Action<float> OnDoingPhysicalDamage;//ItemEffect_HealOnDoingDamage
     public event Action<Collider2D> OnDoingDamage;//ItemEffect_ThunderClaw
 
+    private Entity_SFX sfx;//音效
     private Entity_VFX vfx;//视觉效果
     private Entity_Stats stats;
 
@@ -23,10 +24,12 @@ public class Entity_Combat : MonoBehaviour
     {
         vfx = GetComponent<Entity_VFX>();
         stats = GetComponent<Entity_Stats>();
+        sfx=GetComponent<Entity_SFX>();
     }
 
     public void PerformAttack()
     {
+        bool targetGetHit = false;
         foreach (var defender in GetDetectedColliders())
         {
             IDamgable damegable = defender.GetComponent<IDamgable>();//entity_health,object_Chest
@@ -41,7 +44,7 @@ public class Entity_Combat : MonoBehaviour
 
             ElementType elementType = attackData.elementType;
 
-            bool targetGetHit = damegable.TakeDamage(physicalDamage, elementalDamage, elementType, transform);
+            targetGetHit = damegable.TakeDamage(physicalDamage, elementalDamage, elementType, transform);
             //如果元素不是空,附加元素效果
             if (elementType != ElementType.None)
                 statusHandler?.ApplyStatusEffect(elementType, attackData.effectData);
@@ -50,8 +53,11 @@ public class Entity_Combat : MonoBehaviour
                 OnDoingPhysicalDamage?.Invoke(physicalDamage);
                 OnDoingDamage?.Invoke(defender);
                 vfx.CreatOnHitVfx(defender.transform, attackData.isCrit, elementType);//打在敌人身上的效果
+                sfx?.PlayAttackHit();
             }
         }
+        if (targetGetHit == false)
+            sfx?.PlayerAttackMiss();
     }
 
     //获取检测到的Collider
