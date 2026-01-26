@@ -40,6 +40,8 @@ public class AudioManager : MonoBehaviour
             StopBGM();
     }
 
+    #region ±≥æ∞“Ù¿÷øÿ÷∆
+
     public void StartBGM(string musicGroup)
     {
         bgmShouldPlay = true;
@@ -48,7 +50,6 @@ public class AudioManager : MonoBehaviour
 
         NextBGM(musicGroup);
     }
-
 
     public void NextBGM(string musicGroup)
     {
@@ -70,6 +71,8 @@ public class AudioManager : MonoBehaviour
             StopCoroutine(currentBgmCo);
        
     }
+
+    #endregion
 
     private IEnumerator SwitchMusicCo(string musicGrouop)
     {

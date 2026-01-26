@@ -582,7 +582,7 @@ GameObject:
   - component: {fileID: 216424492}
   - component: {fileID: 216424493}
   m_Layer: 5
-  m_Name: BGM_Volume
+  m_Name: BGM_Volume - Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -654,13 +654,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 1474673408}
   m_HandleRect: {fileID: 1075446717}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.491
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1252956007}
+        m_TargetAssemblyTypeName: UI_Options, Assembly-CSharp
+        m_MethodName: BGMSliderValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &219805096
 GameObject:
   m_ObjectHideFlags: 0
@@ -1595,6 +1607,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 528410353}
   m_CullTransparentMesh: 1
+--- !u!1001 &562744659
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3168101830571789, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: sfxSource
+      value: 
+      objectReference: {fileID: 718414262}
+    - target: {fileID: 670878934637956135, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: m_Name
+      value: ___AUDIO MANAGER___
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.591659
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.17392
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.045069497
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
 --- !u!1 &633278913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,6 +2034,11 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!82 &718414262 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4276225386028827361, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+  m_PrefabInstance: {fileID: 562744659}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &747640511
 GameObject:
   m_ObjectHideFlags: 0
@@ -2850,6 +2928,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarToggle: {fileID: 82550501}
+  audioMixer: {fileID: 24100000, guid: 389748efeb95633449d8b63124e33a2f, type: 2}
+  mixerMultiplier: 25
+  bgmSlider: {fileID: 216424493}
+  bgmParameter: bgmMixer
+  sfxSlider: {fileID: 1972854727}
+  sfxParameter: sfxMixer
 --- !u!114 &1252956009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4591,7 +4675,7 @@ GameObject:
   - component: {fileID: 1972854726}
   - component: {fileID: 1972854727}
   m_Layer: 5
-  m_Name: SFX_Volume
+  m_Name: SFX_Volume - Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4663,70 +4747,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 747640512}
   m_HandleRect: {fileID: 1590412080}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.491
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
---- !u!1001 &1976721209
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 670878934637956135, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
-      propertyPath: m_Name
-      value: ___AUDIO MANAGER___
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -8.591659
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.17392
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.045069497
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879243394571060767, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c697d5cd470ed0948ad127da1356a602, type: 3}
+      m_Calls:
+      - m_Target: {fileID: 1252956007}
+        m_TargetAssemblyTypeName: UI_Options, Assembly-CSharp
+        m_MethodName: SFXSliderValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1979421630
 GameObject:
   m_ObjectHideFlags: 0
@@ -5048,4 +5087,4 @@ SceneRoots:
   - {fileID: 1122978002}
   - {fileID: 1634243598}
   - {fileID: 1727124612}
-  - {fileID: 1976721209}
+  - {fileID: 562744659}
