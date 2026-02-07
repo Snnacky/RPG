@@ -114,6 +114,11 @@ public class Enemy : Entity
         stateMachine.ChangeState(idleState);
     }
 
+    public void DestroyGameObjectWithDelay(float delay=10)
+    {
+        Destroy(gameObject, delay);
+    }
+
     //背后偷袭的时候进入battleState
     public void TryEnterBattleState(Transform player)
     {

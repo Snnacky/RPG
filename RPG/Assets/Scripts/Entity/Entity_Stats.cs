@@ -17,6 +17,29 @@ public class Entity_Stats : MonoBehaviour//统计数据
 
     }
 
+    public void AdjustStatSetup(Stat_ResourceGroup resourceGroup,Stat_OffenseGroup offenseGroup, Stat_DefenseGroup defenseGroup, float penalty,float increase)
+    {
+        offense.basicalPhysicalDamage.SetBaseValue(offenseGroup.basicalPhysicalDamage.GetValue() * increase);
+        offense.attackSpeed.SetBaseValue(offenseGroup.attackSpeed.GetValue() * increase);
+        offense.critChance.SetBaseValue(offenseGroup.critChance.GetValue() * increase);
+        offense.critPower.SetBaseValue(offenseGroup.critPower.GetValue() * increase);
+        offense.fireDamage.SetBaseValue(offenseGroup.fireDamage.GetValue() * increase);
+        offense.chillDamage.SetBaseValue(offenseGroup.chillDamage.GetValue() * increase);
+        offense.lightningDamage.SetBaseValue(offenseGroup.lightningDamage.GetValue() * increase);
+
+        defense.evasion.SetBaseValue(defenseGroup.evasion.GetValue() * increase);
+
+        resources.maxHealth.SetBaseValue(resourceGroup.maxHealth.GetValue() * penalty);
+        resources.healthRegen.SetBaseValue(resourceGroup.healthRegen.GetValue() * penalty);
+
+
+        defense.armor.SetBaseValue(defenseGroup.armor.GetValue() * penalty);
+        defense.lightningResistance.SetBaseValue(defenseGroup.lightningResistance.GetValue() * penalty);
+        defense.fireResistance.SetBaseValue(defenseGroup.fireResistance.GetValue() * penalty);
+        defense.iceResistance.SetBaseValue(defenseGroup.iceResistance.GetValue() * penalty);
+    }
+
+
     public AttackData GetAttackData(DamageData damageData,Entity_Stats defender_Stats)
     {
         return new AttackData(this, damageData, defender_Stats);

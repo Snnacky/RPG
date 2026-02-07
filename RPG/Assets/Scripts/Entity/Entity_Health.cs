@@ -33,7 +33,7 @@ public class Entity_Health : MonoBehaviour, IDamgable
     [SerializeField] private Vector2 onHeavyDamageKnockback = new Vector2(7, 7);
 
     private bool miniHealthBarActive;
-    private void Awake()
+    protected virtual void Awake()
     {
         entity = GetComponent<Entity>();//Entity的子类也属于Entity
         entity_VFX = GetComponent<Entity_VFX>();
@@ -41,7 +41,12 @@ public class Entity_Health : MonoBehaviour, IDamgable
         entityStats = GetComponent<Entity_Stats>();
         damageCalculator=new DamageCalculator();
         dropManager = GetComponent<Entity_DropManager>();
-        SetupHealth();
+
+    }
+
+    protected virtual void Start()
+    {
+        SetupHealth(); 
 
     }
 

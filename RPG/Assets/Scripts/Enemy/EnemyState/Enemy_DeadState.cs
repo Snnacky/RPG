@@ -19,5 +19,6 @@ public class Enemy_DeadState : EnemyState
         rb.gravityScale = 12;
         rb.velocity = new Vector2(rb.velocity.x, 15);
         stateMachine.SwitchOffStateMachine();
+        enemy.DestroyGameObjectWithDelay();
     }
 }
