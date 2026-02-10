@@ -21,6 +21,9 @@ public class UI_SkillSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
     [SerializeField] private TextMeshProUGUI inputKeyText;
     [SerializeField] private GameObject conflictSlot;
 
+    [SerializeField] private Sprite originalSprite;
+    [SerializeField] private Skill_DataSO dataSO;
+
     private void Awake()
     {
         ui=GetComponentInParent<UI>();
@@ -47,6 +50,22 @@ public class UI_SkillSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
         if(conflictSlot != null) 
             conflictSlot.SetActive(false);
     }
+
+    public void RecoverySkillSlot()
+    {
+        if(skillType==SkillType.Dash)
+        {
+            SetupSkillSlot(dataSO);
+        }else
+        {
+            this.skillData = null;
+
+            skillIcon.sprite = originalSprite;
+            inputKeyText.text = "";
+        }
+            
+    }
+
 
     public void StartCooldown(float cooldown)
     {

@@ -55,7 +55,12 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         GetNeededComponents();
         //默认解锁
         if (skillData.unlockedByDefualt)
+        {
+            Debug.Log("lock");
             Unlock();
+        }
+
+       
     }
 
     private void OnEnable()
@@ -68,10 +73,10 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void Refund()//返回技能点
     {
+        //只返回解开了并且不是默认解开的
         if (isUnlocked == false || skillData.unlockedByDefualt)
             return;
         isUnlocked = false;
-        isLimited = false;
         UpdateIconColor(GetColorByHex(lockedColorHex));
 
         skillTree.AddSkillPoints(skillData.cost);//增加技能点
@@ -83,7 +88,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (isUnlocked)
             return;
-
+        Debug.Log("islock");
         isUnlocked = true;
         UpdateIconColor(Color.white);
         LockConflictNodes();

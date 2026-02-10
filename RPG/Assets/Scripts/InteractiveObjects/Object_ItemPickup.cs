@@ -22,7 +22,9 @@ public class Object_ItemPickup : MonoBehaviour
         if (itemData == null) return;
 
         sr=GetComponent<SpriteRenderer>();
-        
+        sr.sprite = itemData.itemIcon;
+        gameObject.name = "Object_ItemPickup - " + itemData.itemName;
+
     }
 
     private void Start()

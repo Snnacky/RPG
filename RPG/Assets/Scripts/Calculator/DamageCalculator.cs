@@ -9,6 +9,7 @@ public class DamageCalculator:ScriptableObject
     {
         isCrit = false;
         elementType = damageData.elementType;
+        Debug.Log(elementType);
         float baseDamage = GetElementDamageByType(elementType, attacker_Stats);
         Debug.Log(baseDamage);
         if (baseDamage == 0)

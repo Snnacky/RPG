@@ -43,6 +43,7 @@ public class Entity_Combat : MonoBehaviour
             float elementalDamage = attackData.elementalDamage;//获取元素伤害
 
             ElementType elementType = attackData.elementType;
+            Debug.Log(elementType);
 
             targetGetHit = damegable.TakeDamage(physicalDamage, elementalDamage, elementType, transform);
             //如果元素不是空,附加元素效果
@@ -53,7 +54,7 @@ public class Entity_Combat : MonoBehaviour
                 OnDoingPhysicalDamage?.Invoke(physicalDamage);
                 OnDoingDamage?.Invoke(defender);
                 vfx.CreatOnHitVfx(defender.transform, attackData.isCrit, elementType);//打在敌人身上的效果
-                sfx?.PlayAttackHit();
+                sfx?.PlayAttackHit();//攻击音效
             }
         }
         if (targetGetHit == false)

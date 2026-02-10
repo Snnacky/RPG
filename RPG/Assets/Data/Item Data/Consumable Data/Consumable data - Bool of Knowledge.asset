@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Book of Knowlede
   itemIcon: {fileID: -813457153, guid: 748ab983f671666478e286155eaa530d, type: 3}
   itemType: 4
-  maxStackSize: 5
+  maxStackSize: 999
   itemRarity: 769
   dropChance: 23.2
   maxDropChance: 65

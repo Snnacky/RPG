@@ -30,6 +30,6 @@ MonoBehaviour:
   - statType: 10
     value: 40
   - statType: 6
-    value: 1
+    value: 0.2
   - statType: 17
     value: 0.1

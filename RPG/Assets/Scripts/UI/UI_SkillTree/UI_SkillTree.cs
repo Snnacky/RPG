@@ -9,9 +9,11 @@ public class UI_SkillTree : MonoBehaviour,ISaveable
     [SerializeField] private int skillPoints;
     [SerializeField] private TextMeshProUGUI skillPointsText;
     [SerializeField] private UI_TreeConnectHandler[] parentNodes;
+    [SerializeField] private GameObject skillBarParent;
     private UI_TreeNode[] allTreeNodes;
 
     public Player_SkillManager skillManager { get; private set; }
+
     public bool EnoughSkillPoints(int cost) => skillPoints >= cost;
     public void RemoveSkillPoints(int cost)
     {
@@ -55,7 +57,13 @@ public class UI_SkillTree : MonoBehaviour,ISaveable
         foreach (var node in skillNodes)
         {
             node.Refund();
+            node.isLimited = false;
         }
+        //技能栏应该更新
+        //skillmanager应该更新
+
+        skillBarParent.GetComponent<UI_SkillBarParent>().RecoverySkillSlot();//恢复技能栏
+        skillManager.RecoveryAllSkills();//恢复出厂设置
     }
 
 
@@ -100,9 +108,11 @@ public class UI_SkillTree : MonoBehaviour,ISaveable
         foreach(var node in allTreeNodes)
         {
             string skillName = node.skillData.displayName;
+            Debug.Log(skillName + ": " + node.isUnlocked);
             data.skillTreeUI[skillName] = node.isUnlocked;
         }
 
+        //player身上
         foreach(var skill in skillManager.allskills)
         {
             data.skillUpgrades[skill.GetSkillType()] = skill.GetUpgrade();

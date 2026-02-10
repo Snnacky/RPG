@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 3481219035573393466}
   - component: {fileID: 3370436304297358730}
   - component: {fileID: 5875770209672183836}
-  - component: {fileID: 9080264281320241966}
   - component: {fileID: 3179629007528181636}
   - component: {fileID: 395629292099817204}
+  - component: {fileID: -8049580639253995883}
   m_Layer: 8
   m_Name: Enemy_Slime_Large
   m_TagString: Untagged
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageData:
-    elementType: 0
+    elementType: 2
     chillDuration: 3
     chillSlowMultiplier: 0.2
     burnDuration: 3
@@ -193,7 +193,7 @@ MonoBehaviour:
   defalutStatSetup: {fileID: 11400000, guid: 9d8e928bc3ad14848809fa1efeaccbe5, type: 2}
   resources:
     maxHealth:
-      baseValue: 100
+      baseValue: 200
       modifiers: []
     healthRegen:
       baseValue: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
       baseValue: 10
       modifiers: []
     chillDamage:
-      baseValue: 0
+      baseValue: 10
       modifiers: []
     fireDamage:
       baseValue: 0
@@ -279,22 +279,6 @@ MonoBehaviour:
   lightningStrikeVfx: {fileID: 1241660284631621823, guid: 61328dbc25fc60c4987affc5006dc4f0, type: 3}
   currentCharge: 0
   maximumCharge: 1
---- !u!114 &9080264281320241966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1103904814443078779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df4c88c4aae2227409582c2d7170ac08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemDropPrefab: {fileID: 8398667642126833731, guid: 2e423af3cb7bc554cb0cc12b6e88d065, type: 3}
-  dropData: {fileID: 11400000, guid: cc2b7680f9f5aa84da9685e5220ec12b, type: 2}
-  maxRarityAmount: 1200
-  maxItemsToDrop: 3
 --- !u!114 &3179629007528181636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,6 +334,22 @@ MonoBehaviour:
   slimeToCreatePrefab: {fileID: 355298623378726541, guid: d47c3d94531b97244a6026031fe04a34, type: 3}
   amountofSlimesToCreate: 2
   newSlimeVelocity: {x: 4, y: 4}
+--- !u!114 &-8049580639253995883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103904814443078779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4c88c4aae2227409582c2d7170ac08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDropPrefab: {fileID: 8398667642126833731, guid: 2e423af3cb7bc554cb0cc12b6e88d065, type: 3}
+  dropData: {fileID: 11400000, guid: 6ef1ca3db532bd94884b7ed4fd539736, type: 2}
+  maxRarityAmount: 1200
+  maxItemsToDrop: 2
 --- !u!1 &1453162585111847986
 GameObject:
   m_ObjectHideFlags: 0

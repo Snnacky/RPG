@@ -21,4 +21,4 @@ MonoBehaviour:
     shockDuration: 3
     shockDamage: 30
     shockCharge: 0.3
-  thunderChance: 0.5
+  thunderChance: 0.2

@@ -48,6 +48,12 @@ public class Skill_Base : MonoBehaviour
         player.ui.inGameUI.GetSkillSlot(skillType).SetupSkillSlot(skillData);
     }
 
+    public virtual void RecoverySkillUpgrade()
+    {
+        upgradeType = SkillUpgradeType.None;
+        cooldown = 0;
+    }
+
     public virtual bool CanUseSkill()
     {
         if (upgradeType == SkillUpgradeType.None)

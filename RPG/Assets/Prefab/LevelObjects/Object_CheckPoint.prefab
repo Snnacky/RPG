@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cffde34bbe4341444b3bb2a075866fd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkpointId: 69c0c832-b370-4d68-8c1d-23e344a38ea0
+  checkpointId: a1d99d87-a118-40a9-80e9-7f096f6196ae
   respawnPoint: {fileID: 0}
 --- !u!114 &1186251552604361550
 MonoBehaviour:

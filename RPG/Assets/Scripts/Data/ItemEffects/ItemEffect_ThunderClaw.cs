@@ -15,7 +15,8 @@ public class ItemEffect_ThunderClaw : ItemEffectDataSO
 
     private void ThunderStrike(Collider2D enemy)
     {
-        bool canAttack = Random.Range(0, 1) < thunderChance;
+        float random = Random.Range(0f, 1f);
+        bool canAttack = random < thunderChance;
         if (canAttack == false) return;
 
         Entity_StatusHandler statusHandler  = enemy.GetComponent<Entity_StatusHandler>();

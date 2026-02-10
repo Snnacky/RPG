@@ -151,7 +151,7 @@ public class UI : MonoBehaviour
         SetTooltipsAsLastSibling();
         fadeScreenUI.transform.SetAsLastSibling();
 
-
+        skillTreeEnabled = skillTreeUI.gameObject.activeSelf;
         skillTreeEnabled = !skillTreeEnabled;
         skillTreeUI.gameObject.SetActive(skillTreeEnabled);
         HideAllToolTips();  
@@ -164,6 +164,7 @@ public class UI : MonoBehaviour
         SetTooltipsAsLastSibling();
         fadeScreenUI.transform.SetAsLastSibling();
 
+        inventoryEnabled = inventoryUI.gameObject.activeSelf;
         inventoryEnabled = !inventoryEnabled;
         inventoryUI.gameObject.SetActive(inventoryEnabled);
 

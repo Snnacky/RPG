@@ -30,4 +30,10 @@ public class Skill_Dash : Skill_Base
     {
         skillManager.timeEcho.CreateTimeEcho();
     }
+
+    public override void RecoverySkillUpgrade()
+    {
+        upgradeType = SkillUpgradeType.Dash;
+        cooldown = 0.5f;
+    }
 }

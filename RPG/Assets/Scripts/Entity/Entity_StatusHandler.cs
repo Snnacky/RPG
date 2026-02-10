@@ -39,6 +39,7 @@ public class Entity_StatusHandler : MonoBehaviour
     //应用元素攻击效果
     public void ApplyStatusEffect(ElementType element,ElementalEffectData effectData)
     {
+        Debug.Log(element);
         if (element == ElementType.Ice && CanBeApplied(ElementType.Ice))
             ApplyChilledEffect(effectData.chillDuration, effectData.chillSlowMulltiplier);
         

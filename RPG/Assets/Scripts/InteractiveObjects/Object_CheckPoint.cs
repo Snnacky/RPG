@@ -1,3 +1,6 @@
+using System;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Object_CheckPoint : MonoBehaviour, ISaveable
@@ -23,8 +26,11 @@ public class Object_CheckPoint : MonoBehaviour, ISaveable
 #if UNITY_EDITOR
         if (string.IsNullOrEmpty(checkpointId))
             checkpointId = System.Guid.NewGuid().ToString();
+        //checkpointId = gameObject.GetInstanceID().ToString();
 #endif
     }
+
+
 
     public void ActivataCheckPoint(bool activate)
     {

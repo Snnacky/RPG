@@ -29,6 +29,14 @@ public class Player_SkillManager : MonoBehaviour
         }
     }
 
+    public void RecoveryAllSkills()
+    {
+        foreach (var skill in allskills)
+        {
+            skill.RecoverySkillUpgrade();
+        }
+    }
+
     //通过类型寻找技能
     public Skill_Base GetSkillBaseByType(SkillType type)
     {

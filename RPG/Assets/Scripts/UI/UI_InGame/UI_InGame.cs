@@ -8,7 +8,7 @@ public class UI_InGame : MonoBehaviour
 {
     private Player player;
     private Inventory_Player inventory;
-    private UI_SkillSlot[] skillSlots;
+    private UI_SkillSlot[] skillSlots;//¼¼ÄÜÀ¸
 
     [SerializeField] private RectTransform healthRect;
     [SerializeField] private Slider healthSlider;
