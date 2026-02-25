@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Skill data - Irritated Shard
   m_EditorClassIdentifier: 
   displayName: Irritated Shard
-  description: Shard will fly towards closest enemy.
+  description: "\u788E\u7247\u5C06\u81EA\u52A8\u8FFD\u8E2A\u5E76\u98DE\u5411\u6700\u8FD1\u7684\u654C\u4EBA"
   icon: {fileID: -996365660, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 2
   unlockedByDefualt: 0

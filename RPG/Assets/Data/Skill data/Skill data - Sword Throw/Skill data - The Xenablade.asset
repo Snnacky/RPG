@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Skill data - The Xenablade
   m_EditorClassIdentifier: 
   displayName: The Xenablade
-  description: 'Thesword will bounce between N targets,dealing damage on each bounce.
-
-'
+  description: "\u98DE\u5251\u5C06\u5728\u6700\u591A N \u4E2A\u654C\u4EBA\u4E4B\u95F4\u6765\u56DE\u5F39\u5C04 
+    \u6BCF\u6B21\u5F39\u5C04\u5747\u9020\u6210\u4F24\u5BB3"
   icon: {fileID: 583239525, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 2
   unlockedByDefualt: 0

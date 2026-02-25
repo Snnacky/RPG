@@ -6,8 +6,8 @@ public class Player_Health : Entity_Health
 {
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.N))
-            Die();
+        //if (Input.GetKeyUp(KeyCode.N))
+        //    Die();
     }
 
     public override void Die()

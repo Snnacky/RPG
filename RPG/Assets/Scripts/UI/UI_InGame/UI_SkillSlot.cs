@@ -24,6 +24,8 @@ public class UI_SkillSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
     [SerializeField] private Sprite originalSprite;
     [SerializeField] private Skill_DataSO dataSO;
 
+    private Coroutine coldDownCo;
+
     private void Awake()
     {
         ui=GetComponentInParent<UI>();
@@ -51,7 +53,7 @@ public class UI_SkillSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
             conflictSlot.SetActive(false);
     }
 
-    public void RecoverySkillSlot()
+    public void   RecoverySkillSlot()
     {
         if(skillType==SkillType.Dash)
         {
@@ -62,6 +64,8 @@ public class UI_SkillSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
 
             skillIcon.sprite = originalSprite;
             inputKeyText.text = "";
+
+            ResetCooldown();
         }
             
     }
@@ -70,10 +74,17 @@ public class UI_SkillSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
     public void StartCooldown(float cooldown)
     {
         cooldownImage.fillAmount = 1;
-        StartCoroutine(CooldownCo(cooldown));
+        if(coldDownCo != null)
+            StopCoroutine(coldDownCo);
+        coldDownCo= StartCoroutine(CooldownCo(cooldown));
     }
 
-    public void ResetCooldown() => cooldownImage.fillAmount = 0;
+    public void ResetCooldown()
+    {
+        if (coldDownCo != null)
+            StopCoroutine(coldDownCo);
+        cooldownImage.fillAmount = 0;
+    }
 
     private IEnumerator CooldownCo(float duration)
     {

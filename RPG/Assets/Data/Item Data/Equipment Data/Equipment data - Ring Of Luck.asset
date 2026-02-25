@@ -20,7 +20,13 @@ MonoBehaviour:
   dropChance: 24.7
   maxDropChance: 65
   itemEffect: {fileID: 0}
-  craftRecipe: []
+  craftRecipe:
+  - itemData: {fileID: 11400000, guid: 8f4305a58b6ef2f438b278141d7af8b6, type: 2}
+    stackSize: 1
+    itemEffectData: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: 66bf9f4b47ed5e94b8b0323899a0ce94, type: 2}
+    stackSize: 1
+    itemEffectData: {fileID: 0}
   itemPrice: 100
   minStackSizeAtShop: 1
   maxStackSizeAtShop: 1

@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour,ISaveable
     {
         SaveManager.instance.SaveGame();
         Time.timeScale = 1;
+        Debug.Log(sceneName);
         StartCoroutine(ChangeSceneCo(sceneName,respawnType));
     }
 
@@ -71,6 +72,15 @@ public class GameManager : MonoBehaviour,ISaveable
         //yield return new WaitForSeconds(.2f);
         if(position!=Vector3.zero)
             player.TeleportPlayer(position);
+
+        UI ui = UI.instance;
+        if (ui == null) yield break;
+        UI_Options ui_Option = ui.optionsUI;
+        bool healthBarEnabled = PlayerPrefs.GetInt("HealthBarEnabled", 1) == 1;
+        if (ui_Option)
+        {
+            ui_Option.OnHealthBarToggleChanged(healthBarEnabled);
+        }
     }
 
     private UI_FadeScreen FindFadeScreenUI()
@@ -133,6 +143,12 @@ public class GameManager : MonoBehaviour,ISaveable
         }
 
         return Vector3.zero;
+    }
+
+    public void DeleteData()
+    {
+        lastScenePlayed = "Level_0";
+        lastPlayerPosition = Vector3.zero;
     }
 
     public void LoadData(GameData data)

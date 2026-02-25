@@ -14,6 +14,8 @@ public class Inventory_Player : Inventory_Base
 
     [Header("Gold Info")]
     public int gold = 100000;
+
+    public void AddGold(int amount)=> gold += amount;
     protected override void Awake()
     {
         base.Awake();

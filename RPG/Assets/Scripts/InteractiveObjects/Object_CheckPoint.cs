@@ -1,6 +1,3 @@
-using System;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Object_CheckPoint : MonoBehaviour, ISaveable

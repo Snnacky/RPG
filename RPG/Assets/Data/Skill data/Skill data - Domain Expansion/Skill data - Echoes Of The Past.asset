@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Skill data - Echoes Of The Past
   m_EditorClassIdentifier: 
   displayName: Echoes Of The Past
-  description: Each enemy trapped in the time warp is struck by multiple time echoes.
+  description: "\u6BCF\u4E00\u4E2A\u88AB\u56F0\u5728\u65F6\u95F4\u626D\u66F2\u4E2D\u7684\u654C\u4EBA\u90FD\u4F1A\u53D7\u5230\u591A\u6B21\u65F6\u95F4\u56DE\u54CD\u7684\u6253\u51FB"
   icon: {fileID: -1001469373, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 4
   unlockedByDefualt: 0
   skillType: 4
   upgradeData:
     upgradeType: 23
-    cooldown: 5
+    cooldown: 30
     damageData:
       elementType: 3
       chillDuration: 3

@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class UI_SkillToolTip : UI_ToolTip

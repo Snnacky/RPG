@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Skill data - The Buffetsword
   m_EditorClassIdentifier: 
   displayName: The Buffetswrd
-  description: Launch a sword that flies forward,plercing through up to N enemies
-    in its path.
+  description: "\u5411\u524D\u53D1\u5C04\u98DE\u5251  \u6CBF\u9014\u6700\u591A\u53EF\u7A7F\u900F
+    N \u540D\u654C\u4EBA"
   icon: {fileID: 1396357970, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 2
   unlockedByDefualt: 0

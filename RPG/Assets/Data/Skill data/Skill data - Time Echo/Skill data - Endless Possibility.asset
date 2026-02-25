@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Skill data - Endless Possibility
   m_EditorClassIdentifier: 
   displayName: Endless Posibility
-  description: "\u65F6\u95F4\u56DE\u58F0\u670930%\u7684\u673A\u4F1A\u590D\u5236\u81EA\u5DF1\u3002"
+  description: "\u65F6\u95F4\u56DE\u58F0\u670930%\u7684\u673A\u4F1A\u590D\u5236\u81EA\u5DF1"
   icon: {fileID: -357765113, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 2
   unlockedByDefualt: 0

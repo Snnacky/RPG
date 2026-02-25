@@ -1269,7 +1269,7 @@ MonoBehaviour:
   skillType: 1
   upgradeType: 0
   timeEchoPrefab: {fileID: 36141950851800601, guid: a80bccba1179ac3468eb63423947bf5e, type: 3}
-  timeEchoDuration: 15
+  timeEchoDuration: 1
   maxAttacks: 3
   duplicateChance: 1
   damagePercentHealed: 0.3

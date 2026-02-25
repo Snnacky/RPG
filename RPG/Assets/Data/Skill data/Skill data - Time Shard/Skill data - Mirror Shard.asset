@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Skill data - Mirror Shard
   m_EditorClassIdentifier: 
   displayName: Mirror Shard
-  description: Time shard now has 3 charges.
+  description: "\u65F6\u95F4\u788E\u7247\u73B0\u5DF2\u62E5\u6709 3 \u5C42\u5145\u80FD"
   icon: {fileID: -1274634490, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 3
   unlockedByDefualt: 0

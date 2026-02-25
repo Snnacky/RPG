@@ -41,9 +41,12 @@ public class UI_Options : MonoBehaviour
         audioMixer.SetFloat(sfxParameter, newValue);
     }
 
-    private void OnHealthBarToggleChanged(bool isOn)
-    {
-        player.health.EnableHealthBar(isOn);
+    public void OnHealthBarToggleChanged(bool isOn)
+    {   if (player == null) player = Player.instance;
+        if(player)
+        {
+            player.health.EnableHealthBar(isOn);
+        }
     }
 
     public void GoMainMenuBTN()=>GameManager.Instance.ChangeScene("MainMenu", RespawnType.NoneSpecific);
@@ -52,14 +55,14 @@ public class UI_Options : MonoBehaviour
     {
         sfxSlider.value = PlayerPrefs.GetFloat(sfxParameter, .6f);
         bgmSlider.value = PlayerPrefs.GetFloat(bgmParameter, .6f);
-        Debug.Log(bgmSlider.value);
+        healthBarToggle.isOn = PlayerPrefs.GetInt("HealthBarEnabled", 1) == 1;
     }
 
     private void OnDisable()
     {
         PlayerPrefs.SetFloat(sfxParameter, sfxSlider.value);
         PlayerPrefs.SetFloat(bgmParameter, bgmSlider.value);
-        Debug.Log(bgmSlider.value);
+        PlayerPrefs.SetInt("HealthBarEnabled", healthBarToggle.isOn ? 1 : 0);
     }
 
     public void LoadUpVolume()

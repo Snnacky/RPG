@@ -39,6 +39,7 @@ public class SaveManager : MonoBehaviour
         {
             Debug.Log("No save data found,creating new save");
             gameData = new GameData();
+            GameManager.Instance.DeleteData();
             return;
         }
 
@@ -52,6 +53,7 @@ public class SaveManager : MonoBehaviour
         //保存所有数据
         foreach(var saveable in allSaveables)
             saveable.SaveData(ref gameData);//ref:确保所有数据写在同一个gameData
+
 
         dataHandler.SaveData(gameData);
     }

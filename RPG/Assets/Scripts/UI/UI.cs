@@ -79,15 +79,6 @@ public class UI : MonoBehaviour
             OpenOptionsUI();
         };
     }
-
-    ////角色控制
-    //private void StopPlayerControls(bool stopControls)
-    //{
-    //    if (stopControls)
-    //        input.Player.Disable();
-    //    else input.Player.Enable();
-    //}
-    //角色控制
     private void StopPlayerControlsIfNeeded()
     {
         foreach(var element in uiElements)
@@ -176,12 +167,12 @@ public class UI : MonoBehaviour
     public void OpenStorageUI(bool openStorageUI)
     {
         storageUI.gameObject.SetActive(openStorageUI);
-        StopPlayerControlsIfNeeded() ;
         if (openStorageUI == false)
         {
             craftUI.gameObject.SetActive(false);
             HideAllToolTips();  
         }
+        StopPlayerControlsIfNeeded() ;
     }
 
     //商店ui

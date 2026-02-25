@@ -311,7 +311,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheckDistance: 0.37
-  wallChckDistance: 0.5
+  wallChckDistance: 1.55
   groundCheck: {fileID: 8575929745165461740}
   primaryWallCheck: {fileID: 4374763833509197452}
   secondarWallCheck: {fileID: 0}
@@ -324,7 +324,7 @@ MonoBehaviour:
   playerCheck: {fileID: 4374763833509197452}
   playerCheckDistance: 10
   battleMoveSpeed: 2.5
-  attackDistance: 1.93
+  attackDistance: 1.91
   battleTimeDuration: 5
   minRetreatDistance: 1
   retreatVelovity: {x: 5, y: 3}
@@ -694,7 +694,7 @@ Transform:
   m_GameObject: {fileID: 3798420939833896912}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.154, y: -0.748, z: 0}
+  m_LocalPosition: {x: 1.192, y: -0.748, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

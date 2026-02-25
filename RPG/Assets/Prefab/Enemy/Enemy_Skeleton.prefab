@@ -349,7 +349,7 @@ MonoBehaviour:
   defalutStatSetup: {fileID: 11400000, guid: 9d8e928bc3ad14848809fa1efeaccbe5, type: 2}
   resources:
     maxHealth:
-      baseValue: 1000
+      baseValue: 100
       modifiers: []
     healthRegen:
       baseValue: 0
@@ -372,7 +372,7 @@ MonoBehaviour:
       baseValue: 1
       modifiers: []
     basicalPhysicalDamage:
-      baseValue: 40
+      baseValue: 10
       modifiers: []
     chillDamage:
       baseValue: 0

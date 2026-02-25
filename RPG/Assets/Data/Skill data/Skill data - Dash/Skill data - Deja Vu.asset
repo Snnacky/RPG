@@ -13,10 +13,7 @@ MonoBehaviour:
   m_Name: Skill data - Deja Vu
   m_EditorClassIdentifier: 
   displayName: Daja Vu
-  description: 'Create a time echo on arrival.
-
-    (Inherits all upgrades of Time
-    echo Ability)'
+  description: "\u5230\u8FBE\u65F6\u4EA7\u751F\u65F6\u95F4\u56DE\u58F0"
   icon: {fileID: -1600333535, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 3
   unlockedByDefualt: 0

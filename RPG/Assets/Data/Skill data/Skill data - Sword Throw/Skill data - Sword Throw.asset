@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Skill data - Sword Throw
   m_EditorClassIdentifier: 
   displayName: Catch this!
-  description: Throw your sword to damage enemies.Sword will apply status effects.You
-    can have only one active sword at a time.
+  description: "\u6295\u63B7\u4F60\u7684\u5251\u653B\u51FB\u654C\u4EBA  \u547D\u4E2D\u65F6\u4F1A\u9644\u52A0\u72B6\u6001\u6548\u679C 
+    \u573A\u4E0A\u540C\u65F6\u53EA\u80FD\u5B58\u5728\u4E00\u628A\u6FC0\u6D3B\u7684\u5251"
   icon: {fileID: 260377368, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 1
   unlockedByDefualt: 0

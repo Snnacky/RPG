@@ -13,10 +13,7 @@ MonoBehaviour:
   m_Name: Skill data - Time Lost Shard
   m_EditorClassIdentifier: 
   displayName: Time Lost Shard
-  description: 'Crate a time shard before you dash.
-
-    (Inherits all upgrades of
-    Time shard Ability)'
+  description: "\u51B2\u523A\u524D\u4EA7\u751F\u65F6\u95F4\u788E\u7247"
   icon: {fileID: -172661879, guid: 748ab983f671666478e286155eaa530d, type: 3}
   cost: 2
   unlockedByDefualt: 0
